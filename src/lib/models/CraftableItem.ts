@@ -13,3 +13,7 @@ export type CraftableItem = {
 export type CraftableItemMap = {
     [key: string]: CraftableItem
 }
+
+export type MapDataCombinedWithImage = MapDataCombined & { imageName: string };
+
+export type CraftableItemWithGeData = { name: string; data: MapDataCombinedWithImage[]};

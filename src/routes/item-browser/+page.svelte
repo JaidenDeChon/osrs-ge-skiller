@@ -10,13 +10,45 @@
 
 <h3>Crafting</h3>
 
-<details>
+{#each data.craftableCollectionsByName as craftableCollection}
+    <details>
+        <summary>{craftableCollection.name}</summary>
+
+        <div class="grid">
+            {#each craftableCollection.data as item}
+                <article class="item-browser-grid__item">
+        
+                    <header>
+                        <img
+                            src="/item-images/{item.imageName}"
+                            alt="image of item: {item.name}"
+                        >
+                        <hgroup>
+                            <h5>{item.name}</h5>
+                            <h6>{item.examine}</h6>
+                        </hgroup>
+                    </header>
+        
+                    <p>
+                        <img src="/item-images/coins-few.png" alt="coins" />
+                        Low Price: {item.lowPrice}gp
+                    </p>
+                    <p>
+                        <img src="/item-images/coins-lots.png" alt="coins" />
+                        High Price: {item.highPrice}gp
+                    </p>
+                </article>
+            {/each}
+        </div>
+    </details>
+{/each}
+
+<!-- <details>
     <summary>Leather</summary>
     <div class="grid">
         {#each data.leatherItemsArray as item}
             <article class="item-browser-grid__item">
     
-                <!-- Header with image, item name, item examine -->
                 <header>
                     <img
                         src="/item-images/{item.imageName}"
@@ -28,7 +60,6 @@
                     </hgroup>
                 </header>
     
-                <!-- Body -->
                 <p>
                     <img src="/item-images/coins-few.png" alt="coins" />
                     Low Price: {item.itemData?.lowPrice}gp
@@ -40,15 +71,14 @@
             </article>
         {/each}
     </div>
-</details>
+</details> -->
 
-<details>
+<!-- <details>
     <summary>Snakeskin</summary>
     <div class="grid">
         {#each data.snakeskinItemsArray as item}
             <article class="item-browser-grid__item">
     
-                <!-- Header with image, item name, item examine -->
                 <header>
                     <img
                         src="/item-images/{item.imageName}"
@@ -60,7 +90,6 @@
                     </hgroup>
                 </header>
     
-                <!-- Body -->
                 <p>
                     <img src="/item-images/coins-few.png" alt="coins" />
                     Low Price: {item.itemData?.lowPrice}gp
@@ -72,7 +101,7 @@
             </article>
         {/each}
     </div>
-</details>
+</details> -->
 
 <style>
     article {
