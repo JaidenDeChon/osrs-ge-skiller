@@ -58,12 +58,18 @@
                     <div class="card__content-column">
                         <div class="card__icon-text-group">
                             <img src="/spell-images/low-level-alchemy.png" alt="high-level alchemy">
-                            <p>{ item.lowAlch }</p>
+                            <p>
+                                <span>Low alch - </span>
+                                { item.lowAlch }
+                            </p>
                         </div>
     
                         <div class="card__icon-text-group">
                             <img src="/spell-images/high-level-alchemy.png" alt="high-level alchemy">
-                            <p>{ item.highAlch }</p>
+                            <p>
+                                <span>High alch - </span>
+                                { item.highAlch }
+                            </p>
                         </div>
                     </div>
 
@@ -146,6 +152,7 @@
 
     article.card .card__content {
         display: flex;
+        gap: 1em;
         justify-content: space-evenly;
         margin-bottom: var(--block-spacing-vertical);
     }
@@ -181,7 +188,11 @@
 
     @media (min-width: 1200px) {
         .gallery article.card {
-            width: calc(50% - 1rem)
+            width: calc(50% - 0.5rem)
+        }
+
+        article.card .card__content {
+            flex-direction: column;
         }
     }
 </style>
