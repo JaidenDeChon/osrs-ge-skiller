@@ -70,8 +70,10 @@ export const geDataCombined = async (fetchFunction: SvelteFetchFunction): Promis
     Object.keys(latestPrices).forEach((itemId: string) => {
         const itemData = itemMapping[itemId];
         const highPrice = latestPrices[itemId].high;
+        const highTime = latestPrices[itemId].highTime;
         const lowPrice = latestPrices[itemId].low;
-        geData[itemId] = { ...itemData, highPrice, lowPrice };
+        const lowTime = latestPrices[itemId].lowTime;
+        geData[itemId] = { ...itemData, highPrice, highTime, lowPrice, lowTime };
     });
 
     return geData;

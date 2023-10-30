@@ -52,7 +52,7 @@ export type MapDataCombined = MapData & { highPrice: number, lowPrice: number };
 
 /** An object with a string for a key and the above type for a value. */
 export type FullMapDataCombined = {
-    [key: string]: MapData & { highPrice: number, lowPrice: number }
+    [key: string]: MapData & { highPrice: number, lowPrice: number, highTime: number, lowTime: number }
 }
 
 /**

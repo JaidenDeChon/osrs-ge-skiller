@@ -1,28 +1,58 @@
-import type { PageLoad } from './$types';
-import type { CraftableItemWithGeData } from '$lib/models/CraftableItem';
+import type { PageServerLoad } from './$types';
+import { addMarketInfoToGameItems } from '$lib/helpers/addMarketInfoToGameItem';
 import { geDataCombined } from '$lib/services/grand-exchange-service';
-import { assembleCraftableItemCollection } from '$lib/helpers/assembleCraftableItemCollection';
 import {
-    leatherCraftableSpecs,
-    snakeskinCraftableSpecs,
-    blackDragonhideCraftableSpecs,
-    blueDragonhideCraftableSpecs,
-    greenDragonhideCraftableSpecs,
-    redDragonhideCraftableSpecs
-} from '../../constants/skills/crafting';
+    leatherItemTrees,
+    snakeskinItemTrees,
+    blueDragonhideItemTrees,
+    greenDragonhideItemTrees,
+    redDragonhideItemTrees,
+    blackDragonhideItemTrees
+} from '$lib/constants/crafting-item-creation-trees';
 
-export const load: PageLoad = async ({ fetch }) => {
+export const load: PageServerLoad = async({ fetch }) => {
     const geData = await geDataCombined(fetch);
-    const craftableCollectionsByName = [] as CraftableItemWithGeData[];
 
-    craftableCollectionsByName.push(
-        assembleCraftableItemCollection('Leather', leatherCraftableSpecs, geData),
-        assembleCraftableItemCollection('Snakeskin Armor', snakeskinCraftableSpecs, geData),
-        assembleCraftableItemCollection('Blue Dragonhide Armor', blueDragonhideCraftableSpecs, geData),
-        assembleCraftableItemCollection('Green Dragonhide Armor', greenDragonhideCraftableSpecs, geData),
-        assembleCraftableItemCollection('Red Dragonhide Armor', redDragonhideCraftableSpecs, geData),
-        assembleCraftableItemCollection('Black Dragonhide Armor', blackDragonhideCraftableSpecs, geData)
-    );
+    const leatherItems = leatherItemTrees;
+    const snakeskinItems = snakeskinItemTrees;
+    const blueDragonhideItems = blueDragonhideItemTrees;
+    const greenDragonhideItems = greenDragonhideItemTrees;
+    const redDragonhideItems = redDragonhideItemTrees;
+    const blackDragonhideItems = blackDragonhideItemTrees;
 
-    return { craftableCollectionsByName };
-}
+    addMarketInfoToGameItems(leatherItems, geData);
+    addMarketInfoToGameItems(snakeskinItems, geData);
+    addMarketInfoToGameItems(blueDragonhideItems, geData);
+    addMarketInfoToGameItems(greenDragonhideItems, geData);
+    addMarketInfoToGameItems(redDragonhideItems, geData);
+    addMarketInfoToGameItems(blackDragonhideItems, geData);
+
+    const creatableItems = [
+        {
+            name: 'Leather armor',
+            items: leatherItems
+        },
+        {
+            name: 'Snakeskin armor',
+            items: snakeskinItems
+        },
+        {
+            name: 'Blue d\'hide armor',
+            items: blueDragonhideItems
+        },
+        {
+            name: 'Green d\'hide armor',
+            items: greenDragonhideItems
+        },
+        {
+            name: 'Black d\'hide armor',
+            items: redDragonhideItems
+        },
+        {
+            name: 'Red d\'hide armor',
+            items: blackDragonhideItems
+        }
+    ];
+
+    return { creatableItems }
+};

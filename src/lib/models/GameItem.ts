@@ -1,4 +1,4 @@
-import type { InGameSkillNamesEnum } from '../../constants/enums/InGameSkillNamesEnum';
+import type { InGameSkillNamesEnum } from '../enums/InGameSkillNamesEnum';
 
 /**
  * Represents the amount of experience in a given skill awarded for creating an item.
