@@ -46,11 +46,11 @@ export const load: PageServerLoad = async({ fetch }) => {
         },
         {
             name: 'Black d\'hide armor',
-            items: redDragonhideItems
+            items: blackDragonhideItems
         },
         {
             name: 'Red d\'hide armor',
-            items: blackDragonhideItems
+            items: redDragonhideItems
         }
     ];
 

@@ -1,8 +1,14 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
     import type { PageData } from './$types';
+    import type { GameItem } from "$lib/models/GameItem";
     export let data: PageData;
 
-    export function timeSince(unixTimestamp: number) {
+    function navigateToItemBrowser(item: GameItem) {
+        goto(`/item-browser/${item.id}`);
+    }
+
+    function timeSince(unixTimestamp: number) {
         // Get current time in seconds.
         const currentTime = Math.floor(Date.now() / 1000);
         // Calculate the difference in seconds.
@@ -100,7 +106,7 @@
                     </div>
                 </div>
 
-                <button>Details</button>
+                <button on:click={ () => navigateToItemBrowser(item) }>Details</button>
 
             </article>
         {/each}
