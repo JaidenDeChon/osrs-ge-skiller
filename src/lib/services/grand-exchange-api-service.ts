@@ -8,8 +8,8 @@ const headers = {
         'ventures. | Contact: jdechon1995@gmail.com'
 };
 
-const fetchData = async (svelteFetchFunction: SvelteFetchFunction, url: RequestInfo | URL) => {
-    const response = await svelteFetchFunction(url, { headers });
+const fetchData = async (url: RequestInfo | URL) => {
+    const response = await fetch(url, { headers });
     const data = await response.json();
     return data;
 }
@@ -21,13 +21,13 @@ const fetchData = async (svelteFetchFunction: SvelteFetchFunction, url: RequestI
  * @returns An associative array object.
  * @see https://oldschool.runescape.wiki/w/RuneScape:Real-time_Prices
  */
-export const latest = async (fetchFunction: SvelteFetchFunction, id?: number): Promise<Types.FullTransactionData> => {
+export const latest = async (id?: number): Promise<Types.FullTransactionData> => {
     const url = id
         ? `https://prices.runescape.wiki/api/v1/osrs/latest?id=${id}`
         : `https://prices.runescape.wiki/api/v1/osrs/latest`;
 
     // return (await axios.get<{ data: any }>(url, { headers })).data.data;
-    const response = await fetchData(fetchFunction, url);
+    const response = await fetchData(url);
     return response.data as Types.FullTransactionData;
 };
 
@@ -43,13 +43,13 @@ const mappingCache: Types.FullMap = {};
  * @returns An associative array object.
  * @see https://oldschool.runescape.wiki/w/RuneScape:Real-time_Prices
  */
-export const mapping = async (fetchFunction: SvelteFetchFunction): Promise<Types.FullMap> => {
+export const mapping = async (): Promise<Types.FullMap> => {
 
     const cached = Object.keys(mappingCache).length > 0;
     const url = "https://prices.runescape.wiki/api/v1/osrs/mapping";
 
     if (!cached) {
-        const response = await fetchData(fetchFunction, url) as Types.MapData[];
+        const response = await fetchData(url) as Types.MapData[];
         response.forEach((item) => mappingCache[item.id] = item);
     }
 
@@ -62,10 +62,10 @@ export const mapping = async (fetchFunction: SvelteFetchFunction): Promise<Types
  * @param fetchFunction - The Svelte 
  * @returns 
  */
-export const geDataCombined = async (fetchFunction: SvelteFetchFunction): Promise<Types.FullMapDataCombined> => {
+export const geDataCombined = async (): Promise<Types.FullMapDataCombined> => {
     const geData = {} as Types.FullMapDataCombined;
-    const latestPrices = await latest(fetchFunction);
-    const itemMapping = await mapping(fetchFunction);
+    const latestPrices = await latest();
+    const itemMapping = await mapping();
 
     Object.keys(latestPrices).forEach((itemId: string) => {
         const itemData = itemMapping[itemId];
@@ -89,7 +89,6 @@ export const geDataCombined = async (fetchFunction: SvelteFetchFunction): Promis
  * @see https://oldschool.runescape.wiki/w/RuneScape:Real-time_Prices
  */
 export const prices = async (
-    fetchFunction: SvelteFetchFunction,
     options: {
         timestep?: "5m" | "1h";
         timestamp?: number | string;
@@ -109,7 +108,7 @@ export const prices = async (
         ? `https://prices.runescape.wiki/api/v1/osrs/${timestep}?timestamp=${timestamp}`
         : `https://prices.runescape.wiki/api/v1/osrs/${timestep}`;
 
-    const response = await fetchData(fetchFunction, url);
+    const response = await fetchData(url);
 
     Object.keys(response.data).forEach((key) => {
         (response as any).data[key].timestamp = response.timestamp;
@@ -137,6 +136,6 @@ export const timeseries = async (
     const url = `https://prices.runescape.wiki/api/v1/osrs/timeseries?timestep=${timestep}&id=${id}`;
 
     // const response = (await axios.get<{ data: any }>(url, { headers })).data;
-    const response = await fetchData(fetchFunction, url);
+    const response = await fetchData(url);
     return response.data.data[id] ?? response.data.data;
 };
