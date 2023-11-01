@@ -1,11 +1,12 @@
 <script lang="ts">
-    import { page } from '$app/stores';
-    const itemId = $page.params.itemId;
+    import type { PageData } from '../$types';
+    import type { GameItem } from '$lib/models/GameItem';
+
+    export let data: PageData;
+    $: itemDetails = (data as any).itemDetails as GameItem;
 </script>
 
 <hgroup>
-    <h1>Individual item</h1>
-    <h2>This is what will be shown on an individual item page.</h2>
+    <h1>{ itemDetails.name }</h1>
+    <h2>{ itemDetails.examineText }</h2>
 </hgroup>
-
-<p>Item id: {itemId}</p>
