@@ -71,3 +71,23 @@ export type GameItem = {
     lowAlch?: number;
     creationSpecs?: GameItemCreationSpecs[];
 }
+
+/**
+ * Pairs multiple GameItems together under a single category represented by a string.
+ * @property category - The name of the category of these GameItems.
+ * @property items - The list of GameItems for this category.
+ */
+export type GameItemsByCategory = {
+    categoryName: string;
+    items: GameItem[];
+};
+
+/**
+ * Pairs multiple `GameItemsByCategory` objects together under a single skill.
+ * @property skillName - The name of the skill to which these categories are relvant.
+ * @property categories - The list of categories under this skill.
+ */
+export type GameItemsBySkill = {
+    skillName: InGameSkillNamesEnum;
+    categories: GameItemsByCategory[];
+};

@@ -1,8 +1,13 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
-    import type { PageData } from './$types';
-    import type { GameItem } from "$lib/models/GameItem";
-    export let data: PageData;
+	import type { PageData } from './$types';
+    import type { GameItem, GameItemsBySkill } from '$lib/models/GameItem';
+    import { goto } from '$app/navigation';
+
+    export let data: PageData
+    export let selectedSkill = 'crafting';
+    $: gameItemsBySkill = data.gameItemsBySkill;
+    $: categoriesForSelectedSkill = gameItemsBySkill
+        .find((skill: GameItemsBySkill) => skill.skillName === selectedSkill)?.categories ?? [];
 
     function navigateToItemBrowser(item: GameItem) {
         goto(`/item-browser/${item.id}`);
@@ -35,14 +40,22 @@
     <h2>Here we will see a gallery allowing us to browse items.</h2>
 </hgroup>
 
-<h3>Crafting</h3>
+<select
+    id="skill-selector-dropdown"
+    bind:value={selectedSkill}
+>
+    {#each gameItemsBySkill as skill}
+        <option>{ skill.skillName }</option>
+    {/each}
+</select>
 
-{#each data.creatableItems as collection }
+
+{#each categoriesForSelectedSkill as category }
 <details>
-    <summary>{ collection.name }</summary>
+    <summary>{ category.categoryName }</summary>
 
     <div class="gallery">
-        {#each collection.items as item }
+        {#each category.items as item }
             <article class="card">
 
                 <header>
@@ -115,6 +128,10 @@
 {/each}
 
 <style>
+    #skill-selector-dropdown {
+        margin-bottom: 6rem;
+    }
+
     .gallery {
         display: flex;
         flex-wrap: wrap;
