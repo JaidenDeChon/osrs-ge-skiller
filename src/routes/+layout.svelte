@@ -1,6 +1,7 @@
 <script lang="ts">
     import { fly } from 'svelte/transition';
     import { cubicIn, cubicOut } from 'svelte/easing';
+    import { afterNavigate, disableScrollHandling } from '$app/navigation';
     import '../scss/base.scss';
 
     export let data;
@@ -11,6 +12,13 @@
 
     const transitionIn = { easing: cubicOut, y, duration, delay };
     const transitionOut = { easing: cubicIn, y: -y, duration };
+
+    afterNavigate(() => {
+        disableScrollHandling();
+        setTimeout(() => {
+            scrollTo({ top: 0, behavior: 'instant' });
+        }, 400);
+    });
 </script>
 
 <header class="container">
