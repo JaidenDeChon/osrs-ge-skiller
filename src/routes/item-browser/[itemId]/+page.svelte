@@ -19,10 +19,14 @@
     </hgroup>
 </div>
 
+<!-- This is where the tree will go -->
+<div id="individual-item-page__tree-container"></div>
+
 <style>
     .individual-item-page__header {
         display: flex;
         gap: 1rem;
+        margin-bottom: 6rem;
     }
 
     .individual-item-page__header-image-container {
