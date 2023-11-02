@@ -8,29 +8,27 @@ import { willowShield } from './willowShield';
 
 export function snakeskinShield(): GameItem {
     const gameItem = assembleGameItem(GameItemEnumKeysEnum.SNAKESKIN_SHIELD);
-    gameItem.creationSpecs?.push(
-        {
-            experienceGranted: [{ skillName: InGameSkillNamesEnum.CRAFTING, experienceAmount: 100 }],
-            requiredSkills: [{ skillName: InGameSkillNamesEnum.CRAFTING, skillLevel: 56 }],
-            ingredients: [
-                {
-                    item: snakeskin(),
-                    amount: 2,
-                    consumedDuringCreation: true
-                },
-                {
-                    item: willowShield(),
-                    amount: 1,
-                    consumedDuringCreation: true
-                },
-                {
-                    item: ironNails(),
-                    amount: 15,
-                    consumedDuringCreation: true
-                }
-            ]
-        }
-    );
+    gameItem.creationSpecs = {
+        experienceGranted: [{ skillName: InGameSkillNamesEnum.CRAFTING, experienceAmount: 100 }],
+        requiredSkills: [{ skillName: InGameSkillNamesEnum.CRAFTING, skillLevel: 56 }],
+        ingredients: [
+            {
+                item: snakeskin(),
+                amount: 2,
+                consumedDuringCreation: true
+            },
+            {
+                item: willowShield(),
+                amount: 1,
+                consumedDuringCreation: true
+            },
+            {
+                item: ironNails(),
+                amount: 15,
+                consumedDuringCreation: true
+            }
+        ]
+    };
 
     return gameItem;
 };

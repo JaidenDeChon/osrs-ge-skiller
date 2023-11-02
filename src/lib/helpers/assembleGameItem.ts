@@ -1,4 +1,4 @@
-import type { GameItem, GameItemCreationSpecs } from '$lib/models/GameItem';
+import type { GameItem } from '$lib/models/GameItem';
 import type { GameItemEnumKeysEnum } from '$lib/enums/GameItemEnumKeysEnum';
 import { GameItemIdsEnum } from '$lib/enums/GameItemIdsEnum';
 import { GameItemNamesEnum } from '$lib/enums/GameItemNamesEnum';
@@ -8,8 +8,7 @@ export function assembleGameItem(gameItemEnumsKey: GameItemEnumKeysEnum): GameIt
     const id = GameItemIdsEnum[gameItemEnumsKey];
     const name = GameItemNamesEnum[gameItemEnumsKey];
     const image = GameItemImageFilenamesEnum[gameItemEnumsKey];
-    const creationSpecs: GameItemCreationSpecs[] = [];
 
-    return { id, name, image, creationSpecs };
+    return { id, name, image };
 }
  

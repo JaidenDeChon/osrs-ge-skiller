@@ -22,11 +22,9 @@ export function addMarketInfoToGameItem(gameItem: GameItem, geData: FullMapDataC
     gameItemCopy.lowTime = itemGeData.lowTime;
 
     // Recursively do the same for all GameItem child ingredients.
-    if (gameItemCopy.creationSpecs) {
-        for (const creationSpec of gameItemCopy.creationSpecs) {
-            for (const ingredient of creationSpec.ingredients) {
-                addMarketInfoToGameItem(ingredient.item, geData);
-            }
+    if (gameItemCopy.creationSpecs && gameItemCopy.creationSpecs.ingredients.length > 0) {
+        for (const ingredient of gameItemCopy.creationSpecs.ingredients) {
+            ingredient.item = addMarketInfoToGameItem(ingredient.item, geData);
         }
     }
 

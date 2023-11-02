@@ -7,24 +7,22 @@ import { knife } from './knife';
 
 export function willowShield(): GameItem {
     const gameItem = assembleGameItem(GameItemEnumKeysEnum.WILLOW_SHIELD);
-    gameItem.creationSpecs?.push(
-        {
-            experienceGranted: [{ skillName: InGameSkillNamesEnum.FLETCHING, experienceAmount: 83 }],
-            requiredSkills: [{ skillName: InGameSkillNamesEnum.FLETCHING, skillLevel: 42 }],
-            ingredients: [
-                {
-                    item: willowLogs(),
-                    amount: 8,
-                    consumedDuringCreation: true
-                },
-                {
-                    item: knife(),
-                    amount: 1,
-                    consumedDuringCreation: true
-                }
-            ]
-        }
-    );
+    gameItem.creationSpecs = {
+        experienceGranted: [{ skillName: InGameSkillNamesEnum.FLETCHING, experienceAmount: 83 }],
+        requiredSkills: [{ skillName: InGameSkillNamesEnum.FLETCHING, skillLevel: 42 }],
+        ingredients: [
+            {
+                item: willowLogs(),
+                amount: 8,
+                consumedDuringCreation: true
+            },
+            {
+                item: knife(),
+                amount: 1,
+                consumedDuringCreation: true
+            }
+        ]
+    };
 
     return gameItem;
 };

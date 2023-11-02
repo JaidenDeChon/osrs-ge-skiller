@@ -8,29 +8,27 @@ import { needle } from './needle';
 
 export function blueDragonhideVambraces(): GameItem {
     const gameItem = assembleGameItem(GameItemEnumKeysEnum.BLUE_DRAGONHIDE_VAMBRACES);
-    gameItem.creationSpecs?.push(
-        {
-            experienceGranted: [{ skillName: InGameSkillNamesEnum.CRAFTING, experienceAmount: 70 }],
-            requiredSkills: [{ skillName: InGameSkillNamesEnum.CRAFTING, skillLevel: 66 }],
-            ingredients: [
-                {
-                    item: blueDragonLeather(),
-                    amount: 1,
-                    consumedDuringCreation: true
-                },
-                {
-                    item: thread(),
-                    amount: 0.2,
-                    consumedDuringCreation: true
-                },
-                {
-                    item: needle(),
-                    amount: 1,
-                    consumedDuringCreation: false
-                }
-            ]
-        }
-    );
+    gameItem.creationSpecs = {
+        experienceGranted: [{ skillName: InGameSkillNamesEnum.CRAFTING, experienceAmount: 70 }],
+        requiredSkills: [{ skillName: InGameSkillNamesEnum.CRAFTING, skillLevel: 66 }],
+        ingredients: [
+            {
+                item: blueDragonLeather(),
+                amount: 1,
+                consumedDuringCreation: true
+            },
+            {
+                item: thread(),
+                amount: 0.2,
+                consumedDuringCreation: true
+            },
+            {
+                item: needle(),
+                amount: 1,
+                consumedDuringCreation: false
+            }
+        ]
+    };
 
     return gameItem;
 };

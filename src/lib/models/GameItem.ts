@@ -69,7 +69,7 @@ export type GameItem = {
     lowTime?: number;
     highAlch?: number;
     lowAlch?: number;
-    creationSpecs?: GameItemCreationSpecs[];
+    creationSpecs?: GameItemCreationSpecs;
 }
 
 /**
