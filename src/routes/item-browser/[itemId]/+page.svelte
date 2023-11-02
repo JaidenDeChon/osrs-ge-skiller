@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { PageData } from '../$types';
     import type { GameItem } from '$lib/models/GameItem';
+    import GameItemNested from '$lib/components/GameItemNested.svelte';
 
     export let data: PageData;
     $: itemDetails = (data as any).itemDetails as GameItem;
@@ -21,6 +22,11 @@
 
 <!-- This is where the tree will go -->
 <div id="individual-item-page__tree-container"></div>
+
+<GameItemNested
+    gameItem={ itemDetails }
+    isParent={ true }
+/>
 
 <style>
     .individual-item-page__header {

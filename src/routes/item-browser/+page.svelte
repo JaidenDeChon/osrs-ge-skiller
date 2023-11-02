@@ -2,6 +2,7 @@
 	import type { PageData } from './$types';
     import type { GameItem, GameItemsBySkill } from '$lib/models/GameItem';
     import { goto } from '$app/navigation';
+    import { timeSince } from '$lib/helpers/timeSince';
 
     export let data: PageData
     export let selectedSkill = 'crafting';
@@ -11,26 +12,6 @@
 
     function navigateToItemBrowser(item: GameItem) {
         goto(`/item-browser/${item.id}`);
-    }
-
-    function timeSince(unixTimestamp: number) {
-        // Get current time in seconds.
-        const currentTime = Math.floor(Date.now() / 1000);
-        // Calculate the difference in seconds.
-        const timeDifference = currentTime - unixTimestamp;
-
-        if (timeDifference < 60) {
-            return timeDifference === 1 ? "1 second ago" : `${timeDifference} seconds ago`;
-        } else if (timeDifference < 3600) { // 60 * 60 = 3600 seconds in an hour
-            const minutes = Math.floor(timeDifference / 60);
-            return minutes === 1 ? "1 minute ago" : `${minutes} minutes ago`;
-        } else if (timeDifference < 86400) { // 60 * 60 * 24 = 86400 seconds in a day
-            const hours = Math.floor(timeDifference / 3600);
-            return hours === 1 ? "1 hour ago" : `${hours} hours ago`;
-        } else {
-            const days = Math.floor(timeDifference / 86400);
-            return days === 1 ? "1 day ago" : `${days} days ago`;
-        }
     }
 
 </script>
@@ -75,7 +56,7 @@
                 <div class="card__content">
 
                     <div class="card__content-column">
-                        <div class="card__icon-text-group">
+                        <div class="icon-text-group">
                             <img src="/spell-images/low-level-alchemy.png" alt="high-level alchemy">
                             <p>
                                 <span>Low alch - </span>
@@ -83,7 +64,7 @@
                             </p>
                         </div>
     
-                        <div class="card__icon-text-group">
+                        <div class="icon-text-group">
                             <img src="/spell-images/high-level-alchemy.png" alt="high-level alchemy">
                             <p>
                                 <span>High alch - </span>
@@ -93,7 +74,7 @@
                     </div>
 
                     <div class="card__content-column">
-                        <div class="card__icon-text-group">
+                        <div class="icon-text-group">
                             <img src="/item-images/coins-few.png" alt="low-price icon">
                             <p>
                                 { item.lowPrice }
@@ -105,7 +86,7 @@
                             </p>
                         </div>
         
-                        <div class="card__icon-text-group">
+                        <div class="icon-text-group">
                             <img src="/item-images/coins-lots.png" alt="high-price icon">
                             <p>
                                 { item.highPrice }
@@ -186,22 +167,22 @@
         gap: 1em;
     }
 
-    article.card .card__icon-text-group {
+    :global(.icon-text-group) {
         display: flex;
         align-items: center;
         justify-content: flex-start;
         gap: 1em;
     }
 
-    article.card .card__icon-text-group img {
+    :global(.icon-text-group img) {
         width: 1.6em;
     }
 
-    article.card .card__icon-text-group p {
+    :global(.icon-text-group p) {
         margin-bottom: 0;
     }
 
-    article.card .card__icon-text-group p span {
+    :global(.icon-text-group p span) {
         color: var(--muted-color);
     }
 
