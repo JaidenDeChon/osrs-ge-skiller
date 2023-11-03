@@ -23,7 +23,7 @@
 <!-- This is where the tree will go -->
 <div id="individual-item-page__tree-container"></div>
 
-<table>
+<table role="grid">
     <tbody>
         <tr>
             <th scope="row">Cost in materials</th>
