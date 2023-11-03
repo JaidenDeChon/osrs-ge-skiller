@@ -5,7 +5,7 @@
 
     export let gameItem: GameItem;
     export let isParent = false;
-    export let amount: number;
+    export let amount: number = -1;
     let includeInProductionCost = true;
 </script>
 
@@ -17,7 +17,7 @@
             alt="{ gameItem.name }"
         >
         <p>{ gameItem.name }</p>
-        {#if amount}
+        {#if amount && amount > 0}
             <p class="muted">(x { amount })</p>
         {/if}
     </div>
