@@ -23,6 +23,23 @@
 <!-- This is where the tree will go -->
 <div id="individual-item-page__tree-container"></div>
 
+<table>
+    <tbody>
+        <tr>
+            <th scope="row">Cost in materials</th>
+            <td>999,999</td>
+        </tr>
+        <tr>
+            <th scope="row">Profit after materials</th>
+            <td>1,000 - 2,000</td>
+        </tr>
+        <tr>
+            <th scope="row">Experience gained</th>
+            <td>Crafting - 750</td>
+        </tr>
+    </tbody>
+</table>
+
 <GameItemNested
     gameItem={ itemDetails }
     isParent={ true }
