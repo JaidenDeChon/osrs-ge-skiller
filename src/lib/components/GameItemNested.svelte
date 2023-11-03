@@ -81,7 +81,7 @@
                 type="checkbox"
                 bind:checked={includeInProductionCost}
             >
-            Include in production cost
+            Include in materials cost
         </label>
     {/if}
 
@@ -133,8 +133,10 @@
 
     .game-item-nested__values {
         margin-bottom: 1em;
-        display: inline;
+        display: flex;
         flex-direction: column;
+        gap: 0.6em;
+        margin: 0 auto;
     }
 
     .game-item-nested__ingredients {
@@ -152,6 +154,18 @@
 
     :global(.image-with-text) {
         flex: 1;
+    }
+
+    :global(.game-item-nested .game-item-nested .game-item-nested__values) {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    :global(.game-item-nested .game-item-nested .game-item-nested__values .image-with-text) {
+        flex: unset;
+        margin-bottom: 1em;
     }
 
     @media (prefers-color-scheme: dark) {
