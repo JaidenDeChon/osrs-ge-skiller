@@ -129,7 +129,6 @@
     .game-item-nested__values-container {
         display: flex;
         gap: 3em;
-        /* justify-content: space-evenly; */
     }
 
     .game-item-nested__values {
