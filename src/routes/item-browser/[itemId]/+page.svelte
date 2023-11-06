@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { PageData } from '../$types';
     import type { GameItem } from '$lib/models/GameItem';
+    import { totalValueLowStore, totalValueHighStore } from '$lib/stores/itemIngredientsValueStore';
     import GameItemNested from '$lib/components/GameItemNested.svelte';
 
     export let data: PageData;
@@ -27,7 +28,7 @@
     <tbody>
         <tr>
             <th scope="row">Cost in materials</th>
-            <td>999,999</td>
+            <td>{$totalValueLowStore} - {$totalValueHighStore}</td>
         </tr>
         <tr>
             <th scope="row">Profit after materials</th>

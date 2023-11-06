@@ -1,12 +1,41 @@
 <script lang="ts">
     import type { GameItem } from '$lib/models/GameItem';
     import { timeSince } from '$lib/helpers/timeSince';
+    import { totalValueLowStore, totalValueHighStore } from '$lib/stores/itemIngredientsValueStore';
     import ImageWithText from './ImageWithText.svelte';
 
     export let gameItem: GameItem;
     export let isParent = false;
     export let amount: number = -1;
-    let includeInProductionCost = true;
+    function calculateItemLowTotalValue (item: GameItem): number {
+        let total = item.lowPrice ?? 0;
+        if (item.creationSpecs?.ingredients.length) {
+            for (const ingredient of item.creationSpecs?.ingredients) {
+                total += ingredient.amount * calculateItemLowTotalValue(ingredient.item);
+            }
+        }
+        return total;
+    }
+
+    function calculateItemHighTotalValue (item: GameItem): number {
+        let total = item.highPrice ?? 0;
+        if (item.creationSpecs?.ingredients.length) {
+            for (const ingredient of item.creationSpecs?.ingredients) {
+                total += ingredient.amount * calculateItemHighTotalValue(ingredient.item);
+            }
+        }
+        return total;
+    }
+
+    function toggleItemValue(event: Event, item: GameItem) {
+        alert('called');
+        const include = (event.target as HTMLInputElement).checked;
+        const itemTotalLowValue = calculateItemLowTotalValue(item);
+        const itemTotalHighValue = calculateItemHighTotalValue(item);
+        console.log(itemTotalLowValue, itemTotalHighValue);
+        totalValueLowStore.update(value => include ? value + itemTotalLowValue : value - itemTotalLowValue);
+        totalValueHighStore.update(value => include ? value + itemTotalHighValue : value - itemTotalHighValue);
+    }
 </script>
 
 <div class="game-item-nested">
@@ -79,7 +108,7 @@
         <label>
             <input
                 type="checkbox"
-                bind:checked={includeInProductionCost}
+                on:change={(event) => toggleItemValue(event, gameItem)}
             >
             Include in materials cost
         </label>
