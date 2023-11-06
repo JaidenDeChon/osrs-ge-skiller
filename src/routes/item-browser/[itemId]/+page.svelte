@@ -1,11 +1,17 @@
 <script lang="ts">
+    import { onNavigate } from '$app/navigation';
     import type { PageData } from '../$types';
     import type { GameItem } from '$lib/models/GameItem';
-    import { totalValueLowStore, totalValueHighStore } from '$lib/stores/itemIngredientsValueStore';
+    import { materialCostLowStore, materialCostHighStore } from '$lib/stores/materialCostStore';
     import GameItemNested from '$lib/components/GameItemNested.svelte';
 
     export let data: PageData;
     $: itemDetails = (data as any).itemDetails as GameItem;
+
+    onNavigate(() => {
+        materialCostLowStore.set(0);
+        materialCostHighStore.set(0);
+    });
 </script>
 
 <div class="individual-item-page__header">
@@ -25,18 +31,28 @@
 <div id="individual-item-page__tree-container"></div>
 
 <table role="grid">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="colgroup">Low</th>
+            <th scope="colgroup">High</th>
+        </tr>
+    </thead>
     <tbody>
         <tr>
-            <th scope="row">Cost in materials</th>
-            <td>{$totalValueLowStore} - {$totalValueHighStore}</td>
+            <th scope="row">GE Value</th>
+            <td>{itemDetails.lowPrice}</td>
+            <td>{itemDetails.highPrice}</td>
+        </tr>
+        <tr>
+            <th scope="row">Material cost</th>
+            <td>{Math.ceil($materialCostLowStore)}</td>
+            <td>{Math.ceil($materialCostHighStore)}</td>
         </tr>
         <tr>
             <th scope="row">Profit after materials</th>
-            <td>1,000 - 2,000</td>
-        </tr>
-        <tr>
-            <th scope="row">Experience gained</th>
-            <td>Crafting - 750</td>
+            <td>{itemDetails.lowPrice ? Math.ceil(itemDetails.lowPrice - $materialCostLowStore) : 'Insufficient data'}</td>
+            <td>{itemDetails.highPrice ? Math.ceil(itemDetails.highPrice - $materialCostHighStore) : 'Insufficient data'}</td>
         </tr>
     </tbody>
 </table>

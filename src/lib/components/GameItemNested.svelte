@@ -1,41 +1,43 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
     import type { GameItem } from '$lib/models/GameItem';
     import { timeSince } from '$lib/helpers/timeSince';
-    import { totalValueLowStore, totalValueHighStore } from '$lib/stores/itemIngredientsValueStore';
+    import { materialCostLowStore, materialCostHighStore } from '$lib/stores/materialCostStore';
     import ImageWithText from './ImageWithText.svelte';
+
+    // Props.
 
     export let gameItem: GameItem;
     export let isParent = false;
-    export let amount: number = -1;
-    function calculateItemLowTotalValue (item: GameItem): number {
-        let total = item.lowPrice ?? 0;
-        if (item.creationSpecs?.ingredients.length) {
-            for (const ingredient of item.creationSpecs?.ingredients) {
-                total += ingredient.amount * calculateItemLowTotalValue(ingredient.item);
-            }
-        }
-        return total;
+    export let amount: number = 1;
+
+    // Variables.
+
+    $: countsTowardValue = true;
+    $: highPriceAsIngredient = amount * (gameItem.highPrice ?? 0);
+    $: lowPriceAsIngredient = amount * (gameItem.lowPrice ?? 0);
+
+    // Functions.
+
+    function handleToggle (event: Event): void {
+        (event.target as HTMLInputElement).checked
+            ? incrementMaterialCost()
+            : decrementMaterialCost();
     }
 
-    function calculateItemHighTotalValue (item: GameItem): number {
-        let total = item.highPrice ?? 0;
-        if (item.creationSpecs?.ingredients.length) {
-            for (const ingredient of item.creationSpecs?.ingredients) {
-                total += ingredient.amount * calculateItemHighTotalValue(ingredient.item);
-            }
-        }
-        return total;
+    function incrementMaterialCost (): void {
+        materialCostHighStore.update((value: number) => value += highPriceAsIngredient);
+        materialCostLowStore.update((value: number) => value += lowPriceAsIngredient);
     }
 
-    function toggleItemValue(event: Event, item: GameItem) {
-        alert('called');
-        const include = (event.target as HTMLInputElement).checked;
-        const itemTotalLowValue = calculateItemLowTotalValue(item);
-        const itemTotalHighValue = calculateItemHighTotalValue(item);
-        console.log(itemTotalLowValue, itemTotalHighValue);
-        totalValueLowStore.update(value => include ? value + itemTotalLowValue : value - itemTotalLowValue);
-        totalValueHighStore.update(value => include ? value + itemTotalHighValue : value - itemTotalHighValue);
+    function decrementMaterialCost (): void {
+        materialCostHighStore.update((value: number) => value -= highPriceAsIngredient);
+        materialCostLowStore.update((value: number) => value -= lowPriceAsIngredient);
     }
+
+    onMount(() => {
+        if (!isParent) incrementMaterialCost();
+    });
 </script>
 
 <div class="game-item-nested">
@@ -46,7 +48,7 @@
             alt="{ gameItem.name }"
         >
         <p>{ gameItem.name }</p>
-        {#if amount && amount > 0}
+        {#if !isParent}
             <p class="muted">(x { amount })</p>
         {/if}
     </div>
@@ -104,11 +106,13 @@
     </div>
 
     <!-- Checkbox for including in total (!isParent only) -->
+    <!-- on:change={(event) => dispatch('toggled', gameItem.id)} -->
     {#if !isParent}
         <label>
             <input
                 type="checkbox"
-                on:change={(event) => toggleItemValue(event, gameItem)}
+                bind:checked={countsTowardValue}
+                on:change={(event) => handleToggle(event)}
             >
             Include in materials cost
         </label>
