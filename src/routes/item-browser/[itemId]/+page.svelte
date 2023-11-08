@@ -3,6 +3,7 @@
     import type { PageData } from '../$types';
     import type { GameItem } from '$lib/models/GameItem';
     import { materialCostLowStore, materialCostHighStore } from '$lib/stores/materialCostStore';
+    import GameItemIngredientsTree from '$lib/components/GameItemIngredientsTree.svelte';
     import GameItemNested from '$lib/components/GameItemNested.svelte';
 
     export let data: PageData;
@@ -28,7 +29,9 @@
 </div>
 
 <!-- This is where the tree will go -->
-<div id="individual-item-page__tree-container"></div>
+<div class="individual-item-page__tree-container">
+    <GameItemIngredientsTree gameItem={itemDetails} />
+</div>
 
 <table role="grid">
     <thead>
@@ -66,7 +69,6 @@
     .individual-item-page__header {
         display: flex;
         gap: 1rem;
-        margin-bottom: 6rem;
     }
 
     .individual-item-page__header-image-container {
@@ -83,5 +85,9 @@
         width: 4.4rem;
         height: 4.4rem;
         object-fit: contain;
+    }
+
+    .individual-item-page__tree-container {
+        margin: 3rem auto;
     }
 </style>
