@@ -88,6 +88,6 @@
     }
 
     .individual-item-page__tree-container {
-        margin: 3rem auto;
+        margin: 2rem auto;
     }
 </style>

@@ -18,13 +18,13 @@ export function snakeskinShield(): GameItem {
                 consumedDuringCreation: true
             },
             {
-                item: willowShield(),
-                amount: 1,
+                item: ironNails(),
+                amount: 15,
                 consumedDuringCreation: true
             },
             {
-                item: ironNails(),
-                amount: 15,
+                item: willowShield(),
+                amount: 1,
                 consumedDuringCreation: true
             }
         ]
