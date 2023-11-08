@@ -7,7 +7,7 @@
     export let gameItem: GameItem;
 
     const treeHeight = 200;
-    let treeWidth = 500;
+    let treeWidth = 400;
     let xTransform: number;
 
     interface TreeData {
