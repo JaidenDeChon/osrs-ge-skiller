@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ce62da7f-b761-4f7b-b3f5-ca3c157efc97/deploy-status)](https://app.netlify.com/sites/osrs-ge-skiller/deploys)
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
