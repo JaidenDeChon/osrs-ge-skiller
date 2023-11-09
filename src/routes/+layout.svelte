@@ -25,20 +25,20 @@
     <nav>
         <ul>
             <li>
-                <strong>ge-skiller</strong>
+                <strong>osrs-ge-skiller</strong>
             </li>
         </ul>
     
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/item-browser">Item Browser</a></li>
+            <li><a href="/" class="secondary">Home</a></li>
+            <li><a href="/item-browser" class="secondary">Item Browser</a></li>
         </ul>
     </nav>
 </header>
 
 {#key data.pathname}
     <main
-        class="container"
+        class="container-fluid"
         in:fly={transitionIn}
         out:fly={transitionOut}
     >
@@ -46,4 +46,24 @@
     </main>
 {/key}
 
-<footer class="container"></footer>
+<style>
+    header {
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        right: 0;
+        margin: auto;
+        transform: translate(0 -25%);
+    }
+
+    main.container-fluid {
+        padding: 5rem 0 0 0;
+    }
+
+    @media(prefers-color-scheme: dark) {
+        header a.secondary,
+        nav ul li strong {
+            color: rgba(255, 255, 255, 0.6);
+        }
+    }
+</style>
