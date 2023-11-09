@@ -1,0 +1,151 @@
+{
+  ".svelte-kit/generated/server/internal.js": {
+    "file": "internal.js",
+    "imports": [
+      "_internal.js"
+    ],
+    "isEntry": true,
+    "src": ".svelte-kit/generated/server/internal.js"
+  },
+  "_gameItemCache.js": {
+    "file": "chunks/gameItemCache.js"
+  },
+  "_index.js": {
+    "file": "chunks/index.js",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_internal.js": {
+    "dynamicImports": [
+      "src/hooks.server.ts"
+    ],
+    "file": "chunks/internal.js",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_navigation.js": {
+    "file": "chunks/navigation.js"
+  },
+  "_ssr.js": {
+    "file": "chunks/ssr.js"
+  },
+  "_timeSince.js": {
+    "file": "chunks/timeSince.js"
+  },
+  "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
+    "file": "entries/fallbacks/error.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/error.svelte"
+  },
+  "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
+    "file": "index.js",
+    "imports": [
+      "_internal.js",
+      "_index.js"
+    ],
+    "isEntry": true,
+    "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js"
+  },
+  "src/hooks.server.ts": {
+    "file": "chunks/hooks.server.js",
+    "imports": [
+      "_gameItemCache.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/hooks.server.ts"
+  },
+  "src/routes/+layout.css": {
+    "file": "_app/immutable/assets/_layout.f30b99cc.css",
+    "src": "src/routes/+layout.css"
+  },
+  "src/routes/+layout.svelte": {
+    "css": [
+      "_app/immutable/assets/_layout.f30b99cc.css"
+    ],
+    "file": "entries/pages/_layout.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_navigation.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/+layout.svelte"
+  },
+  "src/routes/+layout.ts": {
+    "file": "entries/pages/_layout.ts.js",
+    "isEntry": true,
+    "src": "src/routes/+layout.ts"
+  },
+  "src/routes/+page.svelte": {
+    "file": "entries/pages/_page.svelte.js",
+    "imports": [
+      "_ssr.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/+page.svelte"
+  },
+  "src/routes/api/game-item-by-id/+server.ts": {
+    "file": "entries/endpoints/api/game-item-by-id/_server.ts.js",
+    "imports": [
+      "_gameItemCache.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/api/game-item-by-id/+server.ts"
+  },
+  "src/routes/api/game-items-by-skill/+server.ts": {
+    "file": "entries/endpoints/api/game-items-by-skill/_server.ts.js",
+    "imports": [
+      "_gameItemCache.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/api/game-items-by-skill/+server.ts"
+  },
+  "src/routes/item-browser/+page.css": {
+    "file": "_app/immutable/assets/_page.539035a2.css",
+    "src": "src/routes/item-browser/+page.css"
+  },
+  "src/routes/item-browser/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page.539035a2.css"
+    ],
+    "file": "entries/pages/item-browser/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_timeSince.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/item-browser/+page.svelte"
+  },
+  "src/routes/item-browser/+page.ts": {
+    "file": "entries/pages/item-browser/_page.ts.js",
+    "isEntry": true,
+    "src": "src/routes/item-browser/+page.ts"
+  },
+  "src/routes/item-browser/[itemId]/+page.css": {
+    "file": "_app/immutable/assets/_page.892392d9.css",
+    "src": "src/routes/item-browser/[itemId]/+page.css"
+  },
+  "src/routes/item-browser/[itemId]/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page.892392d9.css"
+    ],
+    "file": "entries/pages/item-browser/_itemId_/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_navigation.js",
+      "_index.js",
+      "_timeSince.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/item-browser/[itemId]/+page.svelte"
+  },
+  "src/routes/item-browser/[itemId]/+page.ts": {
+    "file": "entries/pages/item-browser/_itemId_/_page.ts.js",
+    "isEntry": true,
+    "src": "src/routes/item-browser/[itemId]/+page.ts"
+  }
+}
