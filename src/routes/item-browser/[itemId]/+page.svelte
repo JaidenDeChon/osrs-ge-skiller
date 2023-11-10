@@ -15,57 +15,55 @@
     });
 </script>
 
-<div class="container">
-    <div class="individual-item-page__header">
-        <div class="individual-item-page__header-image-container">
-            <img
-                src="/item-images/{ itemDetails.image }"
-                alt={ itemDetails.name }
-            >
-        </div>
-        <hgroup>
-            <h1>{ itemDetails.name }</h1>
-            <h2>{ itemDetails.examineText }</h2>
-        </hgroup>
+<div class="individual-item-page__header">
+    <div class="individual-item-page__header-image-container">
+        <img
+            src="/item-images/{ itemDetails.image }"
+            alt={ itemDetails.name }
+        >
     </div>
-    
-    <!-- This is where the tree will go -->
-    <div class="individual-item-page__tree-container">
-        <GameItemIngredientsTree gameItem={itemDetails} />
-    </div>
-    
-    <table role="grid">
-        <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="colgroup">Low</th>
-                <th scope="colgroup">High</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">GE Value</th>
-                <td>{itemDetails.lowPrice}</td>
-                <td>{itemDetails.highPrice}</td>
-            </tr>
-            <tr>
-                <th scope="row">Material cost</th>
-                <td>{Math.ceil($materialCostLowStore)}</td>
-                <td>{Math.ceil($materialCostHighStore)}</td>
-            </tr>
-            <tr>
-                <th scope="row">Profit after materials</th>
-                <td>{itemDetails.lowPrice ? Math.ceil(itemDetails.lowPrice - $materialCostLowStore) : 'Insufficient data'}</td>
-                <td>{itemDetails.highPrice ? Math.ceil(itemDetails.highPrice - $materialCostHighStore) : 'Insufficient data'}</td>
-            </tr>
-        </tbody>
-    </table>
-    
-    <GameItemNested
-        gameItem={ itemDetails }
-        isParent={ true }
-    />
+    <hgroup>
+        <h1>{ itemDetails.name }</h1>
+        <h2>{ itemDetails.examineText }</h2>
+    </hgroup>
 </div>
+
+<!-- This is where the tree will go -->
+<div class="individual-item-page__tree-container">
+    <GameItemIngredientsTree gameItem={itemDetails} />
+</div>
+
+<table role="grid">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="colgroup">Low</th>
+            <th scope="colgroup">High</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">GE Value</th>
+            <td>{itemDetails.lowPrice}</td>
+            <td>{itemDetails.highPrice}</td>
+        </tr>
+        <tr>
+            <th scope="row">Material cost</th>
+            <td>{Math.ceil($materialCostLowStore)}</td>
+            <td>{Math.ceil($materialCostHighStore)}</td>
+        </tr>
+        <tr>
+            <th scope="row">Profit after materials</th>
+            <td>{itemDetails.lowPrice ? Math.ceil(itemDetails.lowPrice - $materialCostLowStore) : 'Insufficient data'}</td>
+            <td>{itemDetails.highPrice ? Math.ceil(itemDetails.highPrice - $materialCostHighStore) : 'Insufficient data'}</td>
+        </tr>
+    </tbody>
+</table>
+
+<GameItemNested
+    gameItem={ itemDetails }
+    isParent={ true }
+/>
 
 <style>
     .individual-item-page__header {

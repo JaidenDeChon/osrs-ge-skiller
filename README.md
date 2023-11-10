@@ -1,4 +1,4 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/f10df3be-df94-4a14-a823-ba780da3f2e3/deploy-status)](https://app.netlify.com/sites/osrs-ge-skiller/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ce62da7f-b761-4f7b-b3f5-ca3c157efc97/deploy-status)](https://app.netlify.com/sites/osrs-ge-skiller/deploys)
 
 # create-svelte
 

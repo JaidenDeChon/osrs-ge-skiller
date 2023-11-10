@@ -16,104 +16,97 @@
 
 </script>
 
-<div class="container">
-    <hgroup>
-        <h1>Item browser</h1>
-        <h2>Here we will see a gallery allowing us to browse items.</h2>
-    </hgroup>
-    
-    <select
-        id="skill-selector-dropdown"
-        bind:value={selectedSkill}
-    >
-        {#each gameItemsBySkill as skill}
-            <option>{ skill.skillName }</option>
-        {/each}
-    </select>
-    
-    
-    {#each categoriesForSelectedSkill as category }
-    <details>
-        <summary>{ category.categoryName }</summary>
-    
-        <div class="gallery">
-            {#each category.items as item }
-                <article class="card">
-    
-                    <header>
-                        <div class="card__image-container">
-                            <img
-                                src="/item-images/{ item.image }"
-                                alt="{ item.name }"
-                                class="card__image"
-                            >
-                        </div>
-                        <hgroup class="card__title-container">
-                            <h5>{ item.name }</h5>
-                            <h6> { item.examineText }</h6>
-                        </hgroup>
-                    </header>
-    
-                    <div class="card__content">
-    
-                        <div class="card__content-column">
-                            <div class="icon-text-group">
-                                <img src="/spell-images/low-level-alchemy.png" alt="high-level alchemy">
-                                <p>
-                                    <span>Low alch - </span>
-                                    { item.lowAlch }
-                                </p>
-                            </div>
-        
-                            <div class="icon-text-group">
-                                <img src="/spell-images/high-level-alchemy.png" alt="high-level alchemy">
-                                <p>
-                                    <span>High alch - </span>
-                                    { item.highAlch }
-                                </p>
-                            </div>
+<hgroup>
+    <h1>Item browser</h1>
+    <h2>Here we will see a gallery allowing us to browse items.</h2>
+</hgroup>
+
+<select
+    id="skill-selector-dropdown"
+    bind:value={selectedSkill}
+>
+    {#each gameItemsBySkill as skill}
+        <option>{ skill.skillName }</option>
+    {/each}
+</select>
+
+
+{#each categoriesForSelectedSkill as category }
+<details>
+    <summary>{ category.categoryName }</summary>
+
+    <div class="gallery">
+        {#each category.items as item }
+            <article class="card">
+
+                <header>
+                    <div class="card__image-container">
+                        <img
+                            src="/item-images/{ item.image }"
+                            alt="{ item.name }"
+                            class="card__image"
+                        >
+                    </div>
+                    <hgroup class="card__title-container">
+                        <h5>{ item.name }</h5>
+                        <h6> { item.examineText }</h6>
+                    </hgroup>
+                </header>
+
+                <div class="card__content">
+
+                    <div class="card__content-column">
+                        <div class="icon-text-group">
+                            <img src="/spell-images/low-level-alchemy.png" alt="high-level alchemy">
+                            <p>
+                                <span>Low alch - </span>
+                                { item.lowAlch }
+                            </p>
                         </div>
     
-                        <div class="card__content-column">
-                            <div class="icon-text-group">
-                                <img src="/item-images/coins-few.png" alt="low-price icon">
-                                <p>
-                                    { item.lowPrice }
-                                    {#if item.lowTime}
-                                        <span>
-                                            ({ timeSince(item.lowTime) })
-                                        </span>
-                                    {/if}
-                                </p>
-                            </div>
-            
-                            <div class="icon-text-group">
-                                <img src="/item-images/coins-lots.png" alt="high-price icon">
-                                <p>
-                                    { item.highPrice }
-                                    {#if item.highTime}
-                                        <span>
-                                            ({ timeSince(item.highTime) })
-                                        </span>
-                                    {/if}
-                                </p>
-                            </div>
+                        <div class="icon-text-group">
+                            <img src="/spell-images/high-level-alchemy.png" alt="high-level alchemy">
+                            <p>
+                                <span>High alch - </span>
+                                { item.highAlch }
+                            </p>
                         </div>
                     </div>
-    
-                    <button
-                        class="secondary"
-                        on:click={ () => navigateToItemBrowser(item) }
-                    >
-                        Details
-                    </button>
-    
-                </article>
-            {/each}
-        </div>
-    </details>
-    {/each}
-</div>
+
+                    <div class="card__content-column">
+                        <div class="icon-text-group">
+                            <img src="/item-images/coins-few.png" alt="low-price icon">
+                            <p>
+                                { item.lowPrice }
+                                {#if item.lowTime}
+                                    <span>
+                                        ({ timeSince(item.lowTime) })
+                                    </span>
+                                {/if}
+                            </p>
+                        </div>
+        
+                        <div class="icon-text-group">
+                            <img src="/item-images/coins-lots.png" alt="high-price icon">
+                            <p>
+                                { item.highPrice }
+                                {#if item.highTime}
+                                    <span>
+                                        ({ timeSince(item.highTime) })
+                                    </span>
+                                {/if}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <button on:click={ () => navigateToItemBrowser(item) }>Details</button>
+
+            </article>
+        {/each}
+    </div>
+</details>
+{/each}
 
 <style>
     #skill-selector-dropdown {
