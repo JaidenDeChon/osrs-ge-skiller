@@ -2,7 +2,8 @@
 	import type { PageData } from './$types';
     import type { GameItem, GameItemsBySkill } from '$lib/models/GameItem';
     import { goto } from '$app/navigation';
-    import { timeSince } from '$lib/helpers/timeSince';
+    // import { timeSince } from '$lib/helpers/timeSince';
+    import GameItemOverviewCard from '$lib/components/GameItemOverviewCard.svelte';
 
     export let data: PageData
     export let selectedSkill = 'crafting';
@@ -37,7 +38,8 @@
 
     <div class="gallery">
         {#each category.items as item }
-            <article class="card">
+        <GameItemOverviewCard gameItem="{item}" />
+            <!-- <article class="card">
 
                 <header>
                     <div class="card__image-container">
@@ -102,7 +104,7 @@
 
                 <button on:click={ () => navigateToItemBrowser(item) }>Details</button>
 
-            </article>
+            </article> -->
         {/each}
     </div>
 </details>

@@ -3,9 +3,14 @@
     export let src: string;
     // Image alt attribute.
     export let alt: string;
+    // Controls whether to use vertical mode.
+    export let vertical = false;
 </script>
 
-<div class="image-with-text">
+<div
+    class="image-with-text"
+    class:image-with-text--vertical={vertical}
+>
     <img { src } { alt }>
     <slot />
 </div>
@@ -15,6 +20,10 @@
         display: flex;
         align-items: center;
         gap: 1em;
+    }
+
+    .image-with-text--vertical {
+        flex-direction: column;
     }
 
     .image-with-text img {

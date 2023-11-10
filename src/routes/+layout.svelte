@@ -25,7 +25,7 @@
     <nav>
         <ul>
             <li>
-                <strong>ge-skiller</strong>
+                <strong>osrs-ge-skiller</strong>
             </li>
         </ul>
     

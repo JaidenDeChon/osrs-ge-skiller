@@ -6,15 +6,18 @@
     }
 </script>
 
-<hgroup>
-    <h1>ge-skiller</h1>
+<article>
+    <hgroup>
+        <h1>osrs-ge-skiller</h1>
+    
+        <p>
+            Find the most profitable OSRS items you can make given your skill levels. Powered by real-time Grand Exchange price stats.
+        </p>
+    </hgroup>
 
-    <h2>
-        Welcome! ge-skiller calculates the most profitable items that can be created for experience in a given skill in
-        an effort to either offset or eradicate the price of skilling. Apply your account's skill levels and other
-        specifics to nail down exactly what's right for you, or cast a wide net to find the most profitable items that
-        can be made.
-    </h2>
-</hgroup>
+    <button on:click={navigateToItemBrowser}>Start browsing items</button>
 
-<button on:click={navigateToItemBrowser}>Start browsing items</button>
+    <footer>
+        <span>Made with ❤️ by <a href="https://GitHub.com/JaidenDeChon">Jaiden DeChon</a></span>
+    </footer>
+</article>
