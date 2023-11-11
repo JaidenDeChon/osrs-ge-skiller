@@ -1,10 +1,14 @@
 <script lang="ts">
+
     // Image source attribute.
     export let src: string;
+
     // Image alt attribute.
     export let alt: string;
+
     // Controls whether to use vertical mode.
     export let vertical = false;
+
 </script>
 
 <div
@@ -19,7 +23,7 @@
     .image-with-text {
         display: flex;
         align-items: center;
-        gap: 1em;
+        gap: 0.6em;
     }
 
     .image-with-text--vertical {
@@ -28,6 +32,7 @@
 
     .image-with-text img {
         width: 1.6em;
+        height: 1.6em;
         object-fit: contain;
     }
 
