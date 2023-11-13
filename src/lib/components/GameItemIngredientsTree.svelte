@@ -91,8 +91,7 @@
             .attr('cx', c => c.x)
             .attr('cy', c => c.y)
             .attr('r', () => 28)
-            .style('fill', 'var(--card-sectionning-background-color)')
-            .attr('stroke', 'var(--form-element-active-border-color)');
+            .attr('stroke', 'rgb(105, 134, 79)');
 
         const imageDimensions = 33;
         treeNodes.append('image')
@@ -115,7 +114,7 @@
                 return link(d);
             })
             .attr('fill', 'none')
-            .attr('stroke', 'var(--form-element-active-border-color)');
+            .attr('stroke', 'rgb(105, 134, 79)');
     }
 
     function transformGameItemToD3(item: GameItem): TreeData {
@@ -153,5 +152,15 @@
     .game-item-ingredients-tree {
         width: fit-content;
         margin: 0 auto;
+    }
+
+    :global(g.node) {
+        fill: rgb(69, 88, 51);
+    }
+
+    @media (prefers-color-scheme: light) {
+        :global(g.node) {
+            fill: rgb(172, 202, 150);
+        }
     }
 </style>

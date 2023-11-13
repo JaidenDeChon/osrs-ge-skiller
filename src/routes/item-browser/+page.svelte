@@ -1,56 +1,44 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-    import type { GameItem, GameItemsBySkill } from '$lib/models/GameItem';
-    import { goto } from '$app/navigation';
-    import GameItemOverviewCard from '$lib/components/GameItemOverviewCard.svelte';
+	import type { GameItemsBySkill } from '$lib/models/GameItem';
+	import GameItemOverviewCard from '$lib/components/GameItemOverviewCard.svelte';
 
-    export let data: PageData
-    export let selectedSkill = 'crafting';
-    $: gameItemsBySkill = data.gameItemsBySkill;
-    $: categoriesForSelectedSkill = gameItemsBySkill
-        .find((skill: GameItemsBySkill) => skill.skillName === selectedSkill)?.categories ?? [];
+	export let data: PageData;
+	export let selectedSkill = 'all';
+
+	$: gameItemsBySkill = data.gameItemsBySkill;
+	$: categoriesForSelectedSkill = gameItemsBySkill
+		.find((skill: GameItemsBySkill) => selectedSkill === 'all' ? true : skill.skillName === selectedSkill)?.categories ?? [];
 </script>
 
-<hgroup>
-    <h1>Item browser</h1>
-    <h2>Here we will see a gallery allowing us to browse items.</h2>
-</hgroup>
+<div class="mx-10 my-4">
+	<h1 class="h1">Item browser</h1>
+</div>
 
-<select
-    id="skill-selector-dropdown"
-    bind:value={selectedSkill}
->
-    {#each gameItemsBySkill as skill}
-        <option>{ skill.skillName }</option>
-    {/each}
-</select>
+<label class="label m-10">
+	<span>Select a skill</span>
+	<select
+		class="select variant-soft-primary"
+		id="skill-selector-dropdown"
+		bind:value={selectedSkill}
+	>
+		{#each gameItemsBySkill as skill}
+			<option>all</option>
+			<option>{ skill.skillName }</option>
+		{/each}
+	</select>
+</label>
 
 {#each categoriesForSelectedSkill as category }
-    <details>
-        <summary>{ category.categoryName }</summary>
 
-        <div class="gallery">
-            {#each category.items as item }
-                <GameItemOverviewCard gameItem="{item}" />
-            {/each}
-        </div>
-    </details>
+	<h3 class="h3 ml-10">{category.categoryName}</h3>
+
+	<div class="p-10 grid gap-6 grid-cols-1 lg:grid-cols-2">
+		{#each category.items as item }
+			<GameItemOverviewCard
+				classes="flex-1"
+				gameItem="{item}"
+			/>
+		{/each}
+	</div>
 {/each}
-
-<style>
-    #skill-selector-dropdown {
-        margin-bottom: 6rem;
-    }
-
-    .gallery {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1em;
-    }
-
-    @media (min-width: 900px) {
-        :global(.gallery > *) {
-            width: calc(50% - 1em) !important;
-        }
-    }
-</style>
