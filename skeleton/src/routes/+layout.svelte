@@ -43,9 +43,11 @@
 	beforeNavigate(() => {
 		// Show a loading toast so they know we're workig on it.
 		toastStore.trigger({
+			autohide: false,
+			hoverable: false,
 			message: 'Loading...',
 			hideDismiss: true,
-			classes: 'variant-soft-surface',
+			classes: 'variant-glass-surface',
 			callback(response) {
 				loadingToastId = response.id;
 			},
@@ -61,7 +63,7 @@
         disableScrollHandling();
         setTimeout(() => {
             scrollTo({ top: 0, behavior: 'instant' });
-        }, 400);
+        }, delay);
     });
 </script>
 
@@ -103,6 +105,12 @@
 							</svg>
 						</span>
 					</button>
+					<a
+						href="/"
+						class="w-0 h-0 invisible sm:visible sm:w-auto sm:h-auto"
+					>
+						<strong>🚩 osrs-ge-skiller</strong>
+					</a>
 				</div>
 			</svelte:fragment>
 
@@ -137,8 +145,15 @@
 		<div
 			in:fly={ transitionIn }
 			out:fly={ transitionOut }
+			class="mx-auto max-w-screen-lg w-full md:px-12"
 		>
 			<slot />
 		</div>
 	{/key}
 </AppShell>
+
+<style>
+	:global(html) {
+		-webkit-tap-highlight-color: rgba(128, 128, 128, 0.5);
+		}
+</style>

@@ -1,0 +1,222 @@
+<script lang="ts">
+    import { onMount } from 'svelte';
+    import type { GameItem } from '$lib/models/GameItem';
+    import { timeSince } from '$lib/helpers/timeSince';
+    import { materialCostLowStore, materialCostHighStore } from '$lib/stores/materialCostStore';
+    import ImageWithText from './ImageWithText.svelte';
+
+    // Props.
+
+    export let gameItem: GameItem;
+    export let isParent = false;
+    export let amount: number = 1;
+
+    // Variables.
+
+    $: countsTowardValue = true;
+    $: highPriceAsIngredient = amount * (gameItem.highPrice ?? 0);
+    $: lowPriceAsIngredient = amount * (gameItem.lowPrice ?? 0);
+
+    // Functions.
+
+    function handleToggle (event: Event): void {
+        (event.target as HTMLInputElement).checked
+            ? incrementMaterialCost()
+            : decrementMaterialCost();
+    }
+
+    function incrementMaterialCost (): void {
+        materialCostHighStore.update((value: number) => value += highPriceAsIngredient);
+        materialCostLowStore.update((value: number) => value += lowPriceAsIngredient);
+    }
+
+    function decrementMaterialCost (): void {
+        materialCostHighStore.update((value: number) => value -= highPriceAsIngredient);
+        materialCostLowStore.update((value: number) => value -= lowPriceAsIngredient);
+    }
+
+    onMount(() => {
+        if (!isParent) incrementMaterialCost();
+    });
+</script>
+
+<div class="game-item-nested">
+    <!-- Title and image -->
+    <div class="game-item-nested__title">
+        <img
+            src="/item-images/{ gameItem.image }"
+            alt="{ gameItem.name }"
+        >
+        <p>{ gameItem.name }</p>
+        {#if !isParent}
+            <p class="muted">(x { amount })</p>
+        {/if}
+    </div>
+
+    <div class="game-item-nested__values-container">
+        <!-- GE prices -->
+        <div class="game-item-nested__values">
+            <ImageWithText
+                src="/item-images/coins-few.png"
+                alt="Just a few coins."
+            >
+                <p>
+                    { gameItem.lowPrice }
+                    {#if gameItem.lowTime}
+                        <span>
+                            ({ timeSince(gameItem.lowTime, true) })
+                        </span>
+                    {/if}
+                </p>
+            </ImageWithText>
+
+            <ImageWithText
+                src="/item-images/coins-lots.png"
+                alt="Lots of coins!"
+            >
+                <p>
+                    { gameItem.highPrice }
+                    {#if gameItem.highTime}
+                        <span>
+                            ({ timeSince(gameItem.highTime, true) })
+                        </span>
+                    {/if}
+                </p>
+            </ImageWithText>
+        </div>
+
+        <!-- High/low alch (parent item only) -->
+        {#if isParent}
+            <div class="game-item-nested__values">
+                <ImageWithText
+                    src="/spell-images/low-level-alchemy.png"
+                    alt="Low level alchemy"
+                >
+                    <p>{ gameItem.highAlch }</p>
+                </ImageWithText>
+
+                <ImageWithText
+                    src="/spell-images/high-level-alchemy.png"
+                    alt="High level alchemy"
+                >
+                    <p>{ gameItem.lowAlch }</p>
+                </ImageWithText>
+            </div>
+        {/if}
+    </div>
+
+    <!-- Checkbox for including in total (!isParent only) -->
+    <!-- on:change={(event) => dispatch('toggled', gameItem.id)} -->
+    {#if !isParent}
+        <label>
+            <input
+                type="checkbox"
+                bind:checked={countsTowardValue}
+                on:change={(event) => handleToggle(event)}
+            >
+            Include in materials cost
+        </label>
+    {/if}
+
+
+    {#if gameItem.creationSpecs && gameItem.creationSpecs.ingredients}
+
+        <details class="game-item-nested__ingredients">
+            <summary>Ingredients</summary>
+
+            {#each gameItem.creationSpecs.ingredients as ingredient}
+                <svelte:self
+                    gameItem={ingredient.item}
+                    amount={ingredient.amount}
+                />
+            {/each}
+        </details>
+    {/if}
+</div>
+
+<style>
+    .game-item-nested {
+        border: 0.1em solid;
+        padding: 1em;
+        margin-top: 1rem;
+        border-radius: var(--border-radius);
+    }
+
+    .game-item-nested__title {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        margin-bottom: 1em;
+    }
+
+    .game-item-nested__title img {
+        height: 2em;
+        width: 2em;
+        object-fit: contain;
+    }
+
+    .game-item-nested__title p {
+        margin-bottom: 0;
+    }
+
+    .game-item-nested__values-container {
+        display: flex;
+        gap: 3em;
+    }
+
+    .game-item-nested__values {
+        margin-bottom: 1em;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6em;
+        margin: 0 auto;
+    }
+
+    .game-item-nested__ingredients {
+        margin-top: 1rem;
+    }
+
+    .game-item-nested details {
+        margin-top: 1.5em;
+        margin-bottom: 0;
+    }
+
+    .muted {
+        color: var(--muted-color);
+    }
+
+    :global(.image-with-text) {
+        flex: 1;
+    }
+
+    :global(.game-item-nested .game-item-nested .game-item-nested__values) {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    :global(.game-item-nested .game-item-nested .game-item-nested__values .image-with-text) {
+        flex: unset;
+        margin-bottom: 1em;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .game-item-nested {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-color: transparent;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        .game-item-nested {
+            border-color: rgb(237, 240, 243);
+            box-shadow: var(--card-box-shadow);
+        }
+
+        :global(.game-item-nested__ingredients .game-item-nested) {
+            border-width: 0.12em !important;
+            box-shadow: none !important;
+        }
+    }
+</style>
