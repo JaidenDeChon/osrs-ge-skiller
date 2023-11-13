@@ -40,22 +40,25 @@
     });
 </script>
 
-<div class="game-item-nested">
+<div class="game-item-nested card variant-ghost-surface p-6 my-3">
     <!-- Title and image -->
-    <div class="game-item-nested__title">
-        <img
-            src="/item-images/{ gameItem.image }"
-            alt="{ gameItem.name }"
-        >
-        <p>{ gameItem.name }</p>
-        {#if !isParent}
-            <p class="muted">(x { amount })</p>
-        {/if}
+    <div class="flex items-center">
+        <div class="rounded-full w-16 min-w-16 max-w-16 h-16 min-h-16 max-h-16 p-3 variant-soft-tertiary flex place-content-center">
+            <img
+                class="w-full h-auto object-contain"
+                src="/item-images/{gameItem.image}"
+                alt="{gameItem.name}"
+            >
+        </div>
+        <div class="flex flex-col ml-4">
+            <strong class="text-lg">{gameItem.name}</strong>
+            <p>{gameItem.examineText}</p>
+        </div>
     </div>
 
-    <div class="game-item-nested__values-container">
+    <div class="flex place-content-evenly">
         <!-- GE prices -->
-        <div class="game-item-nested__values">
+        <div class="flex {isParent ? 'flex-col' : 'place-content-evenly w-full'} gap-4 my-6">
             <ImageWithText
                 src="/item-images/coins-few.png"
                 alt="Just a few coins."
@@ -87,7 +90,7 @@
 
         <!-- High/low alch (parent item only) -->
         {#if isParent}
-            <div class="game-item-nested__values">
+            <div class="flex flex-col gap-4 my-6">
                 <ImageWithText
                     src="/spell-images/low-level-alchemy.png"
                     alt="Low level alchemy"
@@ -133,90 +136,3 @@
         </details>
     {/if}
 </div>
-
-<style>
-    .game-item-nested {
-        border: 0.1em solid;
-        padding: 1em;
-        margin-top: 1rem;
-        border-radius: var(--border-radius);
-    }
-
-    .game-item-nested__title {
-        display: flex;
-        align-items: center;
-        gap: 1em;
-        margin-bottom: 1em;
-    }
-
-    .game-item-nested__title img {
-        height: 2em;
-        width: 2em;
-        object-fit: contain;
-    }
-
-    .game-item-nested__title p {
-        margin-bottom: 0;
-    }
-
-    .game-item-nested__values-container {
-        display: flex;
-        gap: 3em;
-    }
-
-    .game-item-nested__values {
-        margin-bottom: 1em;
-        display: flex;
-        flex-direction: column;
-        gap: 0.6em;
-        margin: 0 auto;
-    }
-
-    .game-item-nested__ingredients {
-        margin-top: 1rem;
-    }
-
-    .game-item-nested details {
-        margin-top: 1.5em;
-        margin-bottom: 0;
-    }
-
-    .muted {
-        color: var(--muted-color);
-    }
-
-    :global(.image-with-text) {
-        flex: 1;
-    }
-
-    :global(.game-item-nested .game-item-nested .game-item-nested__values) {
-        flex-direction: row;
-        justify-content: space-around;
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    :global(.game-item-nested .game-item-nested .game-item-nested__values .image-with-text) {
-        flex: unset;
-        margin-bottom: 1em;
-    }
-
-    @media (prefers-color-scheme: dark) {
-        .game-item-nested {
-            background-color: rgba(255, 255, 255, 0.03);
-            border-color: transparent;
-        }
-    }
-
-    @media (prefers-color-scheme: light) {
-        .game-item-nested {
-            border-color: rgb(237, 240, 243);
-            box-shadow: var(--card-box-shadow);
-        }
-
-        :global(.game-item-nested__ingredients .game-item-nested) {
-            border-width: 0.12em !important;
-            box-shadow: none !important;
-        }
-    }
-</style>
