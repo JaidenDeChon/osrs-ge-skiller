@@ -83,12 +83,12 @@
 <!-- App Shell -->
 <AppShell
 	regionPage="relative"
-	slotPageHeader="sticky top-0 z-10"
-	slotSidebarLeft="bg-surface-500/5 w-0 lg:w-64"
+	slotPageHeader="shadow-lg"
+	slotSidebarLeft="bg-surface-50 dark:bg-surface-900 w-0 lg:w-64 shadow-xl"
 >
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
-		<AppBar background="variant-glass-surface">
+		<AppBar shadow="shadow-xl">
 
 			<!-- Beginning of app bar -->
 			<svelte:fragment slot="lead">
@@ -96,7 +96,7 @@
 
 					<!-- Hamburger button (hidden on large screens) -->
 					<button
-						class="lg:hidden btn btn-sm mr-4 variant-soft-primary h-12 w-12"
+						class="lg:hidden btn btn-sm mr-4 bg-primary-600 h-12 w-12"
 						on:click={openDrawer}
 					>
 						<span>
@@ -123,13 +123,13 @@
 			<svelte:fragment slot="trail">
 				<div class="sm-hidden">
 					<a
-						class="btn btn-sm variant-soft-primary"
+						class="btn btn-sm bg-primary-600 text-surface-100"
 						href="/"
 					>
 						Home
 					</a>
 					<a
-						class="btn btn-sm variant-soft-primary"
+						class="btn btn-sm bg-primary-600 text-surface-100"
 						href="/item-browser"
 					>
 						Item Browser
@@ -149,7 +149,7 @@
 		<div
 			in:fly={ transitionIn }
 			out:fly={ transitionOut }
-			class="mx-auto max-w-screen-lg w-full md:px-12"
+			class="mx-auto max-w-screen-2xl w-full md:px-12"
 		>
 			<slot />
 		</div>
@@ -165,7 +165,7 @@
 
 		background-image: radial-gradient(
 			at 98% 98%,
-			rgba(var(--color-success-500) / .33) 0px,
+			rgba(var(--color-primary-500) / .33) 0px,
 			transparent 60%
 		);
 

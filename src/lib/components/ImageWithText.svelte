@@ -6,42 +6,17 @@
     // Image alt attribute.
     export let alt: string;
 
-    // Controls whether to use vertical mode.
-    export let vertical = false;
-
 </script>
 
-<div
-    class="image-with-text"
-    class:image-with-text--vertical={vertical}
->
-    <img { src } { alt }>
-    <slot />
+<div class="flex gap-4">
+    <div class="flex items-center justify-center variant-soft-primary h-12 w-12 rounded-full">
+        <img
+            { src }
+            { alt }
+            class="h-7 w-7 object-contain"
+        >
+    </div>
+    <div class="flex flex-col justify-center">
+        <slot />
+    </div>
 </div>
-
-<style>
-    .image-with-text {
-        display: flex;
-        align-items: center;
-        gap: 0.6em;
-    }
-
-    .image-with-text--vertical {
-        flex-direction: column;
-    }
-
-    .image-with-text img {
-        width: 1.6em;
-        height: 1.6em;
-        object-fit: contain;
-    }
-
-    :global(.image-with-text > *) {
-        margin-bottom: 0;
-    }
-
-    :global(.image-with-text span) {
-        font-size: 0.75em;
-        color: var(--muted-color);
-    }
-</style>

@@ -91,7 +91,7 @@
             .attr('cx', c => c.x)
             .attr('cy', c => c.y)
             .attr('r', () => 28)
-            .attr('stroke', 'rgb(105, 134, 79)');
+            .attr('stroke', 'rgb(11, 140, 97)');
 
         const imageDimensions = 33;
         treeNodes.append('image')
@@ -114,7 +114,7 @@
                 return link(d);
             })
             .attr('fill', 'none')
-            .attr('stroke', 'rgb(105, 134, 79)');
+            .attr('stroke', 'rgb(11, 140, 97)');
     }
 
     function transformGameItemToD3(item: GameItem): TreeData {
@@ -155,7 +155,7 @@
     }
 
     :global(g.node) {
-        fill: rgb(69, 88, 51);
+        fill: rgb(7, 91, 63);
     }
 
     @media (prefers-color-scheme: light) {
