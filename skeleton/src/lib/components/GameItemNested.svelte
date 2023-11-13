@@ -41,10 +41,10 @@
     });
 </script>
 
-<div class="game-item-nested card variant-glass-surface p-6 my-3">
+<div class="game-item-nested card variant-ghost-surface p-6 my-3">
     <!-- Title and image -->
     <div class="flex items-center">
-        <div class="rounded-full w-16 h-16 p-3 variant-soft-primary flex place-content-center">
+        <div class="rounded-full w-16 min-w-16 max-w-16 h-16 min-h-16 max-h-16 p-3 variant-soft-tertiary flex place-content-center">
             <img
                 class="w-full h-auto object-contain"
                 src="/item-images/{gameItem.image}"

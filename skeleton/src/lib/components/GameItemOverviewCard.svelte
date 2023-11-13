@@ -31,10 +31,10 @@
     }
 </script>
 
-<div class="card p-4 variant-soft-surface {classes}">
+<div class="card p-4 variant-ghost-surface {classes}">
     <header class="card-header">
         <div class="flex items-center">
-            <div class="rounded-full w-16 h-16 p-3 variant-soft-primary flex place-content-center">
+            <div class="rounded-full w-16 min-w-16 max-w-16 h-16 min-h-16 max-h-16 p-3 variant-soft-tertiary flex place-content-center">
                 <img
                     class="w-full h-auto object-contain"
                     src="/item-images/{gameItem.image}"
@@ -126,7 +126,7 @@
 
     <footer class="card-footer">
         <button
-            class="btn variant-glass-primary w-full"
+            class="btn variant-filled-primary w-full mt-6"
             on:click={ () => navigateToItemDetails(gameItem.id) }
         >
             Details

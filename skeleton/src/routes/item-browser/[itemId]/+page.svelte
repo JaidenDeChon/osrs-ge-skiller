@@ -19,7 +19,7 @@
 
 <!-- Title and image -->
 <div class="flex items-center p-4 sm:p-10">
-    <div class="rounded-full w-24 h-24 p-3 variant-soft-primary flex place-content-center">
+    <div class="rounded-full w-24 min-w-24 max-w-24 h-24 min-h-24 max-h-24 p-3 variant-soft-tertiary flex place-content-center">
         <img
             class="w-full h-auto object-contain"
             src="/item-images/{itemDetails.image}"

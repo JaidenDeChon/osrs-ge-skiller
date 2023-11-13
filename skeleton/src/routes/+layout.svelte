@@ -114,7 +114,7 @@
 						href="/"
 						class="w-0 h-0 invisible sm:visible sm:w-auto sm:h-auto"
 					>
-						<strong>🚩 osrs-ge-skiller</strong>
+						<strong>osrs-ge-skiller</strong>
 					</a>
 				</div>
 			</svelte:fragment>
