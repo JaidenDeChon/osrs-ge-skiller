@@ -31,13 +31,10 @@
     }
 </script>
 
-<div
-    href="/item-browser/{gameItem.id}"
-    class="card p-4 variant-glass-surface {classes}"
->
+<div class="card p-4 variant-soft-surface {classes}">
     <header class="card-header">
         <div class="flex items-center">
-            <div class="rounded-full w-16 h-16 p-3 variant-soft-surface flex place-content-center">
+            <div class="rounded-full w-16 h-16 p-3 variant-soft-primary flex place-content-center">
                 <img
                     class="w-full h-auto object-contain"
                     src="/item-images/{gameItem.image}"
@@ -128,7 +125,10 @@
     </div>
 
     <footer class="card-footer">
-        <button class="btn variant-glass-surface w-full">
+        <button
+            class="btn variant-glass-primary w-full"
+            on:click={ () => navigateToItemDetails(gameItem.id) }
+        >
             Details
         </button>
     </footer>

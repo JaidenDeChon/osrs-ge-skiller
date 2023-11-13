@@ -6,11 +6,10 @@
 	// Skeleton
 	import '../app.postcss';
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
-	import { LightSwitch, initializeStores, Drawer, getDrawerStore, getToastStore, Toast } from '@skeletonlabs/skeleton';
+	import { autoModeWatcher, initializeStores, Drawer, getDrawerStore, getToastStore, Toast } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
-	import type { ToastSettings, ToastStore } from '@skeletonlabs/skeleton';
 
 	// Components
 	import Navigation from '$lib/components/Navigation.svelte';
@@ -45,9 +44,9 @@
 		toastStore.trigger({
 			autohide: false,
 			hoverable: false,
-			message: 'Loading...',
+			message: '⏳ Loading...',
 			hideDismiss: true,
-			classes: 'variant-glass-surface',
+			classes: 'variant-filled-surface',
 			callback(response) {
 				loadingToastId = response.id;
 			},
@@ -62,10 +61,16 @@
 		// Stuff for making transiton nicer.
         disableScrollHandling();
         setTimeout(() => {
-            scrollTo({ top: 0, behavior: 'instant' });
-        }, delay);
+			document.getElementById('page')?.scroll({ top: 0, behavior: 'instant' });
+            // scrollTo({ top: 0, behavior: 'instant' });
+        }, 400);
     });
 </script>
+
+<!-- Light/dark mode handler -->
+<svelte:head>
+	{@html `<script>${autoModeWatcher.toString()} autoModeWatcher();</script>`}
+</svelte:head>
 
 <!-- Toast -->
 <Toast />
@@ -83,7 +88,7 @@
 >
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
-		<AppBar>
+		<AppBar background="variant-glass-surface">
 
 			<!-- Beginning of app bar -->
 			<svelte:fragment slot="lead">
@@ -91,7 +96,7 @@
 
 					<!-- Hamburger button (hidden on large screens) -->
 					<button
-						class="lg:hidden btn btn-sm mr-4 variant-ghost-surface h-12 w-12"
+						class="lg:hidden btn btn-sm mr-4 variant-soft-primary h-12 w-12"
 						on:click={openDrawer}
 					>
 						<span>
@@ -118,19 +123,18 @@
 			<svelte:fragment slot="trail">
 				<div class="sm-hidden">
 					<a
-						class="btn btn-sm variant-ghost-surface"
+						class="btn btn-sm variant-soft-primary"
 						href="/"
 					>
 						Home
 					</a>
 					<a
-						class="btn btn-sm variant-ghost-surface"
+						class="btn btn-sm variant-soft-primary"
 						href="/item-browser"
 					>
 						Item Browser
 					</a>
 				</div>
-				<LightSwitch />
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
@@ -155,5 +159,27 @@
 <style>
 	:global(html) {
 		-webkit-tap-highlight-color: rgba(128, 128, 128, 0.5);
+	}
+
+	:global(body) {
+
+		background-image: radial-gradient(
+			at 98% 98%,
+			rgba(var(--color-success-500) / .33) 0px,
+			transparent 60%
+		);
+
+		@media (prefers-color-scheme: light) {
+			background-image: radial-gradient(
+				at 0% 0%,
+				rgba(var(--color-primary-500) / .33) 0px,
+				transparent 60%
+			);
 		}
+	}
+
+	:global(#page) {
+		overflow-y: scroll;
+	}
+
 </style>
