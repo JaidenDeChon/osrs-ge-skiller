@@ -37,7 +37,8 @@
             };
         }
 
-        return [item].map(mapItem);
+        // Change this to start mapping from the children of the root item
+        return item.creationSpecs?.ingredients.map(ingredient => mapItem(ingredient.item)) || [];
     }
 
     /**
@@ -59,8 +60,14 @@
             }
         }
 
-        [item].forEach(item => processItem(item, 1));
+        // Start processing from the ingredients of the root item
+        if (item.creationSpecs && item.creationSpecs.ingredients) {
+            item.creationSpecs.ingredients.forEach(ingredient => {
+                processItem(ingredient.item, ingredient.amount);
+            });
+        }
     }
+
 
     /**
      * Calculates the total high or low value of all items currently selected for counting.
@@ -116,9 +123,14 @@
     /**
      * "Selects" all of the game items so they're all active.
      */
-    function selectAllGameItems() {
-        allIngredients.forEach(ingredient => checkedNodes.push(ingredient.item.id));
+     function selectAllGameItems() {
+        allIngredients.forEach(ingredient => {
+            if (ingredient.item.id !== item.id) {
+                checkedNodes.push(ingredient.item.id);
+            }
+        });
     }
+
 
     onMount(() => {
         // Get a version of the GameItem tree compatible with Skeleton tree component
