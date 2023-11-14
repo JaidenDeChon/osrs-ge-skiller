@@ -18,11 +18,11 @@
 		.find((skill: GameItemsBySkill) => selectedSkill === 'all' ? true : skill.skillName === selectedSkill)?.categories ?? [];
 </script>
 
-<div class="mx-10 my-4">
+<div class="mx-4 my-4 mb-12">
 	<h1 class="h1">Item browser</h1>
 </div>
 
-<label class="label m-10">
+<label class="label m-4 mb-12">
 	<span>Select a skill</span>
 	<select
 		class="select variant-soft-primary"
@@ -38,9 +38,9 @@
 
 {#each categoriesForSelectedSkill as category }
 
-	<h3 class="h3 ml-10">{category.categoryName}</h3>
+	<h3 class="h3 ml-4">{category.categoryName}</h3>
 
-	<div class="p-10 grid gap-6 grid-cols-1 2xl:grid-cols-2" style="align-items: start">
+	<div class="p-4 grid gap-6 grid-cols-1 2xl:grid-cols-2" style="align-items: start">
 		{#each category.items as item }
 			<GameItemCard
 				item={item}

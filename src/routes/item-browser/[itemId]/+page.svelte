@@ -20,7 +20,7 @@
 </script>
 
 <!-- Title and image -->
-<div class="flex items-center p-4 sm:p-10">
+<div class="flex items-center p-4">
     <div class="rounded-full w-24 min-w-24 max-w-24 h-24 min-h-24 max-h-24 p-3 variant-soft-primary flex place-content-center">
         <img
             class="w-full h-auto object-contain"
@@ -34,7 +34,7 @@
     </div>
 </div>
 
-<div class="card mb-6 variant-glass-surface rounded-md mx-10 border-solid border border-primary-900 shadow-xl">
+<div class="card m-4 sm:m-10 variant-glass-surface rounded-m border-solid border border-primary-900 shadow-xl">
     <GameItemIngredientsTree gameItem={itemDetails} />
 </div>
 
