@@ -69,31 +69,11 @@
 
 <div class="px-4 mb-10 sm:px-10">
     <GameItemCard
-        gameItem={itemDetails}
+        item={itemDetails}
         enableBlur="{false}"
-        enableTree
-        showMaterialCostCheckbox
-        isParent
-    >
-        <div slot="body">
-
-            <h4 class="h4">Grand Exchange prices</h4>
-            <div class="flex justify-evenly my-4">
-                <ImageWithTextPill
-                    src="/item-images/coins-few.png"
-                    alt="just a few coins"
-                    title="Low"
-                    subtitle="{itemDetails.highPrice} GP"
-                    subtitleAside={ itemDetails.lowTime ? `(${timeSince(itemDetails.lowTime, true)})` : '' }
-                />
-                <ImageWithTextPill
-                    src="/item-images/coins-lots.png"
-                    alt="lots of coins"
-                    title="High"
-                    subtitle="{itemDetails.highPrice} GP"
-                    subtitleAside={ itemDetails.highTime ? `(${timeSince(itemDetails.highTime, true)})` : '' }
-                />
-            </div>
-        </div>
-    </GameItemCard>
+        showXpStats
+        showGeData
+        showAlchemy
+        showTree
+    />
 </div>
