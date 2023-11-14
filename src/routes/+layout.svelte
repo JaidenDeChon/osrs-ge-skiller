@@ -5,28 +5,42 @@
 
 	// Skeleton
 	import '../app.postcss';
-	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
-	import { autoModeWatcher, initializeStores, Drawer, getDrawerStore, getToastStore, Toast } from '@skeletonlabs/skeleton';
+	import {
+		AppShell,
+		AppBar,
+		storePopup,
+		autoModeWatcher,
+		initializeStores,
+		Drawer,
+		getDrawerStore,
+		getToastStore,
+		Toast,
+		Modal,
+		type ModalComponent
+	} from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
-	import { storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
-	// Components
+	// Local app stuff
+	import { ModalNamesEnum } from '$lib/enums/ModalNamesEnum';
 	import Navigation from '$lib/components/Navigation.svelte';
+	import SkillLevelsModal from '$lib/components/modal/SkillLevelsModal.svelte';
 
+	// Grabs the data from +layout.ts
 	export let data;
 
+	// Initialize skeleton stores
 	initializeStores();
-
 	const drawerStore = getDrawerStore();
 	const toastStore = getToastStore();
 
+	// Set up modal registry
+	const modalRegistry: Record<ModalNamesEnum, ModalComponent> = {
+		[ModalNamesEnum.PLAYER_SKILLS_MODAL]: { ref: SkillLevelsModal }
+	};
+
 	function openDrawer(): void {
 		drawerStore.open();
-	}
-
-	function closeDrawer(): void {
-		drawerStore.close();
 	}
 
 	// Navigation transition-related functionality
@@ -74,6 +88,9 @@
 
 <!-- Toast -->
 <Toast />
+
+<!-- Modal -->
+<Modal components={modalRegistry} />
 
 <!-- Nav drawer -->
 <Drawer>
@@ -179,6 +196,10 @@
 	}
 
 	:global(#page) {
+		overflow-y: scroll;
+	}
+
+	:global(.modal-backdrop) {
 		overflow-y: scroll;
 	}
 

@@ -29,7 +29,6 @@
 		return item.creationSpecs?.experienceGranted ?? [];
 	}
 
-    console.log(item, amount);
 </script>
 
 <!-- Overall container for applying blurry border -->
