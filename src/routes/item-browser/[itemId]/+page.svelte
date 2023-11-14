@@ -71,6 +71,7 @@
     <GameItemCard
         item={itemDetails}
         enableBlur="{false}"
+        isParent
         showXpStats
         showGeData
         showAlchemy
