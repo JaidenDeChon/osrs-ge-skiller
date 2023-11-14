@@ -4,7 +4,7 @@
 
     import type { GameItem } from '$lib/models/GameItem';
 
-    export let gameItem: GameItem;
+    export let item: GameItem;
 
     const treeHeight = 200;
     let treeWidth = 400;
@@ -19,7 +19,7 @@
     onMount(() => {
         const screenWidth = Math.max(document.documentElement.clientWidth || 0, window.innerHeight || 0);
         xTransform = screenWidth - treeWidth;
-        const tree = transformGameItemToD3(gameItem);
+        const tree = transformGameItemToD3(item);
         d3Setup(tree);
     });
 

@@ -59,6 +59,7 @@ export type GameItemCreationSpecs = {
  * @property creationSpecs - The character requirements for creating this item.
  */
 export type GameItem = {
+    [key: string]: undefined | string | number | GameItemCreationSpecs;
     id: string;
     name: string;
     examineText?: string;
