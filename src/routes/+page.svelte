@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { getModalStore } from '@skeletonlabs/skeleton';
 	import { ModalNamesEnum } from '$lib/enums/ModalNamesEnum';
+	import Card from '$lib/components/Card.svelte';
 
 	const modalStore = getModalStore();
 
 	function fireStatsModal() {
 		modalStore.trigger({
 			type: 'component',
-			component: ModalNamesEnum.PLAYER_SKILLS_MODAL
+			component: ModalNamesEnum.PLAYER_SKILLS_MODAL,
+			meta: { navigateToItemBrowserUponClose: true }
 		});
 	}
 </script>

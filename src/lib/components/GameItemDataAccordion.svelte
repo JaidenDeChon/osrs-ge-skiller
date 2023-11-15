@@ -2,7 +2,7 @@
     import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
     import type {
         GameItem,
-        GameItemCreationSkillRequirement,
+        SkillLevelDesignation,
         GameItemCreationExperienceGranted
     } from '$lib/models/GameItem';
     import { timeSince } from '$lib/helpers/timeSince';
@@ -28,7 +28,7 @@
 
     $: ingredients = item.creationSpecs?.ingredients ?? [];
 
-    function getLevelRequirements (item: GameItem): GameItemCreationSkillRequirement[] {
+    function getLevelRequirements (item: GameItem): SkillLevelDesignation[] {
 		return item.creationSpecs?.requiredSkills ?? [];
 	}
 
@@ -37,7 +37,7 @@
 	}
 </script>
 
-<Accordion {spacing} class="p-4">
+<Accordion {spacing}>
 
     <!-- GE Data -->
     {#if showGeData}
@@ -153,9 +153,11 @@
                     >
                 </div>
             </svelte:fragment>
+
             <svelte:fragment slot="summary">Ingredients</svelte:fragment>
+
             <svelte:fragment slot="content">
-                <div class="p-4 grid gap-6 {treeColumnCount ? `grid-cols-${treeColumnCount}` : 'grid-cols-1 xl:grid-cols-2'}" style="align-items: start">
+                <div class="grid gap-6 {treeColumnCount ? `grid-cols-${treeColumnCount}` : 'grid-cols-1 xl:grid-cols-2'}" style="align-items: start">
                     {#each ingredients as ingredient}
                         <GameItemCard
                             item={ingredient.item}

@@ -15,7 +15,7 @@ export type GameItemCreationExperienceGranted = {
  * @property skillName - The name of the required skill.
  * @property skillLevel - The level of the required skill.
  */
-export type GameItemCreationSkillRequirement = {
+export type SkillLevelDesignation = {
     skillName: InGameSkillNamesEnum;
     skillLevel: number;
 }
@@ -40,7 +40,7 @@ export type GameItemCreationIngredient = {
  */
 export type GameItemCreationSpecs = {
     experienceGranted: GameItemCreationExperienceGranted[];
-    requiredSkills: GameItemCreationSkillRequirement[];
+    requiredSkills: SkillLevelDesignation[];
     ingredients: GameItemCreationIngredient[];
 }
 

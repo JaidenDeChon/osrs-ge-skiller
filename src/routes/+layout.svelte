@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
+	import { fly, fade } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
 	import { beforeNavigate, afterNavigate, disableScrollHandling } from '$app/navigation';
 
@@ -48,7 +48,7 @@
 	const delay = duration + 100;
 	const y = 10;
 
-	const transitionIn = { easing: cubicOut, y, duration, delay };
+	const transitionIn = { easing: cubicOut, y, duration };
 	const transitionOut = { easing: cubicIn, y: -y, duration };
 
 	let loadingToastId = '';
@@ -90,10 +90,16 @@
 <Toast />
 
 <!-- Modal -->
-<Modal components={modalRegistry} />
+<Modal
+	components={modalRegistry}
+	transitionIn={fly}
+	transitionOut={fly}
+	transitionInParams={transitionIn}
+	transitionOutParams={transitionOut}
+/>
 
 <!-- Nav drawer -->
-<Drawer>
+<Drawer width="w-80">
 	<Navigation />
 </Drawer>
 
@@ -101,11 +107,14 @@
 <AppShell
 	regionPage="relative"
 	slotPageHeader="shadow-lg"
-	slotSidebarLeft="bg-surface-50 dark:bg-surface-900 w-0 lg:w-64 shadow-xl"
+	slotSidebarLeft="w-0 lg:w-64 shadow-xl"
 >
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
-		<AppBar shadow="shadow-xl">
+		<AppBar
+			shadow="shadow-xl"
+			class="variant-soft-primary"
+		>
 
 			<!-- Beginning of app bar -->
 			<svelte:fragment slot="lead">
@@ -164,7 +173,7 @@
 	<!-- Page Route Content -->
 	{#key data.pathname}
 		<div
-			in:fly={ transitionIn }
+			in:fly={ { ...transitionIn, delay } }
 			out:fly={ transitionOut }
 			class="mx-auto max-w-screen-2xl w-full md:px-12"
 		>
@@ -180,19 +189,12 @@
 
 	:global(body) {
 
-		background-image: radial-gradient(
-			at 98% 98%,
-			rgba(var(--color-primary-500) / .33) 0px,
-			transparent 60%
-		);
-
-		@media (prefers-color-scheme: light) {
-			background-image: radial-gradient(
-				at 0% 0%,
+		background-image:
+			radial-gradient(
+				circle at 0% 40%,
 				rgba(var(--color-primary-500) / .33) 0px,
 				transparent 60%
 			);
-		}
 	}
 
 	:global(#page) {
@@ -201,6 +203,8 @@
 
 	:global(.modal-backdrop) {
 		overflow-y: scroll;
+		background-color: transparent !important;
+		backdrop-filter: blur(20px);
 	}
 
 </style>

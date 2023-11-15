@@ -139,7 +139,7 @@
         class="game-item-ingredients-tree__tree"
         width="{ treeWidth }"
         height="{ treeHeight + 100 }"
-        viewBox="0 0 { treeWidth } { treeHeight }"
+        viewBox="10 0 { treeWidth } { treeHeight }"
     >
         <g transform="">
             <g class="links"></g>
