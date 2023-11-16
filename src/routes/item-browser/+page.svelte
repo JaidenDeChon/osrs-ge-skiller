@@ -156,6 +156,7 @@
 					<GameItemCard
 						item={item}
 						compact={pageView === 0}
+						linkToIngredients={true}
 						showTree
 						showXpStats
 						showGeData

@@ -4,7 +4,6 @@
     import type { PageData } from '../$types';
     import type { GameItem } from '$lib/models/GameItem';
     import { materialCostLowStore, materialCostHighStore } from '$lib/stores/materialCostStore';
-    import GameItemIngredientsTree from '$lib/components/GameItemIngredientsTree.svelte';
     import GameItemDataAccordion from '$lib/components/GameItemDataAccordion.svelte';
     import MaterialCostTree from '$lib/components/MaterialCostTree.svelte';
     import _ from 'lodash';
@@ -75,6 +74,7 @@
 
 <GameItemDataAccordion
     {item}
+    linkToIngredients={false}
     spacing="space-y-1"
     showGeData
     showXpStats

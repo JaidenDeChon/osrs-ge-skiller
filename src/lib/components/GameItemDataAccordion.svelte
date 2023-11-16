@@ -10,6 +10,9 @@
     import GameItemCard from './GameItemCard.svelte';
 
     export let item: GameItem;
+    export let treeColumnCount = 0;
+    export let spacing = '';
+    export let linkToIngredients = false;
 
     export let showXpStats = false;
     export let openXpStats = false;
@@ -22,9 +25,7 @@
 
     export let showTree = false;
     export let openTree = false;
-    export let treeColumnCount = 0;
 
-    export let spacing = '';
 
     $: ingredients = item.creationSpecs?.ingredients ?? [];
 
@@ -163,6 +164,7 @@
                             item={ingredient.item}
                             enableBlur={false}
                             amount={ingredient.amount}
+                            {linkToIngredients}
                             showXpStats
                             showGeData
                             showAlchemy

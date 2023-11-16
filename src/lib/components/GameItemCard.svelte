@@ -16,6 +16,7 @@
     export let enableBlur = true;
     export let amount = 1;
     export let isParent = false;
+    export let linkToIngredients = false;
 
 </script>
 
@@ -61,13 +62,17 @@
         />
 
         <!-- Footer -->
-        <div class="p-4" slot="footer">
-            <a
-                href="/item-browser/{item.id}"
-                class="btn variant-filled-primary w-full"
-            >
-                Details
-            </a>
-        </div>
+        <svelte:fragment slot="footer">
+            {#if linkToIngredients}
+                <div class="p-4">
+                    <a
+                        href="/item-browser/{item.id}"
+                        class="btn variant-filled-primary w-full"
+                    >
+                        Details
+                    </a>
+                </div>
+            {/if}
+        </svelte:fragment>
     </Card>
 </a>
