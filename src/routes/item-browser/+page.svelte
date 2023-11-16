@@ -52,6 +52,7 @@
 
     $: filteredCategories = getCategoriesOfSelectedSkill(selectedSkill);
     $: categoriesOfSelectedSkill = applyFilterIfRequired(filteredCategories, $playerSkillsStore, $filterItemsStore);
+	$: totalVisibleItems = categoriesOfSelectedSkill.reduce((total, category) => total + category.items.length, 0);
 
     function openPlayerSkillsModal() {
         modalStore.trigger({
@@ -61,13 +62,22 @@
     }
 </script>
 
+<ol class="breadcrumb-nonresponsive m-4 mb-6">
+	<li class="crumb"><a class="anchor" href="/">Home</a></li>
+	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+	<li class="crumb">Item Browser</li>
+</ol>
 
-<div class="mx-4 my-4 mb-12">
-	<h1 class="h1">Item browser</h1>
+<div class="mx-4 my-4 mb-6">
+	<h1 class="h1 mb-4">Item browser</h1>
+	<p>
+		Here, you can browse the craftable items in the game. Use the "filters" section below to narrow down your
+		search, or control whether to filter out items that can't be made with your levels.
+	</p>
 </div>
 
-<div class="p-4">
-	<Accordion class="p-4 variant-glass-surface">
+<div class="p-4 mb-6">
+	<Accordion class="variant-ghost-primary">
 		<AccordionItem class="">
 			<svelte:fragment slot="summary">Filters</svelte:fragment>
 			<svelte:fragment slot="content">
@@ -76,7 +86,7 @@
 				<label class="label mb-4">
 					<span>Show which skill?</span>
 					<select
-						class="select variant-filled-secondary"
+						class="select variant-soft-secondary"
 						id="skill-selector-dropdown"
 						bind:value={selectedSkill}
 					>
@@ -99,7 +109,7 @@
 				</SlideToggle>
 				<br>
 				<button
-					class="btn btn-sm variant-filled-secondary"
+					class="btn btn-sm variant-soft-secondary"
 					on:click={openPlayerSkillsModal}
 				>
 					Set my levels
@@ -109,8 +119,11 @@
 	</Accordion>
 </div>
 
-<div class="flex px-4">
-	<RadioGroup class="variant-glass-secondary ml-auto">
+<div class="flex justify-between m-4 mb-6">
+
+	<p>Showing {totalVisibleItems} items</p>
+
+	<RadioGroup class="variant-glass-secondary">
 		<RadioItem
 			bind:group={pageView}
 			name="justify"
@@ -135,11 +148,11 @@
 		<span class="h3 ml-4">{category.categoryName}</span>
 
 		<div
-			class="p-4 grid grid-cols-1 2xl:grid-cols-2"
+			class="p-4 gap-4 grid grid-cols-1 2xl:grid-cols-2"
 			style="align-items: start"
 		>
 			{#each category.items as item }
-				<div class="mb-4">
+				<div>
 					<GameItemCard
 						item={item}
 						compact={pageView === 0}

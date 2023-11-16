@@ -137,11 +137,12 @@
 <div class="game-item-ingredients-tree">
     <svg
         class="game-item-ingredients-tree__tree"
-        width="{ treeWidth }"
+        style="transform: scale(1.3)"
+        width="{ treeWidth - 100 }"
         height="{ treeHeight + 100 }"
-        viewBox="10 0 { treeWidth } { treeHeight }"
+        viewBox="0 0 { treeWidth } { treeHeight }"
     >
-        <g transform="">
+        <g>
             <g class="links"></g>
             <g class="nodes"></g>
         </g>

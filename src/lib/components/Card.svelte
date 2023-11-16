@@ -18,7 +18,7 @@
 
     {#if !compact}
         {#if slots.body || slots.footer}
-            <div class="p-4 bg-{variant}-50 text-{variant}-900 dark:bg-{variant}-900 dark:text-{variant}-50 {!slots.footer ? 'rounded-b-sm' : ''}">
+            <div class="p-4 text-{variant}-900 dark:bg-{variant}-900 dark:text-{variant}-50 {!slots.footer ? 'rounded-b-sm' : ''}">
                 <!-- Body slot -->
                 {#if slots.body}
                     <slot name="body"/>

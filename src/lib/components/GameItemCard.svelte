@@ -21,6 +21,7 @@
 
 <a
     href="{ compact ? `/item-browser/${item.id}` : '#' }"
+    class="{ compact ? 'cursor-pointer' : 'cursor-default' }"
 >
     <Card
         {enableBlur}

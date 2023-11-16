@@ -7,6 +7,7 @@
     import GameItemIngredientsTree from '$lib/components/GameItemIngredientsTree.svelte';
     import GameItemDataAccordion from '$lib/components/GameItemDataAccordion.svelte';
     import MaterialCostTree from '$lib/components/MaterialCostTree.svelte';
+    import _ from 'lodash';
 
     export let data: PageData;
     $: item = (data as any).itemDetails as GameItem;
@@ -18,8 +19,16 @@
 
 </script>
 
+<ol class="breadcrumb-nonresponsive m-4 mb-6">
+	<li class="crumb"><a class="anchor" href="/">Home</a></li>
+	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+	<li class="crumb"><a class="anchor" href="/item-browser/">Item Browser</a></li>
+    <li class="crumb-separator">&rsaquo;</li>
+    <li class="crumb">{item.name}</li>
+</ol>
+
 <!-- Title and image -->
-<div class="flex items-center p-4">
+<div class="flex items-center p-4 mb-6">
     <div class="rounded-full w-24 min-w-24 max-w-24 h-24 min-h-24 max-h-24 p-3 variant-soft-primary flex place-content-center">
         <img
             class="w-full h-auto object-contain"
@@ -31,6 +40,37 @@
         <strong class="text-lg">{item.name}</strong>
         <p>{item.examineText}</p>
     </div>
+</div>
+
+<div class="p-4 mb-6 flex gap-1">
+    <!-- Wiki link -->
+    <a
+        href="https://oldschool.runescape.wiki/w/{_.snakeCase(item.name)}"
+        target="_blank"
+    >
+        <div class="chip variant-filled-primary">
+            <img
+                class="rounded-full h-4 w-4 mr-2"
+                src="/other-images/osrs-wiki.png"
+                alt="OSRS Wiki icon"
+            >
+            Wiki
+        </div>
+    </a>
+    <!-- GE Tracker link -->
+    <a
+        href="https://www.ge-tracker.com/item/{item.id}"
+        target="_blank"
+    >
+        <div class="chip variant-filled-primary">
+            <img
+                class="rounded-full h-4 w-4 mr-2"
+                src="/other-images/ge-tracker.png"
+                alt="OSRS Wiki icon"
+            >
+            GE Tracker
+        </div>
+    </a>
 </div>
 
 <GameItemDataAccordion
@@ -45,37 +85,4 @@
 
 <div class="p-4 sm:p-10">
     <MaterialCostTree {item}/>
-</div>
-
-<!-- <div class="table-container p-4 sm:p-10">
-    <table class="table variant-glass-primary">
-        <thead>
-            <tr class="bg-primary-600">
-                <th scope="col"></th>
-                <th scope="colgroup">Low</th>
-                <th scope="colgroup">High</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">GE Value</th>
-                <td>{item.lowPrice}</td>
-                <td>{item.highPrice}</td>
-            </tr>
-            <tr>
-                <th scope="row">Material cost</th>
-                <td>{Math.ceil($materialCostLowStore)}</td>
-                <td>{Math.ceil($materialCostHighStore)}</td>
-            </tr>
-            <tr>
-                <th scope="row">Profit after materials</th>
-                <td>{item.lowPrice ? Math.ceil(item.lowPrice - $materialCostLowStore) : 'Insufficient data'}</td>
-                <td>{item.highPrice ? Math.ceil(item.highPrice - $materialCostHighStore) : 'Insufficient data'}</td>
-            </tr>
-        </tbody>
-    </table>
-</div> -->
-
-<div class="px-4 mb-10 sm:px-10">
-    <!-- Tree component with relational checkboxes will go here -->
 </div>
