@@ -152,7 +152,7 @@
     }
 
     :global(g.node:has(.not-counted)) {
-        fill: #bf176a;
+        fill: #541212;
     }
 
     @media (prefers-color-scheme: light) {
@@ -160,7 +160,7 @@
             fill: rgb(172, 202, 150);
         }
         :global(g.node:has(.not-counted)) {
-            fill: #eea3c8;
+            fill: #D95454;
         }
     }
 </style>

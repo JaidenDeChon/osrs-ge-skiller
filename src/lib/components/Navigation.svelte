@@ -24,7 +24,7 @@
 				<div class="flex flex-col gap-4">
 					<header>Made with ❤️ by Jaiden DeChon</header>
 		
-					<div class="flex gap-4">
+					<div class="flex flex-col gap-2">
 						<a
 							href="https://GitHub.com/JaidenDeChon"
 							target="_blank"
@@ -39,7 +39,7 @@
 							target="_blank"
 							class="btn btn-sm bg-secondary-500 w-full"
 						>
-							<i class="fa-brands fa-linkedin"></i>
+							<i class="fa-brands fa-linkedin mr-3"></i>
 							LinkedIn
 						</a>
 					</div>

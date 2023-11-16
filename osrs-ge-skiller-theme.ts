@@ -77,16 +77,16 @@ export const osrsGeSkillerTheme: CustomThemeConfig = {
 		"--color-warning-800": "140 107 5", // #8c6b05
 		"--color-warning-900": "115 88 4", // #735804
 		// error | #D41976 
-		"--color-error-50": "249 221 234", // #f9ddea
-		"--color-error-100": "246 209 228", // #f6d1e4
-		"--color-error-200": "244 198 221", // #f4c6dd
-		"--color-error-300": "238 163 200", // #eea3c8
-		"--color-error-400": "225 94 159", // #e15e9f
-		"--color-error-500": "212 25 118", // #D41976
-		"--color-error-600": "191 23 106", // #bf176a
-		"--color-error-700": "159 19 89", // #9f1359
-		"--color-error-800": "127 15 71", // #7f0f47
-		"--color-error-900": "104 12 58", // #680c3a
+		"--color-error-50": "250 234 234", // #FAEAEA
+		"--color-error-100": "246 213 213", // #F6D5D5
+		"--color-error-200": "237 171 171", // #EDABAB
+		"--color-error-300": "226 125 125", // #E27D7D
+		"--color-error-400": "217 84 84", // #D95454
+		"--color-error-500": "204 45 45", // #CC2D2D
+		"--color-error-600": "163 36 36", // #A32424
+		"--color-error-700": "121 27 27", // #791B1B
+		"--color-error-800": "84 18 18", // #541212
+		"--color-error-900": "42 9 9", // #2A0909
 		// surface | #001328 
 		"--color-surface-50": "217 220 223", // #d9dcdf
 		"--color-surface-100": "204 208 212", // #ccd0d4

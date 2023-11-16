@@ -99,7 +99,7 @@
 />
 
 <!-- Nav drawer -->
-<Drawer width="w-80">
+<Drawer width="w-96">
 	<Navigation />
 </Drawer>
 
@@ -107,7 +107,7 @@
 <AppShell
 	regionPage="relative"
 	slotPageHeader="shadow-lg"
-	slotSidebarLeft="w-0 lg:w-64 shadow-xl"
+	slotSidebarLeft="w-0 lg:w-80 shadow-xl bg-surface-500"
 >
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
