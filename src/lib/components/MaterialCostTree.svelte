@@ -131,6 +131,11 @@
         });
     }
 
+    function updateChecked(data: any): void {
+        const id = (data.detail.id);
+        if (checkedNodes.includes(id)) checkedNodes = checkedNodes.filter(itemId => itemId !== id);
+        else checkedNodes = [...checkedNodes, id];
+    }
 
     onMount(() => {
         // Get a version of the GameItem tree compatible with Skeleton tree component
@@ -145,7 +150,11 @@
 <Card>
     <!-- D3 Tree in header -->
     <svelte:fragment slot="header">
-        <GameItemIngredientsTree {item} />
+        <GameItemIngredientsTree
+            {item}
+            {checkedNodes}
+            on:itemClicked={updateChecked}
+        />
     </svelte:fragment>
 
     <!-- Skeleton relational tree in body -->

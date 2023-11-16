@@ -1,14 +1,19 @@
 <script lang="ts">
+    import { createEventDispatcher } from 'svelte';
     import { onMount } from 'svelte';
     import * as d3 from 'd3';
-
     import type { GameItem } from '$lib/models/GameItem';
 
+    const dispatch = createEventDispatcher();
+
     export let item: GameItem;
+    export let checkedNodes: string[] = [];
 
     const treeHeight = 200;
     let treeWidth = 400;
-    let xTransform: number;
+    let mounted = false;
+
+    $: updateTreeNodeStyles(checkedNodes);
 
     interface TreeData {
         name: string;
@@ -18,58 +23,21 @@
 
     onMount(() => {
         const screenWidth = Math.max(document.documentElement.clientWidth || 0, window.innerHeight || 0);
-        xTransform = screenWidth - treeWidth;
         const tree = transformGameItemToD3(item);
         d3Setup(tree);
+        mounted = true;
     });
+
+    function handleNodeClick(payload: any) {
+        const id = payload.data.itemData.id;
+        // Don't emit clicked if it was the root item
+        if (id === item.id) return;
+        dispatch('itemClicked', { id });
+    }
 
     function d3Setup(treeData: TreeData) {
         const root = d3.hierarchy(treeData as unknown);
 
-        // TODO - Maybe use this for a click event to toggle the material cost
-        // const handleEvents = function(selection) {
-        //     selection
-        //         .on('mouseover', function() {
-        //             let g = d3.select(this);
-        //             let n = g.select('.the-node');
-
-        //             if (n.classed('solid')) {
-        //                 n.transition()
-        //                     .duration(400)
-        //                     .style('fill', 'rgba(211, 0, 0, 0.8)')
-        //                     .attr('r', 18)
-        //             } else {
-        //                 n.transition()
-        //                     .duration(400)
-        //                     .style('fill', 'rgba(211, 0, 0, 0.8)')
-        //             }
-
-        //             g.select('label')
-        //                 .transition()
-        //                 .duration(700)
-        //                 .style('fill', 'white');
-        //         })
-        //         .on('mouseout', function() {
-        //             let g = d3.select(this);
-        //             let n = g.select('.the-node');
-
-        //             if(n.classed('solid')) {
-        //                 n.transition()
-        //                     .duration(400)
-        //                     .style('fill', "#696969" )
-        //                     .attr('r',14);
-        //             } else {
-        //                 n.transition()
-        //                     .duration(400)
-        //                     .style('fill', "rgba(255,255,255,0.2)" )
-        //             }
-        //                 g.select('label')
-        //                     .transition()
-        //                     .duration(700)
-        //                     .style('fill', "black")
-        //         })
-        // }
-    
         const clusterLayout = d3.cluster()
             .size([treeWidth, treeHeight])
             (root)
@@ -81,7 +49,7 @@
             .enter()
             .append('g')
             .classed('node', true)
-            // .call(handleEvents);
+            .on('click', (event, d) => handleNodeClick(d));
 
         const nodeHeight = 60;
         const nodeWidth = 140;
@@ -92,6 +60,12 @@
             .attr('cy', c => c.y)
             .attr('r', () => 28)
             .attr('stroke', 'rgb(11, 140, 97)');
+
+        // Apply 'parent' class to parent node
+        treeNodes.each(function(d) {
+            if (d.parent) return;
+            d3.select(this).select('circle').classed('parent', true);
+        });
 
         const imageDimensions = 33;
         treeNodes.append('image')
@@ -132,6 +106,19 @@
         return { name, children, itemData };
     }
 
+    function updateTreeNodeStyles(nodeIds: string[]) {
+        if (!mounted) return;
+        const treeNodes = d3.selectAll('.game-item-ingredients-tree__tree g.node');
+
+        // Apply styles or classes based on whether the node is checked
+        treeNodes.each(function(d) {
+            if (!d.parent) return;
+
+            d3.select(this).select('circle')
+                .classed('not-counted', !nodeIds.includes(d.data.itemData.id));
+        });
+    }
+
 </script>
 
 <div class="game-item-ingredients-tree">
@@ -156,12 +143,24 @@
     }
 
     :global(g.node) {
-        fill: rgb(7, 91, 63);
+        fill: #001328;
+        transition: fill 0.2s ease;
+    }
+
+    :global(g.node:not(:has(.parent))) {
+        cursor: pointer;
+    }
+
+    :global(g.node:has(.not-counted)) {
+        fill: #bf176a;
     }
 
     @media (prefers-color-scheme: light) {
         :global(g.node) {
             fill: rgb(172, 202, 150);
+        }
+        :global(g.node:has(.not-counted)) {
+            fill: #eea3c8;
         }
     }
 </style>
