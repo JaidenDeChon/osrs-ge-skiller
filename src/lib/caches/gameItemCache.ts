@@ -3,10 +3,10 @@ import type { InGameSkillNamesEnum } from '$lib/enums/InGameSkillNamesEnum';
 import { populateGameItems } from '$lib/services/game-items-service/getAllGameItems';
 
 // Full list of GameItems relevant to the app. Does not include every single GameItem.
-let allGameItems = [] as GameItem[];
+const allGameItems = [] as GameItem[];
 
 // GameItems separated by skill.
-let itemsBySkill = [] as GameItemsBySkill[];
+const itemsBySkill = [] as GameItemsBySkill[];
 
 /**
  * Populates the game item lists.
