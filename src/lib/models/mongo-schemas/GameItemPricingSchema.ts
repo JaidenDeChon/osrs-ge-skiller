@@ -24,4 +24,4 @@ const gameItemPricingSchema = new mongoose.Schema<IGameItemPricing>({
     lowAlch: Number
 });
 
-export const GameItemPricingCollection = mongoose.model<IGameItemPricing>('GameItemPricing', gameItemPricingSchema);
+export const GameItemPricingModel = mongoose.model<IGameItemPricing>('GameItemPricing', gameItemPricingSchema, 'game-item-pricing');

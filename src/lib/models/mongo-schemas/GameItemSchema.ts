@@ -1,4 +1,4 @@
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 import { InGameSkillNamesEnum } from '$lib/enums/InGameSkillNamesEnum';
 import type { GameItemCreationSpecs } from '../GameItem';
 
@@ -39,7 +39,7 @@ export const gameItemSchema = new mongoose.Schema<IGameItem>({
             }
         ],
         ingredients: [
-            {
+            new mongoose.Schema({
                 consumedDuringCreation: Boolean,
                 amount: Number,
                 // Recursively reference another GameItem
@@ -47,9 +47,9 @@ export const gameItemSchema = new mongoose.Schema<IGameItem>({
                     type: mongoose.Schema.Types.ObjectId,
                     ref: 'GameItem'
                 }
-            }
+            }, { _id: false })
         ]
     }
 });
 
-export const GameItemCollection = mongoose.model<IGameItem>('GameItem', gameItemSchema);
+export const GameItemModel = mongoose.model<IGameItem>('GameItem', gameItemSchema, 'game-items');

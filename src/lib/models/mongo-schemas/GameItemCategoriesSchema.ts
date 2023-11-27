@@ -20,4 +20,4 @@ export const gameItemCategoriesSchema = new mongoose.Schema<IGameItemCategory>({
     ]
 });
 
-export const GameItemCategoryCollection = mongoose.model<IGameItemCategory>('GameItemCategory', gameItemCategoriesSchema);
+export const GameItemCategoryModel = mongoose.model<IGameItemCategory>('GameItemCategory', gameItemCategoriesSchema, 'game-item-categories');

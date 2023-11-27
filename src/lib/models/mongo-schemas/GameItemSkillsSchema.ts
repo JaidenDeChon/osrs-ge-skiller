@@ -20,4 +20,4 @@ const gameItemSkillsSchema = new mongoose.Schema<IGameItemSkill>({
     ]
 });
 
-export const GameItemSkillsCollection = mongoose.model<IGameItemSkill>('GameItemSkills', gameItemSkillsSchema);
+export const GameItemSkillsModel = mongoose.model<IGameItemSkill>('GameItemSkills', gameItemSkillsSchema, 'game-item-skills');
