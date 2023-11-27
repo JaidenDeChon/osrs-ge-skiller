@@ -31,8 +31,9 @@ export async function checkEmpty(): Promise<void> {
  * @param itemId The ID of the item to find.
  * @returns The found item, or null if not found.
  */
-export async function getItemById(itemId: string): Promise<GameItem | null> {
+export async function getItemById(itemId: string | undefined): Promise<GameItem | GameItem[] | null> {
     await checkEmpty();
+    if (itemId === undefined) return allGameItems;
     const foundItem = allGameItems.find(item => item.id === itemId);
     return foundItem ?? null;
 }
