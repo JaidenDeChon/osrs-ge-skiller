@@ -107,7 +107,7 @@
 <AppShell
 	regionPage="relative"
 	slotPageHeader="shadow-lg"
-	slotSidebarLeft="w-0 lg:w-80 shadow-xl bg-surface-500"
+	slotSidebarLeft="w-0 lg:w-80 shadow-xl bg-surface-50 dark:bg-surface-500"
 >
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
