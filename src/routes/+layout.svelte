@@ -2,17 +2,15 @@
 	import { fly, fade } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
 	import { beforeNavigate, afterNavigate, disableScrollHandling } from '$app/navigation';
+	import AppHeader from '$lib/components/AppHeader.svelte';
 
 	// Skeleton
 	import '../app.postcss';
 	import {
 		AppShell,
-		AppBar,
 		storePopup,
-		autoModeWatcher,
 		initializeStores,
 		Drawer,
-		getDrawerStore,
 		getToastStore,
 		Toast,
 		Modal,
@@ -31,17 +29,12 @@
 
 	// Initialize skeleton stores
 	initializeStores();
-	const drawerStore = getDrawerStore();
 	const toastStore = getToastStore();
 
 	// Set up modal registry
 	const modalRegistry: Record<ModalNamesEnum, ModalComponent> = {
 		[ModalNamesEnum.PLAYER_SKILLS_MODAL]: { ref: SkillLevelsModal }
 	};
-
-	function openDrawer(): void {
-		drawerStore.open();
-	}
 
 	// Navigation transition-related functionality
 	const duration = 300;
@@ -81,11 +74,6 @@
     });
 </script>
 
-<!-- Light/dark mode handler -->
-<svelte:head>
-	{@html `<script>${autoModeWatcher.toString()} autoModeWatcher();</script>`}
-</svelte:head>
-
 <!-- Toast -->
 <Toast />
 
@@ -98,77 +86,23 @@
 	transitionOutParams={transitionOut}
 />
 
-<!-- Nav drawer -->
-<Drawer width="w-96">
+<Drawer width="w-20">
 	<Navigation />
 </Drawer>
 
 <!-- App Shell -->
 <AppShell
-	regionPage="relative"
-	slotPageHeader="shadow-lg"
-	slotSidebarLeft="w-0 lg:w-80 shadow-xl bg-surface-500"
+	slotSidebarLeft="overflow-y-hidden shadow-xl w-0 lg:w-20"
 >
-	<svelte:fragment slot="header">
-		<!-- App Bar -->
-		<AppBar
-			shadow="shadow-xl"
-			class="variant-soft-primary"
-		>
-
-			<!-- Beginning of app bar -->
-			<svelte:fragment slot="lead">
-				<div class="flex items-center">
-
-					<!-- Hamburger button (hidden on large screens) -->
-					<button
-						class="lg:hidden btn btn-sm mr-4 bg-primary-600 h-12 w-12"
-						on:click={openDrawer}
-					>
-						<span>
-							<svg
-								viewBox="0 0 100 80"
-								class="fill-token w-4 h-4"
-							>
-								<rect width="100" height="20" />
-								<rect width="100" height="20" y="30" />
-								<rect width="100" height="20" y="60" />
-							</svg>
-						</span>
-					</button>
-					<a
-						href="/"
-						class="w-0 h-0 invisible sm:visible sm:w-auto sm:h-auto"
-					>
-						<strong>osrs-ge-skiller</strong>
-					</a>
-				</div>
-			</svelte:fragment>
-
-			<!-- End of app bar -->
-			<svelte:fragment slot="trail">
-				<div class="sm-hidden">
-					<a
-						class="btn btn-sm bg-primary-600 text-surface-100"
-						href="/"
-					>
-						Home
-					</a>
-					<a
-						class="btn btn-sm bg-primary-600 text-surface-100"
-						href="/item-browser"
-					>
-						Item Browser
-					</a>
-				</div>
-			</svelte:fragment>
-		</AppBar>
-	</svelte:fragment>
-
 	<!-- Sidebar -->
 	<svelte:fragment slot="sidebarLeft">
 		<Navigation />
 	</svelte:fragment>
+
+	<!-- Header -->
+	<div class="gradient-background w-full h-64">
+		<AppHeader />
+	</div>
 
 	<!-- Page Route Content -->
 	{#key data.pathname}
@@ -183,6 +117,7 @@
 </AppShell>
 
 <style>
+
 	:global(html) {
 		-webkit-tap-highlight-color: rgba(128, 128, 128, 0.5);
 	}

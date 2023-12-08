@@ -1,7 +1,5 @@
 <script lang="ts">
-    import type {
-        GameItem
-    } from '$lib/models/GameItem';
+    import type { GameItem } from '$lib/models/GameItem';
     import GameItemDataAccordion from './GameItemDataAccordion.svelte';
     import Card from './Card.svelte';
 

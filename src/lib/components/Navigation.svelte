@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { getDrawerStore } from '@skeletonlabs/skeleton';
-	import Card from './Card.svelte';
+import { page } from '$app/stores';
+import { getDrawerStore, AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
+	// import Card from './Card.svelte';
 
 	const drawerStore = getDrawerStore();
 
@@ -9,8 +10,57 @@
 	}
 </script>
 
+<AppRail background="bg-primary-50 dark:bg-surface-500">
+	<svelte:fragment slot="lead">
+		<!-- Home -->
+		<AppRailAnchor
+			href="/"
+			selected={$page.url.pathname === '/'}
+			class="flex"
+		>
+			<i class="fa-solid fa-coins text-3xl"></i>
+		</AppRailAnchor>
+	</svelte:fragment>
+
+	<!-- Search -->
+	<AppRailAnchor
+		href="/"
+		selected={$page.url.pathname === '/search'}
+		class="flex"
+	>
+		<i class="fa-solid fa-magnifying-glass text-xl"></i>
+	</AppRailAnchor>
+
+	<!-- Watched -->
+	<AppRailAnchor
+		href="/"
+		selected={$page.url.pathname === '/watched'}
+		class="flex"
+	>
+		<i class="fa-solid fa-heart text-xl"></i>
+	</AppRailAnchor>
+
+	<!-- Levels -->
+	<AppRailAnchor
+		href="/"
+		selected={$page.url.pathname === '/levels'}
+		class="flex"
+	>
+		<i class="fa-solid fa-chart-simple text-xl"></i>
+	</AppRailAnchor>
+
+	<!-- Github -->
+	<svelte:fragment slot="trail">
+		<AppRailAnchor
+			href="https://github.com/JaidenDeChon"
+			class="flex"
+		>
+			<i class="fa-brands fa-github text-3xl"></i>
+		</AppRailAnchor>
+	</svelte:fragment>
+</AppRail>
 <nav class="list-nav p-4 flex flex-col h-full">
-	<ul>
+	<!-- <ul>
 		<li><a href="/" on:click={closeDrawer}>Home</a></li>
 		<li><a href="/my-character" on:click={closeDrawer}>Watched items</a></li>
 		<li><a href="/item-browser" on:click={closeDrawer}>Browse all items</a></li>
@@ -46,5 +96,5 @@
 				</div>
 			</svelte:fragment>
 		</Card>
-	</div>
+	</div> -->
 </nav>

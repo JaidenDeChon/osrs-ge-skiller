@@ -4,6 +4,7 @@
     import type { GameItem, GameItemsByCategory } from '$lib/models/GameItem';
     import { ModalNamesEnum } from '$lib/enums/ModalNamesEnum';
     import GameItemCard from '$lib/components/GameItemCard.svelte';
+	import GameItemCardNew from '$lib/components/GameItemCardNew.svelte';
     import { playerSkillsStore, type PlayerSkillsStoreType } from '$lib/stores/playerSkillsStore';
 	import { filterItemsStore } from '$lib/stores/filterItemBrowserByPlayerLevelsStore';
 
@@ -153,7 +154,7 @@
 		>
 			{#each category.items as item }
 				<div>
-					<GameItemCard
+					<!-- <GameItemCard
 						item={item}
 						compact={pageView === 0}
 						linkToIngredients={true}
@@ -162,7 +163,8 @@
 						showGeData
 						showAlchemy
 						isParent
-					/>
+					/> -->
+					<GameItemCardNew {item} />
 				</div>
 			{/each}
 		</div>
