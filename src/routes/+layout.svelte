@@ -1,22 +1,12 @@
 <script lang="ts">
-	import { fly, fade } from 'svelte/transition';
+	import '../app.postcss';
+	import { fly } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
 	import { beforeNavigate, afterNavigate, disableScrollHandling } from '$app/navigation';
+	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+	import { AppShell, storePopup, initializeStores, Drawer, getToastStore, Toast, Modal, type ModalComponent } from '@skeletonlabs/skeleton';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 
-	// Skeleton
-	import '../app.postcss';
-	import {
-		AppShell,
-		storePopup,
-		initializeStores,
-		Drawer,
-		getToastStore,
-		Toast,
-		Modal,
-		type ModalComponent
-	} from '@skeletonlabs/skeleton';
-	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
 	// Local app stuff
@@ -91,16 +81,14 @@
 </Drawer>
 
 <!-- App Shell -->
-<AppShell
-	slotSidebarLeft="overflow-y-hidden shadow-xl w-0 lg:w-20"
->
+<AppShell slotSidebarLeft="overflow-y-hidden shadow-xl w-0 lg:w-20">
 	<!-- Sidebar -->
 	<svelte:fragment slot="sidebarLeft">
 		<Navigation />
 	</svelte:fragment>
 
 	<!-- Header -->
-	<div class="gradient-background w-full h-64">
+	<div class="w-full relative z-20">
 		<AppHeader />
 	</div>
 
@@ -109,7 +97,7 @@
 		<div
 			in:fly={ { ...transitionIn, delay } }
 			out:fly={ transitionOut }
-			class="mx-auto max-w-screen-2xl w-full md:px-12"
+			class="mx-auto w-full"
 		>
 			<slot />
 		</div>
@@ -133,7 +121,7 @@
 	}
 
 	:global(#page) {
-		overflow-y: scroll;
+		overflow-y: auto;
 	}
 
 	:global(.modal-backdrop) {

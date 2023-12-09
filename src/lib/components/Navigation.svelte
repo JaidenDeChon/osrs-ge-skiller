@@ -1,7 +1,6 @@
 <script lang="ts">
-import { page } from '$app/stores';
-import { getDrawerStore, AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
-	// import Card from './Card.svelte';
+	import { page } from '$app/stores';
+	import { getDrawerStore, AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
 
 	const drawerStore = getDrawerStore();
 
@@ -17,6 +16,7 @@ import { getDrawerStore, AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
 			href="/"
 			selected={$page.url.pathname === '/'}
 			class="flex"
+			on:click={closeDrawer}
 		>
 			<i class="fa-solid fa-coins text-3xl"></i>
 		</AppRailAnchor>
@@ -27,6 +27,7 @@ import { getDrawerStore, AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
 		href="/"
 		selected={$page.url.pathname === '/search'}
 		class="flex"
+		on:click={closeDrawer}
 	>
 		<i class="fa-solid fa-magnifying-glass text-xl"></i>
 	</AppRailAnchor>
@@ -36,17 +37,9 @@ import { getDrawerStore, AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
 		href="/"
 		selected={$page.url.pathname === '/watched'}
 		class="flex"
+		on:click={closeDrawer}
 	>
 		<i class="fa-solid fa-heart text-xl"></i>
-	</AppRailAnchor>
-
-	<!-- Levels -->
-	<AppRailAnchor
-		href="/"
-		selected={$page.url.pathname === '/levels'}
-		class="flex"
-	>
-		<i class="fa-solid fa-chart-simple text-xl"></i>
 	</AppRailAnchor>
 
 	<!-- Github -->

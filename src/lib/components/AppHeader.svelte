@@ -9,7 +9,7 @@
 	}
 </script>
 
-<div class="h-20 flex items-center gap-6 mr-8">
+<div class="h-20 flex items-center gap-6 pr-8 mx-auto max-w-6xl sticky z-20">
     <!-- Hamburger button; hidden on large screens -->
     <button
         class="flex items-center justify-center h-20 w-20 lg:hidden"
