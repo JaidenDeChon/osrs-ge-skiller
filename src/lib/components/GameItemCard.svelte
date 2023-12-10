@@ -19,7 +19,7 @@
 </script>
 
 <a
-    href="{ compact ? `/item-browser/${item.id}` : '#' }"
+    href="{ compact ? `/item/${item.id}` : '#' }"
     class="{ compact ? 'cursor-pointer' : 'cursor-default' }"
 >
     <Card
@@ -64,7 +64,7 @@
             {#if linkToIngredients}
                 <div class="p-4">
                     <a
-                        href="/item-browser/{item.id}"
+                        href="/items/{item.id}"
                         class="btn variant-filled-primary w-full"
                     >
                         Details

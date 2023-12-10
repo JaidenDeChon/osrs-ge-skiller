@@ -1,12 +1,18 @@
 <script lang="ts">
-    import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
+    import { modeCurrent } from '@skeletonlabs/skeleton';
     import type { GameItem } from '$lib/models/GameItem';
+    import GameItemDataAccordion from './GameItemDataAccordion.svelte';
+    import ImageWithTextPill from './ImageWithTextPill.svelte';
 
     export let item: GameItem;
-    let selectedBodyView: number = 0;
+    export let amount: number = -1;
+    export let linkToIngredients = false;
+    export let enableTransparency = true;
+
+    const cardClasses = `${ enableTransparency ? 'variant-glass-primary' : 'variant-filled-surface' } border border-solid border-primary-700 shadow-xl rounded-md`;
 </script>
 
-<div class="variant-glass-primary border border-solid border-primary-700 shadow-xl rounded-md">
+<div class="{cardClasses} { $modeCurrent ? 'bg-surface-50' : '' }">
     <!-- Header -->
     <div class="p-6 flex gap-6">
         <div class="flex items-center justify-center w-16 h-16 p-3 rounded-full variant-ghost-primary">
@@ -17,23 +23,60 @@
             >
         </div>
         <div class="flex flex-col gap-2">
-            <h3 class="h3 pb-0">{item.name}</h3>
-            <span class="text-sm">{item.examineText}</span>
+            <h3 class="h3 pb-0 { $modeCurrent ? 'text-primary-900' : 'text-primary-300' }">
+                {item.name}
+                {#if amount !== -1}<span class="text-sm opacity-75">({amount})</span>{/if}
+            </h3>
+            <span class="text-sm { $modeCurrent ? 'text-primary-700' : 'text-primary-100' }">{item.examineText}</span>
         </div>
     </div>
 
     <!-- Body -->
-    <div class="p-6 rounded-b-md bg-surface-100 dark:bg-surface-600">
-        <RadioGroup
-            display="flex"
-            background="bg-primary-100 dark:bg-primary-900"
-            border="border border-3 border-primary-500"
-            hover="hover:variant-glass-primary"
-            active="variant-filled-primary"
-        >
-            <RadioItem bind:group={selectedBodyView} name="justify" value={0}>Value</RadioItem>
-            <RadioItem bind:group={selectedBodyView} name="justify" value={1}>Skill Data</RadioItem>
-            <RadioItem bind:group={selectedBodyView} name="justify" value={2}>Ingredients</RadioItem>
-        </RadioGroup>
+    <div class="p-6 flex flex-col gap-4 rounded-b-md variant-filled-surface {$modeCurrent ? 'bg-surface-50' : ''}">
+
+        <div class="flex flex-col gap-4 xl:flex-row">
+            <ImageWithTextPill
+                src="item-images/coins-lots.png"
+                alt="a pile of coins"
+            >
+                <div class="flex flex-col mr-3">
+                    <p class="font-bold">Current Price</p>
+                    <p>
+                        {item.highPrice} <span class="text-xs opacity-75">(high)</span>
+                        {item.lowPrice} <span class="text-xs opacity-75">(low)</span>
+                    </p>
+                </div>
+            </ImageWithTextPill>
+
+            <ImageWithTextPill
+                src="spell-images/high-level-alchemy.png"
+                alt="high alchemcy spell icon"
+            >
+                <div class="flex flex-col mr-3">
+                    <p class="font-bold">Alchemy</p>
+                    <p>
+                        {item.highAlch} <span class="text-xs opacity-75">(high)</span>
+                        {item.lowAlch} <span class="text-xs opacity-75">(low)</span>
+                    </p>
+                </div>
+            </ImageWithTextPill>
+        </div>
+
+        <GameItemDataAccordion
+            {item}
+            linkToIngredients
+            showXpStats
+            showTree
+            treeColumnCount="{1}"
+        />
+
+        {#if linkToIngredients}
+            <a
+                href="/item/{item.id}"
+                class="btn variant-filled-primary w-full"
+            >
+                Details
+            </a>
+        {/if}
     </div>
 </div>

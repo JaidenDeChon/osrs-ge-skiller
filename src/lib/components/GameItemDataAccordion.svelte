@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
+    import { Accordion, AccordionItem, modeCurrent } from '@skeletonlabs/skeleton';
     import type {
         GameItem,
         SkillLevelDesignation,
@@ -51,7 +51,9 @@
                 />
             </svelte:fragment>
 
-            <svelte:fragment slot="summary">GE price data</svelte:fragment>
+            <svelte:fragment slot="summary">
+                <p class="{ $modeCurrent ? 'text-primary-900' : 'text-primary-100' }">GE price data</p>
+            </svelte:fragment>
 
             <svelt:fragment slot="content">
                 <div class="flex flex-col sm:flex-row sm:justify-start gap-3 md:flex-row justify-evenly">
@@ -85,7 +87,9 @@
                 />
             </svelte:fragment>
 
-            <svelte:fragment slot="summary">Skill data</svelte:fragment>
+            <svelte:fragment slot="summary">
+                <p class="{ $modeCurrent ? 'text-primary-900' : 'text-primary-100' }">Skill data</p>
+            </svelte:fragment>
 
             <svelt:fragment slot="content">
                 <div class="flex flex-col sm:flex-row sm:justify-start gap-3 md:flex-row justify-evenly">
@@ -122,7 +126,9 @@
                 >
             </svelte:fragment>
 
-            <svelte:fragment slot="summary">Alchemy values</svelte:fragment>
+            <svelte:fragment slot="summary">
+                <p class="{ $modeCurrent ? 'text-primary-900' : 'text-primary-100' }">Alchemy values</p>
+            </svelte:fragment>
 
             <svelte:fragment slot="content">
                 <div class="flex flex-col sm:flex-row sm:justify-start gap-3 md:flex-row justify-evenly">
@@ -155,7 +161,9 @@
                 </div>
             </svelte:fragment>
 
-            <svelte:fragment slot="summary">Ingredients</svelte:fragment>
+            <svelte:fragment slot="summary">
+                <p class="{ $modeCurrent ? 'text-primary-900' : 'text-primary-100' }">Ingredients</p>
+            </svelte:fragment>
 
             <svelte:fragment slot="content">
                 <div class="grid gap-6 {treeColumnCount ? `grid-cols-${treeColumnCount}` : 'grid-cols-1 xl:grid-cols-2'}" style="align-items: start">

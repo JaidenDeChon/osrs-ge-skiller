@@ -37,17 +37,17 @@
 	let loadingToastId = '';
 
 	beforeNavigate(() => {
-		// Show a loading toast so they know we're workig on it.
+		// Show a loading toast so they know we're working on it.
 		toastStore.trigger({
 			autohide: false,
 			hoverable: false,
 			message: '⏳ Loading...',
 			hideDismiss: true,
-			classes: 'variant-filled-surface',
+			classes: 'variant-filled-secondary shadow-lg',
 			callback(response) {
 				loadingToastId = response.id;
 			},
-		})
+		});
 	});
 
 	afterNavigate(() => {

@@ -4,7 +4,7 @@
     export let src: string;
     export let alt: string;
 
-    export let title: string;
+    export let title = '';
     export let subtitle = '';
     export let subtitleAside = '';
 </script>
@@ -14,12 +14,14 @@
         {src}
         {alt}
     >
-        <strong class="opacity-70 mr-4">{title}</strong>
-        <p class="mr-4">
-            {subtitle}
-            {#if subtitleAside}
-                <span class="text-sm opacity-70">{subtitleAside}</span>
-            {/if}
-        </p>
+        <slot>
+            <strong class="opacity-70 mr-4">{title}</strong>
+            <p class="mr-4">
+                {subtitle}
+                {#if subtitleAside}
+                    <span class="text-sm opacity-70">{subtitleAside}</span>
+                {/if}
+            </p>
+        </slot>
     </ImageWithText>
 </div>

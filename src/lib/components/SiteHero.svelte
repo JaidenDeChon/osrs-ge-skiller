@@ -7,8 +7,7 @@
 	function fireStatsModal() {
 		modalStore.trigger({
 			type: 'component',
-			component: ModalNamesEnum.PLAYER_SKILLS_MODAL,
-			meta: { navigateToItemBrowserUponClose: true }
+			component: ModalNamesEnum.PLAYER_SKILLS_MODAL
 		});
 	}
 </script>

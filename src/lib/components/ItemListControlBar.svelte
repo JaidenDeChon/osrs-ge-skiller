@@ -1,11 +1,13 @@
 <script lang="ts">
+    import { createEventDispatcher } from 'svelte';
     import { SlideToggle, RadioGroup, RadioItem, type PopupSettings, popup } from '@skeletonlabs/skeleton';
     import { getModalStore } from '@skeletonlabs/skeleton';
 	import { ModalNamesEnum } from '$lib/enums/ModalNamesEnum';
 
     const modalStore = getModalStore();
+    const dispatch = createEventDispatcher();
 
-    let currentView = 0;
+    export let viewMode: 0 | 1;
 
     const popupClick: PopupSettings = {
         event: 'click',
@@ -27,13 +29,12 @@
     function fireStatsModal() {
 		modalStore.trigger({
 			type: 'component',
-			component: ModalNamesEnum.PLAYER_SKILLS_MODAL,
-			meta: { navigateToItemBrowserUponClose: true }
+			component: ModalNamesEnum.PLAYER_SKILLS_MODAL
 		});
 	}
 </script>
 
-<div class="min-h-min w-full max-w-6xl flex flex-col justify-between items-center lg:gap-4 bg-surface-50 dark:bg-surface-800 lg:bg-transparent dark:lg:bg-transparent lg:flex-row border border-x-0 border-t-0 border-b-1 border-surface-300 dark:border-surface-400 lg:border-0 lg:mx-auto">
+<div class="min-h-min w-full max-w-6xl flex flex-col justify-between items-center lg:gap-4 lg:mt-4 bg-surface-50 dark:bg-surface-800 lg:bg-transparent dark:lg:bg-transparent lg:flex-row border border-x-0 border-t-0 border-b-1 border-surface-300 dark:border-surface-400 lg:border-0 lg:mx-auto">
     <!-- Controls whether to exclude items not relevant to the user's skills -->
     <div class="h-12 w-full flex items-center justify-start gap-4 px-8 border border-x-0 border-t-0 border-b-1 border-surface-300 dark:border-surface-400 lg:border-0 lg:w-auto">
         <SlideToggle
@@ -100,8 +101,23 @@
                 hover="hover:variant-glass-primary"
                 active="variant-filled-primary"
             >
-                <RadioItem bind:group={currentView} name="justify" value={0}><i class="fa-solid fa-table-cells-large"></i></RadioItem>
-                <RadioItem bind:group={currentView} name="justify" value={1}><i class="fa-solid fa-bars"></i></RadioItem>
+                <RadioItem
+                    bind:group={viewMode}
+                    name="justify"
+                    value={0}
+                    on:change={(value) => dispatch('layout-change', 0)}
+                >
+                    <i class="fa-solid fa-table-cells-large"></i>
+                </RadioItem>
+                
+                <RadioItem
+                    bind:group={viewMode}
+                    name="justify"
+                    value={1}
+                    on:change={(value) => dispatch('layout-change', 1)}
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </RadioItem>
             </RadioGroup>
         </div>
     </div>

@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
     import type { SvelteComponent } from 'svelte';
     import { playerSkillsStore } from '$lib/stores/playerSkillsStore';
 	import { getModalStore } from '@skeletonlabs/skeleton';
-    import { filterItemsStore } from '$lib/stores/filterItemBrowserByPlayerLevelsStore';
 
 	export let parent: SvelteComponent;
 
@@ -18,10 +16,6 @@
         $playerSkillsStore.fletching = fletchingLevel;
         $playerSkillsStore.smithing = smithingLevel;
 
-        if ($modalStore[0].meta?.navigateToItemBrowserUponClose) {
-            filterItemsStore.set(true);
-            goto('/item-browser/');
-        }
 		modalStore.close();
 	}
 
