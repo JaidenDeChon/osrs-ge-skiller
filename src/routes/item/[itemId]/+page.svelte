@@ -18,7 +18,7 @@
 
 </script>
 
-<div class="p-4 max-w-6xl mx-auto">
+<div class="px-8 py-4 max-w-6xl mx-auto">
     <!-- Title and image -->
     <div class="flex items-center mb-6">
         <div class="rounded-full w-24 min-w-24 max-w-24 h-24 min-h-24 max-h-24 p-3 variant-soft-primary flex place-content-center">
