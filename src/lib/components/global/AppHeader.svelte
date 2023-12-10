@@ -9,7 +9,7 @@
 	}
 </script>
 
-<div class="h-20 flex items-center gap-6 pr-8 mx-auto max-w-6xl sticky z-20">
+<div class="h-20 flex items-center gap-6 pr-8 mx-auto max-w-6xl">
     <!-- Hamburger button; hidden on large screens -->
     <button
         class="flex items-center justify-center h-20 w-20 lg:hidden"
@@ -18,7 +18,7 @@
         <i class="fa-solid fa-burger text-2xl"></i>
     </button>
 
-    <p class="lg:ml-8 font-bold">osrs-ge-skiller</p>
+    <a href="/" class="lg:ml-8 font-bold">osrs-ge-skiller</a>
 
     <div class="absolute m-auto left-0 right-0 w-min hidden lg:block">
         <SearchBar />
@@ -33,10 +33,7 @@
         />
     </div>
 
-    <button
-        class="flex items-center justify-center"
-        on:click={openDrawer}
-    >
+    <button class="flex items-center justify-center">
         <i class="fa-solid fa-bell"></i>
     </button>
 </div>
