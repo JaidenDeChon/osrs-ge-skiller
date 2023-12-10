@@ -20,7 +20,7 @@
 		<!-- Noise filter -->
 		<div class="hero-gradient-noise w-full h-full bg-repeat bg-contain">
 			<!-- Text content -->
-			<div class="mx-auto pt-24 lg:pt-32 pb-24 lg:left-20 flex flex-col justify-center p-8 max-w-6xl relative z-10">
+			<div class="mx-auto pt-24 lg:pt-32 pb-24 flex flex-col justify-center p-8 max-w-6xl relative z-10">
 				<h1 class="h1 mb-5">👋 Welcome to osrs-ge-skiller!</h1>
 		
 				<p>Find the most profitable OSRS items you can make given your skill levels.</p>
