@@ -9,7 +9,7 @@
     export let linkToIngredients = false;
     export let enableTransparency = true;
 
-    const cardClasses = `${ enableTransparency ? 'variant-glass-primary' : 'variant-filled-surface' } border border-solid border-primary-700 shadow-xl rounded-md`;
+    const cardClasses = `${ enableTransparency ? 'variant-glass-primary' : 'variant-filled-surface' } card border border-solid border-primary-700 rounded-md`;
 </script>
 
 <div class="{cardClasses} { $modeCurrent ? 'bg-surface-50' : '' }">
