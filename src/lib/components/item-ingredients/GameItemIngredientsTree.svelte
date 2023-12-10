@@ -1,6 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
     import { onMount } from 'svelte';
+    import { modeCurrent } from '@skeletonlabs/skeleton';
     import * as d3 from 'd3';
     import type { GameItem } from '$lib/models/GameItem';
 
@@ -121,7 +122,7 @@
 
 </script>
 
-<div class="game-item-ingredients-tree">
+<div class="game-item-ingredients-tree { modeCurrent ? 'game-item-ingredients-tree--light' : 'game-item-ingredients-tree--dark' }">
     <svg
         class="game-item-ingredients-tree__tree"
         style="transform: scale(1.3)"
@@ -142,25 +143,19 @@
         margin: 0 auto;
     }
 
-    :global(g.node) {
-        fill: #001328;
-        transition: fill 0.2s ease;
-    }
-
     :global(g.node:not(:has(.parent))) {
         cursor: pointer;
     }
 
-    :global(g.node:has(.not-counted)) {
-        fill: #541212;
+    :global(.game-item-ingredients-tree--dark g.node) {
+        transition: fill 0.2s ease;
     }
 
-    @media (prefers-color-scheme: light) {
-        :global(g.node) {
-            fill: rgb(172, 202, 150);
-        }
-        :global(g.node:has(.not-counted)) {
-            fill: #D95454;
-        }
+    :global(g.node) {
+        fill: rgb(172, 202, 150);
+    }
+
+    :global(g.node:has(.not-counted)) {
+        fill: #D95454;
     }
 </style>

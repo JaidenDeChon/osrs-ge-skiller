@@ -5,13 +5,13 @@
 	import { beforeNavigate, afterNavigate, disableScrollHandling } from '$app/navigation';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { AppShell, storePopup, initializeStores, Drawer, getToastStore, Toast, Modal, type ModalComponent } from '@skeletonlabs/skeleton';
-	import AppHeader from '$lib/components/AppHeader.svelte';
+	import AppHeader from '$lib/components/global/AppHeader.svelte';
 
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
 	// Local app stuff
 	import { ModalNamesEnum } from '$lib/enums/ModalNamesEnum';
-	import Navigation from '$lib/components/Navigation.svelte';
+	import Navigation from '$lib/components/global/Navigation.svelte';
 	import SkillLevelsModal from '$lib/components/modal/SkillLevelsModal.svelte';
 
 	// Grabs the data from +layout.ts

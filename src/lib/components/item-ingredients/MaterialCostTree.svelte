@@ -1,8 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
 	import type { GameItem } from '$lib/models/GameItem';
-	import { RecursiveTreeView, type TreeViewNode } from '@skeletonlabs/skeleton';
-    import Card from './Card.svelte';
+	import { RecursiveTreeView, RadioGroup, RadioItem, type TreeViewNode } from '@skeletonlabs/skeleton';
     import GameItemIngredientsTree from './GameItemIngredientsTree.svelte';
 
     export let item: GameItem;
@@ -11,6 +10,7 @@
     let nodes: TreeViewNode[] = [];
     let checkedNodes: string[] = [];
     let indeterminateNodes: string[] = [];
+    let viewMode = 0 as 0 | 1; // 0 for tree, 1 for hierarchy
 
     $: materialCostHigh = Math.ceil(calculateHighMaterialCost(checkedNodes));
     $: materialCostLow = Math.ceil(calculateLowMaterialCost(checkedNodes));
@@ -147,52 +147,75 @@
     });
 </script>
 
-<Card>
-    <!-- D3 Tree in header -->
-    <svelte:fragment slot="header">
-        <GameItemIngredientsTree
-            {item}
-            {checkedNodes}
-            on:itemClicked={updateChecked}
-        />
-    </svelte:fragment>
+<div class="card variant-ghost-primary p-4 flex flex-col gap-4 lg:flex-row">
 
-    <!-- Skeleton relational tree in body -->
-    <svelte:fragment slot="body">
-        <table class="table variant-ghost-primary mb-4">
-            <thead>
-                <tr class="variant-filled-primary">
-                    <th scope="col"></th>
-                    <th scope="colgroup">Low</th>
-                    <th scope="colgroup">High</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">GE Value</th>
-                    <td>{item.lowPrice}</td>
-                    <td>{item.highPrice}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Material cost</th>
-                    <td>{materialCostLow}</td>
-                    <td>{materialCostHigh}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Profit after materials</th>
-                    <td>{highNetProfit}</td>
-                    <td>{lowNetProfit}</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Tree type switcher (visual vs. nested) -->
+    <div class="flex flex-col gap-4 lg:w-1/2">
 
-        <RecursiveTreeView
-            class="variant-ghost-primary p-4"
-            selection
-            multiple
-            {nodes}
-            bind:checkedNodes={checkedNodes}
-            bind:indeterminateNodes={indeterminateNodes}
-        />
-    </svelte:fragment>
-</Card>
+        <div class="ml-auto lg:ml-0 relative z-10">
+            <RadioGroup
+                background="bg-primary-100 dark:bg-primary-900"
+                border="border border-3 border-primary-500"
+                hover="hover:variant-glass-primary"
+                active="variant-filled-primary"
+            >
+                <RadioItem bind:group={viewMode} name="view" value={0}>
+                    <i class="fa-solid fa-network-wired"></i>
+                </RadioItem>
+                <RadioItem bind:group={viewMode} name="view" value={1}>
+                    <i class="fa-solid fa-bars"></i>
+                </RadioItem>
+            </RadioGroup>
+        </div>
+
+        <!-- Not using {#if} so that D3 doesn't lose sync -->
+        <div class={viewMode === 0 ? 'visible' : 'hidden'}>
+            <!-- D3 Tree -->
+                <GameItemIngredientsTree
+                {item}
+                {checkedNodes}
+                on:itemClicked={updateChecked}
+            />
+        </div>
+
+        {#if viewMode === 1}
+            <!-- Skeleton relational tree -->
+            <RecursiveTreeView
+                class="variant-ghost-primary p-4"
+                selection
+                multiple
+                {nodes}
+                bind:checkedNodes={checkedNodes}
+                bind:indeterminateNodes={indeterminateNodes}
+            />
+        {/if}
+    </div>
+
+    <!-- Table -->
+    <table class="table variant-ghost-primary lg:w-1/2">
+        <thead>
+            <tr class="variant-filled-primary">
+                <th scope="col"></th>
+                <th scope="colgroup">Low</th>
+                <th scope="colgroup">High</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">GE Value</th>
+                <td>{item.lowPrice}</td>
+                <td>{item.highPrice}</td>
+            </tr>
+            <tr>
+                <th scope="row">Material cost</th>
+                <td>{materialCostLow}</td>
+                <td>{materialCostHigh}</td>
+            </tr>
+            <tr>
+                <th scope="row">Profit after materials</th>
+                <td>{highNetProfit}</td>
+                <td>{lowNetProfit}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

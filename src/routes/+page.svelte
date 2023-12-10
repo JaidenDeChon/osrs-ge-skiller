@@ -7,10 +7,10 @@
 	import type { GameItemsByCategory } from '$lib/models/GameItem';
 	import { playerSkillsStore, type PlayerSkillsStoreType } from '$lib/stores/playerSkillsStore';
 	import { filterItemsStore } from '$lib/stores/filterItemBrowserByPlayerLevelsStore';
-	import SiteHero from '$lib/components/SiteHero.svelte';
-	import ItemListControlBar from '$lib/components/ItemListControlBar.svelte';
-	import GameItemCardNew from '$lib/components/GameItemCardNew.svelte';
-	import GameItemCardCompact from '$lib/components/GameItemCardCompact.svelte';
+	import SiteHero from '$lib/components/global/SiteHero.svelte';
+	import ItemListControlBar from '$lib/components/global/ItemListControlBar.svelte';
+	import GameItemCardNew from '$lib/components/common/GameItemCard.svelte';
+	import GameItemCardCompact from '$lib/components/common/GameItemCardCompact.svelte';
 
 	const toastStore = getToastStore();
 
