@@ -1,11 +1,18 @@
 <script lang="ts">
 	import '../app.postcss';
+	import type { ComponentEvents } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
 	import { beforeNavigate, afterNavigate, disableScrollHandling } from '$app/navigation';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { AppShell, storePopup, initializeStores, Drawer, getToastStore, Toast, Modal, type ModalComponent } from '@skeletonlabs/skeleton';
 	import AppHeader from '$lib/components/global/AppHeader.svelte';
+
+	let scrollPosition = 0;
+
+	function scrollHandler(event: ComponentEvents<AppShell>['scroll']) {
+		scrollPosition = event.currentTarget.scrollTop;
+	}
 
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
@@ -81,16 +88,21 @@
 </Drawer>
 
 <!-- App Shell -->
-<AppShell slotSidebarLeft="overflow-y-hidden shadow-xl w-0 lg:w-20">
+<AppShell
+	regionPage="relative"
+	slotPageHeader="sticky top-0 z-50 transition-colors {scrollPosition === 0 ? '' : 'variant-filled-surface'}"
+	slotSidebarLeft="overflow-y-hidden shadow-xl w-0 lg:w-20"
+	on:scroll={scrollHandler}
+>
 	<!-- Sidebar -->
 	<svelte:fragment slot="sidebarLeft">
 		<Navigation />
 	</svelte:fragment>
 
 	<!-- Header -->
-	<div class="w-full relative z-20">
+	<svelte:fragment slot="pageHeader">
 		<AppHeader />
-	</div>
+	</svelte:fragment>
 
 	<!-- Page Route Content -->
 	{#key data.pathname}
