@@ -8,6 +8,7 @@
     export let amount: number = -1;
     export let linkToIngredients = false;
     export let enableTransparency = true;
+    export let useSingleColumnImageTextPills = false;
 
     const cardClasses = `${ enableTransparency ? 'variant-glass-primary' : 'variant-filled-surface' } card border border-solid border-primary-700 rounded-md`;
 </script>
@@ -34,7 +35,7 @@
     <!-- Body -->
     <div class="p-6 flex flex-col gap-4 rounded-b-md variant-filled-surface {$modeCurrent ? 'bg-surface-50' : ''}">
 
-        <div class="flex flex-col gap-4 xl:flex-row">
+        <div class="flex flex-col gap-4 xl:flex-row { useSingleColumnImageTextPills ? '!flex-col' : '' }">
             <ImageWithTextPill
                 src="item-images/coins-lots.png"
                 alt="a pile of coins"
@@ -64,7 +65,6 @@
 
         <GameItemDataAccordion
             {item}
-            linkToIngredients
             showXpStats
             showTree
             treeColumnCount="{1}"

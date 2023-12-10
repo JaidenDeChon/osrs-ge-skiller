@@ -166,17 +166,13 @@
             </svelte:fragment>
 
             <svelte:fragment slot="content">
-                <div class="grid gap-6 {treeColumnCount ? `grid-cols-${treeColumnCount}` : 'grid-cols-1 xl:grid-cols-2'}" style="align-items: start">
+                <div class="grid gap-6">
                     {#each ingredients as ingredient}
                         <GameItemCard
                             item={ingredient.item}
-                            enableBlur={false}
                             amount={ingredient.amount}
                             {linkToIngredients}
-                            showXpStats
-                            showGeData
-                            showAlchemy
-                            showTree
+                            useSingleColumnImageTextPills
                         />
                     {/each}
                 </div>
