@@ -1,4 +1,4 @@
-import type { PageLoad } from './$types';
+import type { PageLoad } from '../../$types';
 import type { GameItem } from '$lib/models/GameItem';
 
 export const load: PageLoad = async ({ params, fetch }) => {

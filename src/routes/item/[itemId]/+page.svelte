@@ -1,7 +1,7 @@
 <script lang="ts">
 
 	import { onNavigate } from '$app/navigation';
-    import type { PageData } from '../$types';
+    import type { PageData } from '../../$types';
     import type { GameItem } from '$lib/models/GameItem';
     import { materialCostLowStore, materialCostHighStore } from '$lib/stores/materialCostStore';
     import GameItemDataAccordion from '$lib/components/GameItemDataAccordion.svelte';
@@ -17,14 +17,6 @@
     });
 
 </script>
-
-<ol class="breadcrumb-nonresponsive m-4 mb-6">
-	<li class="crumb"><a class="anchor" href="/">Home</a></li>
-	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
-	<li class="crumb"><a class="anchor" href="/item-browser/">Item Browser</a></li>
-    <li class="crumb-separator">&rsaquo;</li>
-    <li class="crumb">{item.name}</li>
-</ol>
 
 <!-- Title and image -->
 <div class="flex items-center p-4 mb-6">
@@ -56,6 +48,7 @@
             Wiki
         </div>
     </a>
+
     <!-- GE Tracker link -->
     <a
         href="https://www.ge-tracker.com/item/{item.id}"
