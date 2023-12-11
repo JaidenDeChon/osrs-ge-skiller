@@ -6,7 +6,10 @@ export interface IGameItem {
     id: string;
     name: string;
     image: string;
+    examineText?: string;
     creationSpecs?: GameItemCreationSpecs;
+    highAlch?: number;
+    lowAlch?: number;
 }
 
 export const gameItemSchema = new mongoose.Schema<IGameItem>({
@@ -21,6 +24,18 @@ export const gameItemSchema = new mongoose.Schema<IGameItem>({
     image: {
         type: String,
         required: true
+    },
+    examineText: {
+        type: String,
+        required: true
+    },
+    highAlch: {
+        type: Number,
+        required: false
+    },
+    lowAlch: {
+        type: Number,
+        required: false
     },
     creationSpecs: {
         experienceGranted: [
@@ -52,4 +67,12 @@ export const gameItemSchema = new mongoose.Schema<IGameItem>({
     }
 });
 
-export const GameItemModel = mongoose.model<IGameItem>('GameItem', gameItemSchema, 'game-items');
+let GameItemModel: mongoose.Model<IGameItem>;
+
+if (mongoose.models.GameItem) {
+    GameItemModel = mongoose.models.GameItem;
+} else {
+    GameItemModel = mongoose.model<IGameItem>('GameItem', gameItemSchema, 'game-items');
+}
+
+export { GameItemModel };

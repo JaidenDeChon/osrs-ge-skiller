@@ -4,10 +4,8 @@ interface IGameItemPricing {
     associatedGameItemDocId: mongoose.Types.ObjectId;
     highPrice: number;
     lowPrice: number;
-    highTime: Date;
-    lowTime: Date;
-    highAlch: number;
-    lowAlch: number;
+    highTime: number;
+    lowTime: number;
 }
 
 const gameItemPricingSchema = new mongoose.Schema<IGameItemPricing>({
@@ -20,8 +18,14 @@ const gameItemPricingSchema = new mongoose.Schema<IGameItemPricing>({
     lowPrice: Number,
     highTime: Number,
     lowTime: Number,
-    highAlch: Number,
-    lowAlch: Number
 });
 
-export const GameItemPricingModel = mongoose.model<IGameItemPricing>('GameItemPricing', gameItemPricingSchema, 'game-item-pricing');
+let GameItemPricingModel: mongoose.Model<IGameItemPricing>;
+
+if (mongoose.models.GameItemPricing) {
+    GameItemPricingModel = mongoose.models.GameItemPricing;
+} else {
+    GameItemPricingModel = mongoose.model<IGameItemPricing>('GameItemPricing', gameItemPricingSchema, 'game-item-pricing');
+}
+
+export { GameItemPricingModel}

@@ -1,22 +1,20 @@
 import type { GameItem, GameItemsBySkill } from '$lib/models/GameItem';
 import type { InGameSkillNamesEnum } from '$lib/enums/InGameSkillNamesEnum';
-import { populateGameItems } from '$lib/services/game-items-service/getAllGameItems';
+import { buildGameItemTrees } from '$lib/services/game-items-service/buildGameItemTrees';
 
-// Full list of GameItems relevant to the app. Does not include every single GameItem.
 const allGameItems = [] as GameItem[];
-
-// GameItems separated by skill.
 const itemsBySkill = [] as GameItemsBySkill[];
 
 /**
  * Populates the game item lists.
  */
 export async function populateGameItemCaches(): Promise<void> {
-    // Reset arrays.
     allGameItems.length = 0;
     itemsBySkill.length = 0;
 
-    await populateGameItems(allGameItems, itemsBySkill, true);
+    const { finishedGameItems, finishedSkills } = await buildGameItemTrees();
+    allGameItems.push(...finishedGameItems);
+    itemsBySkill.push(...finishedSkills);
 }
 
 /**
