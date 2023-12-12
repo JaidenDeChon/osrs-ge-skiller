@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { GameItemCateogoryNamesEnum } from '$lib/enums/GameItemCategoryNamesEnum';
 
-interface IGameItemCategory {
+export interface IGameItemCategory {
     categoryName: GameItemCateogoryNamesEnum;
     items: mongoose.Types.ObjectId[];
 }

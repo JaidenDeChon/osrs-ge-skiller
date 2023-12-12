@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-interface IGameItemPricing {
+export interface IGameItemPricing {
     associatedGameItemDocId: mongoose.Types.ObjectId;
     highPrice: number;
     lowPrice: number;
