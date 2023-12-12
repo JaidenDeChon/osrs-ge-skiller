@@ -117,6 +117,8 @@ function constructGameItemObject(
         name: item.name,
         examineText: item.examineText,
         image: item.image,
+        highAlch: item.highAlch,
+        lowAlch: item.lowAlch,
         highPrice: pricing?.highPrice,
         highTime: pricing?.highTime,
         lowPrice: pricing?.lowPrice,
