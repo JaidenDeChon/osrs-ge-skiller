@@ -1,8 +1,8 @@
+import type { ObjectIdLike } from "bson";
 import { dev } from "$app/environment";
 import { json, type RequestHandler } from "@sveltejs/kit";
 import { ObjectId } from 'mongodb';
 import { GameItemModel } from '$lib/models/mongo-schemas/GameItemSchema';
-import type { ObjectIdLike } from "bson";
 
 /**
  * Allows for adding new items to the game-items mongoDB collection.

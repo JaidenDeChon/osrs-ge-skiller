@@ -6,8 +6,12 @@
 	import type { GameItem, GameItemCreationSpecs } from '$lib/models/GameItem';
 
     let isDev = false;
+
     export let data: PageData & { gameItems: GameItem[] };
+
     $: allGameItems = data.gameItems as GameItem[];
+    $: allCategories = (data as any).categories as string[];
+    $: allSkills = (data as any).skills as string[];
 
     onMount(() => {
         isDev = import.meta.env.DEV;
@@ -57,8 +61,16 @@
 
     async function submitNewItem(): Promise<void> {
         const newItemId = await saveGameItem(); // MongoDB ID for the new item.
-        if (newItemId) await addItemToCategory(category, newItemId);
-        await linkCategoryToSkill(category, skill);
+        if (!newItemId) throw new Error('No new item ID returned from DB. The item was most likely not saved.');
+
+        const categoryId = await linkItemToCategory(category, newItemId);
+        if (!categoryId) throw new Error('No category ID returned from DB. The category was most likely not saved.');
+
+        try {
+            await linkCategoryToSkill(skill, categoryId);
+        } catch (e) {
+            console.error('Error linking category to skill: ', e);
+        }
     }
 
     async function saveGameItem(): Promise<string | undefined> {
@@ -75,15 +87,15 @@
 
             const result = await response.json();
             console.log('GameItem created:', result);
-            return result;
+            return result._id;
         } catch (e) {
             console.error('Error creating game item: ', e);
         }
     }
 
-    async function addItemToCategory(categoryName: string, newItemId: string) {
+    async function linkItemToCategory(categoryName: string, newItemId: string): Promise<string | undefined> {
         try {
-            const response = await fetch('/api/db/add-game-item-to-category', {
+            const response = await fetch('/api/db/game-item-categories', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -96,19 +108,20 @@
 
             const result = await response.json();
             console.log('Item added to category.', result);
+            return result._id;
         } catch (e) {
             console.error('Error adding item to category: ', e);
         }
     }
 
-    async function linkCategoryToSkill(categoryName: string, skillName: string) {
+    async function linkCategoryToSkill(skillName: string, categoryId: string) {
         try {
-            const response = await fetch('/api/db/link-category-to-skill', {
+            const response = await fetch('/api/db/game-item-skills', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ categoryName, skillName })
+                body: JSON.stringify({ categoryId, skillName })
             });
 
             if (!response.ok)
@@ -131,6 +144,56 @@
 
     {#if isDev}
         <h2 class="h2">Add item to DB</h2>
+
+        <!-- Category and skill parents -->
+        <h3 class="h3 mt-6 mb-4">Category and skill parents</h3>
+
+        <label
+            class="flex flex-col mb-4"
+            for="category"
+        >
+            Category
+            <input
+                class="text-secondary-900"
+                type="text"
+                name="category"
+                bind:value={category}
+            />
+        </label>
+
+        <label
+            class="flex flex-col mb-4"
+            for="skill"
+        >
+            Skill
+            <input
+                class="text-secondary-900"
+                type="text"
+                name="skill"
+                bind:value={skill}
+            />
+        </label>
+
+        <p>Or select from existing:</p>
+        <select
+            class="text-secondary-900"
+            name="category"
+            bind:value={category}
+        >
+            {#each allCategories as categoryName}
+                <option>{ categoryName }</option>
+            {/each}
+        </select> 
+
+        <select
+            class="text-secondary-900"
+            name="skill"
+            bind:value={skill}
+        >
+            {#each allSkills as skill}
+                <option>{ skill }</option>
+            {/each}
+        </select>
 
         <!-- General information -->
         <h3 class="h3 mt-6 mb-4">General information</h3>
