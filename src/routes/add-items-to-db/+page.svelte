@@ -15,14 +15,20 @@
 
     let id = '';
     let name = '';
+    let examineText = '';
+    let highAlch = 0;
+    let lowAlch = 0;
     let creationSpecs = {
         experienceGranted: [],
         requiredSkills: [],
         ingredients: []
     } as GameItemCreationSpecs;
 
+    let category = '';
+    let skill = '';
+
     $: image = kebabCase(name) + '.png';
-    $: newGameItem = { id, name, image, creationSpecs } as GameItem;
+    $: newGameItem = { id, name, image, examineText, highAlch, lowAlch, creationSpecs } as GameItem;
 
     function addExperienceGranted() {
         creationSpecs.experienceGranted.push({
@@ -49,7 +55,13 @@
         creationSpecs.ingredients = [...creationSpecs.ingredients];
     }
 
-    async function submitNewItem() {
+    async function submitNewItem(): Promise<void> {
+        const newItemId = await saveGameItem(); // MongoDB ID for the new item.
+        if (newItemId) await addItemToCategory(category, newItemId);
+        await linkCategoryToSkill(category, skill);
+    }
+
+    async function saveGameItem(): Promise<string | undefined> {
         try {
             const response = await fetch('/api/db/game-item', {
                 method: 'POST',
@@ -59,15 +71,56 @@
                 body: JSON.stringify(newGameItem)
             });
 
-            if (!response.ok)
-                throw new Error(`HTTP error! Status: ${response.status}`);
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
             const result = await response.json();
             console.log('GameItem created:', result);
+            return result;
         } catch (e) {
             console.error('Error creating game item: ', e);
         }
     }
+
+    async function addItemToCategory(categoryName: string, newItemId: string) {
+        try {
+            const response = await fetch('/api/db/add-game-item-to-category', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ categoryName, newItemId })
+            });
+
+            if (!response.ok)
+                throw new Error(`HTTP error! Status: ${response.status}`);
+
+            const result = await response.json();
+            console.log('Item added to category.', result);
+        } catch (e) {
+            console.error('Error adding item to category: ', e);
+        }
+    }
+
+    async function linkCategoryToSkill(categoryName: string, skillName: string) {
+        try {
+            const response = await fetch('/api/db/link-category-to-skill', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ categoryName, skillName })
+            });
+
+            if (!response.ok)
+                throw new Error(`HTTP error! Status: ${response.status}`);
+
+            const result = await response.json();
+            console.log('Category linked to skill.', result);
+        } catch (e) {
+            console.error('Error linking category to skill: ', e);
+        }
+    }
+
 </script>
 
 <div class="p-6">
@@ -105,6 +158,48 @@
                 type="text"
                 name="name"
                 bind:value={name}
+            />
+        </label>
+
+        <label
+            class="flex flex-col mb-4"
+            for="examineText"
+        >
+            Examine text
+            <input
+                class="text-secondary-900"
+                type="text"
+                name="examineText"
+                bind:value={examineText}
+            />
+        </label>
+
+        <!-- Alchemy values -->
+        <h3 class="h3 mt-6 mb-4">Alchemy values</h3>
+
+        <label
+            class="flex flex-col mb-4"
+            for="highAlch"
+        >
+            High alch
+            <input
+                class="text-secondary-900"
+                type="number"
+                name="highAlch"
+                bind:value={highAlch}
+            />
+        </label>
+
+        <label
+            class="flex flex-col mb-4"
+            for="lowAlch"
+        >
+            Low alch
+            <input
+                class="text-secondary-900"
+                type="number"
+                name="lowAlch"
+                bind:value={lowAlch}
             />
         </label>
 

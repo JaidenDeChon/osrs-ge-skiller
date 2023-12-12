@@ -30,12 +30,12 @@ export const POST = (async ({ request }) => {
     console.log('Attempting to save item...');
 
     try {
-        await gameItemDocument.save();
+        const result = await gameItemDocument.save();
+        console.log('Saved.');
+        return json(result)
     } catch (e) {
         throw new Error(e);
     }
-
-    return json(gameItemData);
 }) satisfies RequestHandler;
 
 /**
