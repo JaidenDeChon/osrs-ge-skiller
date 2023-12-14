@@ -14,14 +14,16 @@ export const POST = (async ({ request }) => {
     const gameItemData = await request.json();
 
     // Convert each ingredient to MongoDB ObjectId.
-    gameItemData.creationSpecs.ingredients = gameItemData.creationSpecs.ingredients.map(
-        (ingredient: { item: string | number | ObjectId | Uint8Array | ObjectIdLike | undefined; }) => {
-            if (ingredient.item) {
-                return { ...ingredient, item: new ObjectId(ingredient.item) };
+    if (gameItemData.creationSpecs) {
+        gameItemData.creationSpecs.ingredients = gameItemData.creationSpecs.ingredients.map(
+            (ingredient: { item: string | number | ObjectId | Uint8Array | ObjectIdLike | undefined; }) => {
+                if (ingredient.item) {
+                    return { ...ingredient, item: new ObjectId(ingredient.item) };
+                }
+                return ingredient;
             }
-            return ingredient;
-        }
-    );
+        );
+    }
 
     // Initialize a GameItemModel using the game item.
     const gameItemDocument = new GameItemModel(gameItemData);

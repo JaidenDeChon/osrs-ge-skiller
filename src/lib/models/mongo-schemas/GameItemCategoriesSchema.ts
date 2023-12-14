@@ -9,8 +9,7 @@ export interface IGameItemCategory {
 export const gameItemCategoriesSchema = new mongoose.Schema<IGameItemCategory>({
     categoryName: {
         type: String,
-        enum: GameItemCateogoryNamesEnum,
-        required: true
+        enum: GameItemCateogoryNamesEnum
     },
     items: [
         {

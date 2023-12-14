@@ -12,15 +12,21 @@ export const POST = (async ({ request }) => {
     // Get the data for the new game item/category relationship.
     const gameItemCategoryPair = await request.json() as { categoryName: string; newItemId: string };
 
+    let categoryName: string | undefined = gameItemCategoryPair.categoryName.toLowerCase().trim();
+    const newItemId: string = gameItemCategoryPair.newItemId;
+
+    // Do away with category name if it's empty.
+    categoryName = categoryName ? categoryName : undefined;
+
     // Get or create the category.
     const category = await GameItemCategoryModel.findOneAndUpdate(
-        { categoryName: gameItemCategoryPair.categoryName },
-        { categoryName: gameItemCategoryPair.categoryName },
+        { categoryName },
+        { categoryName },
         { upsert: true, new: true }
     );
 
     // Add the new item to the category.
-    category.items.push(new ObjectId(gameItemCategoryPair.newItemId));
+    category.items.push(new ObjectId(newItemId));
 
     try {
         const result = await category.save();

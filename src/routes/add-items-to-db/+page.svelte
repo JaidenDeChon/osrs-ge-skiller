@@ -1,13 +1,16 @@
 <script lang="ts">
-    import type { PageData } from '../$types';
+    import { getToastStore } from '@skeletonlabs/skeleton';
     import { onMount } from 'svelte';
     import { kebabCase } from 'lodash';
+    import type { PageData } from '../$types';
     import { InGameSkillNamesEnum } from '$lib/enums/InGameSkillNamesEnum';
 	import type { GameItem, GameItemCreationSpecs } from '$lib/models/GameItem';
 
     let isDev = false;
 
     export let data: PageData & { gameItems: GameItem[] };
+
+    const toastStore = getToastStore();
 
     $: allGameItems = data.gameItems as GameItem[];
     $: allCategories = (data as any).categories as string[];
@@ -31,8 +34,27 @@
     let category = '';
     let skill = '';
 
+    // Generates the image name based on the item name.
     $: image = kebabCase(name) + '.png';
-    $: newGameItem = { id, name, image, examineText, highAlch, lowAlch, creationSpecs } as GameItem;
+
+    // If there's no creation specs, don't send it to the DB.
+    $: creationSpecsOrUndefined =
+        creationSpecs.experienceGranted.length ||
+        creationSpecs.requiredSkills.length ||
+        creationSpecs.ingredients.length
+            ? creationSpecs
+            : undefined;
+
+    // The new game item to be sent to the DB.
+    $: newGameItem = {
+        id,
+        name,
+        image,
+        examineText,
+        highAlch,
+        lowAlch,
+        creationSpecs: creationSpecsOrUndefined
+    } as GameItem;
 
     function addExperienceGranted() {
         creationSpecs.experienceGranted.push({
@@ -60,17 +82,56 @@
     }
 
     async function submitNewItem(): Promise<void> {
-        const newItemId = await saveGameItem(); // MongoDB ID for the new item.
-        if (!newItemId) throw new Error('No new item ID returned from DB. The item was most likely not saved.');
+        const newItemIdErrorMessage = 'No new item ID returned from DB. The item was most likely not saved.';
+        const categoryIdErrorMessage = 'No category ID returned from DB. The category was most likely not saved.';
+        const skillIdErrorMessage = 'No skill ID returned from DB. The skill was most likely not saved.';
+        const successMessage = 'Item saved!';
+        let newItemId: string | undefined;
+        let categoryId: string | undefined;
 
-        const categoryId = await linkItemToCategory(category, newItemId);
-        if (!categoryId) throw new Error('No category ID returned from DB. The category was most likely not saved.');
+        // Save the game item to the DB and save off the resulting Mongo ID.
+        try {
+            newItemId = await saveGameItem();     
+        } catch (e: any) {
+            toastStore.trigger({ message: newItemIdErrorMessage });
+            console.error(newItemIdErrorMessage);
+            throw Error(e);
+        }
 
+        if (!newItemId) {
+            toastStore.trigger({ message: newItemIdErrorMessage });
+            throw new Error(newItemIdErrorMessage);
+        }
+
+        // If there's no category or skill, we're done.
+        if (!category && !skill) {
+            toastStore.trigger({ message: successMessage });
+            return;
+        }
+
+        // Link the item to the category and skill and save off that ID.
+        try {
+            categoryId = await linkItemToCategory(category, newItemId);
+        } catch (e: any) {
+            toastStore.trigger({ message: categoryIdErrorMessage });
+            console.error(categoryIdErrorMessage);
+            throw Error(e);
+        }
+    
+        if (!categoryId) {
+            toastStore.trigger({ message: categoryIdErrorMessage });
+            throw new Error(categoryIdErrorMessage);
+        }
+
+        // Link the category to the skill.
         try {
             await linkCategoryToSkill(skill, categoryId);
-        } catch (e) {
-            console.error('Error linking category to skill: ', e);
+        } catch (e: any) {
+            toastStore.trigger({ message: skillIdErrorMessage });
+            throw Error(e);
         }
+
+        toastStore.trigger({ message: successMessage });
     }
 
     async function saveGameItem(): Promise<string | undefined> {
@@ -154,7 +215,7 @@
         >
             Category
             <input
-                class="text-secondary-900"
+                class="input variant-ghost-primary"
                 type="text"
                 name="category"
                 bind:value={category}
@@ -167,7 +228,7 @@
         >
             Skill
             <input
-                class="text-secondary-900"
+                class="input variant-ghost-primary"
                 type="text"
                 name="skill"
                 bind:value={skill}
@@ -175,25 +236,29 @@
         </label>
 
         <p>Or select from existing:</p>
-        <select
-            class="text-secondary-900"
-            name="category"
-            bind:value={category}
-        >
-            {#each allCategories as categoryName}
-                <option>{ categoryName }</option>
-            {/each}
-        </select> 
+        <div class="flex gap-4">
+            <select
+                placeholder="category"
+                class="select variant-ghost-primary"
+                name="category"
+                bind:value={category}
+            >
+                {#each allCategories as categoryName}
+                    <option>{ categoryName }</option>
+                {/each}
+            </select> 
 
-        <select
-            class="text-secondary-900"
-            name="skill"
-            bind:value={skill}
-        >
-            {#each allSkills as skill}
-                <option>{ skill }</option>
-            {/each}
-        </select>
+            <select
+                placeholder="skill"
+                class="select variant-ghost-primary"
+                name="skill"
+                bind:value={skill}
+            >
+                {#each allSkills as skill}
+                    <option>{ skill }</option>
+                {/each}
+            </select>
+        </div>
 
         <!-- General information -->
         <h3 class="h3 mt-6 mb-4">General information</h3>
@@ -204,7 +269,7 @@
         >
             Id
             <input
-                class="text-secondary-900"
+                class="input variant-ghost-primary"
                 type="text"
                 name="id"
                 bind:value={id}
@@ -217,7 +282,7 @@
         >
             Name
             <input
-                class="text-secondary-900"
+                class="input variant-ghost-primary"
                 type="text"
                 name="name"
                 bind:value={name}
@@ -230,7 +295,7 @@
         >
             Examine text
             <input
-                class="text-secondary-900"
+                class="input variant-ghost-primary"
                 type="text"
                 name="examineText"
                 bind:value={examineText}
@@ -246,7 +311,7 @@
         >
             High alch
             <input
-                class="text-secondary-900"
+                class="input variant-ghost-primary"
                 type="number"
                 name="highAlch"
                 bind:value={highAlch}
@@ -259,7 +324,7 @@
         >
             Low alch
             <input
-                class="text-secondary-900"
+                class="input variant-ghost-primary"
                 type="number"
                 name="lowAlch"
                 bind:value={lowAlch}
@@ -280,7 +345,7 @@
             <label class="flex flex-col mb-4">
                 Skill name
                 <select
-                    class="text-secondary-900"
+                    class="select variant-ghost-primary"
                     bind:value={xpGrantedEntry.skillName}
                 >
                     {#each Object.values(InGameSkillNamesEnum) as skill}
@@ -292,7 +357,7 @@
             <label class="flex flex-col mb-4">
                 Amount of xp granted
                 <input
-                    class="text-secondary-900"
+                    class="input variant-ghost-primary"
                     type="number"
                     bind:value={xpGrantedEntry.experienceAmount}
                 />
@@ -313,7 +378,7 @@
             <label class="flex flex-col mb-4">
                 Skill name
                 <select
-                    class="text-secondary-900"
+                    class="select variant-ghost-primary"
                     bind:value={requiredSkill.skillName}
                 >
                     {#each Object.values(InGameSkillNamesEnum) as skill}
@@ -325,7 +390,7 @@
             <label class="flex flex-col mb-4">
                 Skill level
                 <input
-                    class="text-secondary-900"
+                    class="input variant-ghost-primary"
                     type="number"
                     bind:value={requiredSkill.skillLevel}
                 />
@@ -345,7 +410,7 @@
         {#each creationSpecs.ingredients as ingredient}
             <label class="flex flex-col mb-4">
                 Game Item
-                <select bind:value={ingredient.item} class="text-secondary-900">
+                <select bind:value={ingredient.item} class="select variant-ghost-primary">
                     {#each allGameItems as gameItem}
                         <option value={gameItem._id}>{ gameItem.name }</option>
                     {/each}
@@ -355,7 +420,7 @@
             <label class="flex flex-col mb-4">
                 Amount
                 <input
-                    class="text-secondary-900"
+                    class="input variant-ghost-primary"
                     type="number"
                     bind:value={ingredient.amount}
                 />
@@ -364,7 +429,7 @@
             <label class="flex flex-col mb-4">
                 Consumed during creation?
                 <input
-                    class="text-secondary-900"
+                    class="input variant-ghost-primary"
                     type="checkbox"
                     bind:checked={ingredient.consumedDuringCreation}
                 />
