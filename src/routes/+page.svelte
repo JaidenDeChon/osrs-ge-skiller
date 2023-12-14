@@ -106,6 +106,7 @@
 							<GameItemCardNew
 								{item}
 								linkToIngredients
+								showAccordion
 							/>
 						{/if}
 							
