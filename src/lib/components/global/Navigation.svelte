@@ -15,7 +15,7 @@
 		<svelte:fragment slot="lead">
 			<!-- Home -->
 			<AppRailAnchor
-				href="/"
+				href="/add-items-to-db"
 				selected={$page.url.pathname === '/'}
 				class="flex"
 				on:click={closeDrawer}

@@ -37,7 +37,7 @@
     // Generates the image name based on the item name.
     $: image = kebabCase(name) + '.png';
 
-    // If there's no creation specs, don't send it to the DB.
+    // If there are no creation specs, just use undefined.
     $: creationSpecsOrUndefined =
         creationSpecs.experienceGranted.length ||
         creationSpecs.requiredSkills.length ||

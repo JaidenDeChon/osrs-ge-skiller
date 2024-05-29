@@ -12,7 +12,7 @@ export const POST = (async ({ request }) => {
     // Get the data for the new game item/category relationship.
     const gameItemCategoryPair = await request.json() as { categoryName: string; newItemId: string };
 
-    let categoryName: string | undefined = gameItemCategoryPair.categoryName.toLowerCase().trim();
+    let categoryName: string | undefined = gameItemCategoryPair.categoryName;
     const newItemId: string = gameItemCategoryPair.newItemId;
 
     // Do away with category name if it's empty.
