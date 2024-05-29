@@ -1,13 +1,13 @@
 import type { GameItem } from '$lib/models/GameItem';
 import { InGameSkillNamesEnum } from '$lib/enums/InGameSkillNamesEnum';
 import { assembleGameItem } from '$lib/helpers/assembleGameItem';
-import { GameItemEnumKeysEnum } from '$lib/enums/GameItemEnumKeysEnum';
+import { GameItemKeysEnum } from '$lib/enums/GameItemKeysEnum';
 import { blueDragonLeather } from './blueDragonLeather';
 import { thread } from './thread';
 import { needle } from './needle';
 
 export function blueDragonhideBody(): GameItem {
-    const gameItem = assembleGameItem(GameItemEnumKeysEnum.BLUE_DRAGONHIDE_BODY);
+    const gameItem = assembleGameItem(GameItemKeysEnum.BLUE_DRAGONHIDE_BODY);
     gameItem.creationSpecs = {
         experienceGranted: [{ skillName: InGameSkillNamesEnum.CRAFTING, experienceAmount: 210 }],
         requiredSkills: [{ skillName: InGameSkillNamesEnum.CRAFTING, skillLevel: 71 }],

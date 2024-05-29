@@ -1,4 +1,4 @@
-export const enum GameItemEnumKeysEnum {
+export const enum GameItemKeysEnum {
     BLACK_DRAGON_LEATHER = 'BLACK_DRAGON_LEATHER',
     BLACK_DRAGONHIDE_BODY = 'BLACK_DRAGONHIDE_BODY',
     BLACK_DRAGONHIDE_CHAPS = 'BLACK_DRAGONHIDE_CHAPS',

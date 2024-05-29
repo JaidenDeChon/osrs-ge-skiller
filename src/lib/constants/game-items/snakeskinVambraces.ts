@@ -1,13 +1,13 @@
 import type { GameItem } from '$lib/models/GameItem';
 import { InGameSkillNamesEnum } from '$lib/enums/InGameSkillNamesEnum';
 import { assembleGameItem } from '$lib/helpers/assembleGameItem';
-import { GameItemEnumKeysEnum } from '$lib/enums/GameItemEnumKeysEnum';
+import { GameItemKeysEnum } from '$lib/enums/GameItemKeysEnum';
 import { snakeskin } from './snakeskin';
 import { thread } from './thread';
 import { needle } from './needle';
 
 export function snakeskinVambraces(): GameItem {
-    const gameItem = assembleGameItem(GameItemEnumKeysEnum.SNAKESKIN_VAMBRACES);
+    const gameItem = assembleGameItem(GameItemKeysEnum.SNAKESKIN_VAMBRACES);
     gameItem.creationSpecs = {
         experienceGranted: [{ skillName: InGameSkillNamesEnum.CRAFTING, experienceAmount: 35 }],
         requiredSkills: [{ skillName: InGameSkillNamesEnum.CRAFTING, skillLevel: 47 }],
