@@ -90,7 +90,7 @@
 <!-- App Shell -->
 <AppShell
 	regionPage="relative"
-	slotPageHeader="sticky top-0 z-20 transition-colors {scrollPosition === 0 ? '' : 'variant-filled-surface'}"
+	slotPageHeader="sticky top-0 z-20 transition-colors {scrollPosition === 0 ? '' : 'bg-primary-50 dark:bg-surface-500'}"
 	slotSidebarLeft="overflow-y-hidden shadow-xl w-0 lg:w-20"
 	on:scroll={scrollHandler}
 >
