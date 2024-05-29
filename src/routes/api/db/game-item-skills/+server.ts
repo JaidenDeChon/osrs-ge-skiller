@@ -1,10 +1,10 @@
-import { dev } from '$app/environment';
+// import { dev } from '$app/environment';
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { ObjectId } from 'mongodb';
 import { GameItemSkillsModel } from '$lib/models/mongo-schemas/GameItemSkillsSchema';
 
 export const POST = (async ({ request }) => {
-    if (!dev) return json({ error: 'Forbidden in production' }, { status: 403 });
+    // if (!dev) return json({ error: 'Forbidden in production' }, { status: 403 });
 
     // Get the data for the new game item/skill relationship.
     const skillCategoryPair = await request.json() as { skillName: string; categoryId: string; };

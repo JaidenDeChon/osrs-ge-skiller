@@ -1,4 +1,4 @@
-import { dev } from '$app/environment';
+// import { dev } from '$app/environment';
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { ObjectId } from 'mongodb';
 import { GameItemCategoryModel } from '$lib/models/mongo-schemas/GameItemCategoriesSchema';
@@ -7,7 +7,7 @@ import { GameItemCategoryModel } from '$lib/models/mongo-schemas/GameItemCategor
  * Allows for adding new items to the game-item-categories mongoDB collection.
  */
 export const POST = (async ({ request }) => {
-    if (!dev) return json({ error: 'Forbidden in production' }, { status: 403 });
+    // if (!dev) return json({ error: 'Forbidden in production' }, { status: 403 });
 
     // Get the data for the new game item/category relationship.
     const gameItemCategoryPair = await request.json() as { categoryName: string; newItemId: string };

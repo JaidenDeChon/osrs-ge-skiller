@@ -1,5 +1,5 @@
 import type { ObjectIdLike } from "bson";
-import { dev } from "$app/environment";
+// import { dev } from "$app/environment";
 import { json, type RequestHandler } from "@sveltejs/kit";
 import { ObjectId } from 'mongodb';
 import { GameItemModel } from '$lib/models/mongo-schemas/GameItemSchema';
@@ -8,7 +8,7 @@ import { GameItemModel } from '$lib/models/mongo-schemas/GameItemSchema';
  * Allows for adding new items to the game-items mongoDB collection.
  */
 export const POST = (async ({ request }) => {
-    if (!dev) return json({ error: 'Forbidden in production' }, { status: 403 });
+    // if (!dev) return json({ error: 'Forbidden in production' }, { status: 403 });
 
     // Get the data for the new game item.
     const gameItemData = await request.json();
