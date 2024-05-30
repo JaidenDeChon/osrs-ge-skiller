@@ -46,6 +46,13 @@
 
 		<!-- Github -->
 		<svelte:fragment slot="trail">
+			<div class="w-full flex justify-center">
+				<img
+					src="/other-images/osrs-dance.gif"
+					alt="osrs dance gif"
+					class="w-full px-2"
+				/>
+			</div>
 			<AppRailAnchor
 				href="https://github.com/JaidenDeChon"
 				class="flex"

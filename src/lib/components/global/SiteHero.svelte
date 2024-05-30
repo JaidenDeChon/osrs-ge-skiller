@@ -20,13 +20,10 @@
 		<div class="hero-gradient-noise w-full h-full bg-repeat bg-contain">
 			<!-- Text content -->
 			<div class="mx-auto pt-24 lg:pt-32 pb-24 flex flex-col justify-center p-8 max-w-6xl relative z-10">
-				<img
-					src="/other-images/osrs-dance.gif"
-					alt="osrs dance gif"
-					class="w-32 -ml-4"
-				/>
-				<h1 class="h1 mb-5">Welcome to osrs-ge-skiller!</h1>
-		
+				<div class="flex gap-2">
+					<h1 class="h1 mb-5">👋 Welcome to osrs-ge-skiller!</h1>
+				</div>
+
 				<p>Find the most profitable OSRS items you can make given your skill levels.</p>
 				<p>Powered by real-time Grand Exchange price stats.</p>
 		
