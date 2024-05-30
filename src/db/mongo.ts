@@ -13,7 +13,6 @@ const connectionString = `${prepend}://${user}:${pw}@${cluster}.${host}/${dbName
 export async function startMongo(): Promise<void> {
     try {
         console.log('Connecting to MongoDB...');
-        console.log('Using: ', connectionString);
         await mongoose.connect(connectionString);
     } catch (error) {
         console.error('MongoDB connection error:', error);
