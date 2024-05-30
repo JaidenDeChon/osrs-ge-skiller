@@ -1,20 +1,13 @@
 <script lang="ts">
 
-	import { onNavigate } from '$app/navigation';
     import type { PageData } from '../../$types';
     import type { GameItem } from '$lib/models/GameItem';
-    import { materialCostLowStore, materialCostHighStore } from '$lib/stores/materialCostStore';
     import GameItemDataAccordion from '$lib/components/common/GameItemDataAccordion.svelte';
     import MaterialCostTree from '$lib/components/item-ingredients/MaterialCostTree.svelte';
     import _ from 'lodash';
 
     export let data: PageData;
     $: item = (data as any).itemDetails as GameItem;
-
-    onNavigate(() => {
-        materialCostLowStore.set(0);
-        materialCostHighStore.set(0);
-    });
 
 </script>
 

@@ -1,8 +1,11 @@
 <script lang="ts">
+    import { get } from 'svelte/store';
     import { createEventDispatcher } from 'svelte';
     import { SlideToggle, RadioGroup, RadioItem, type PopupSettings, popup } from '@skeletonlabs/skeleton';
     import { getModalStore } from '@skeletonlabs/skeleton';
 	import { ModalNamesEnum } from '$lib/enums/ModalNamesEnum';
+	import { InGameSkillNamesEnum } from '$lib/enums/InGameSkillNamesEnum';
+    import { filterItemsStore } from '$lib/stores/filterItemBrowserByPlayerLevelsStore';
 
     const modalStore = getModalStore();
     const dispatch = createEventDispatcher();
@@ -15,15 +18,20 @@
         placement: 'bottom'
     };
 
-    const selectedSkills: Record<string, boolean> = {
-        crafting: true,
-        fletching: false,
-        smithing: false,
-        cooking: false
-    };
+    const skillsList = Object.values(InGameSkillNamesEnum);
 
-    function toggleSelectedSkill(skillName: string) {
-        selectedSkills[skillName] = !selectedSkills[skillName];
+    function toggleSelectedSkill(skillName: InGameSkillNamesEnum) {
+        const currentSelectedSkills = get(filterItemsStore).filterItemsBySkills;
+        const indexOfSelectedSkill = currentSelectedSkills.indexOf(skillName);
+
+        // If it's already in there, take it out. Otherwise, add it.
+        if (indexOfSelectedSkill >= 0) currentSelectedSkills.splice(indexOfSelectedSkill, 1);
+        else currentSelectedSkills.push(skillName);
+
+        filterItemsStore.update(current => ({
+            ...current,
+            filterItemsBySkills: currentSelectedSkills
+        }));
     }
 
     function fireStatsModal() {
@@ -43,6 +51,7 @@
             name="filter-by-user-skills-toggle"
             label="Filter by skill levels"
             size="sm"
+            bind:checked={$filterItemsStore.filterItemsByPlayerLevels}
         >
             Filter by my skill levels
         </SlideToggle>
@@ -55,14 +64,13 @@
     </div>
 
     <!-- Categories -->
-    <div class="h-12 w-full lg:w-auto flex items-center gap-4 px-8">
-        {#each Object.keys(selectedSkills) as skill}
+    <div class="h-12 w-full px-8 flex items-center gap-4 lg:w-auto">
+        {#each skillsList as skill}
             <button
-                class="chip {selectedSkills[skill] ? 'variant-filled-primary' : 'variant-soft-primary'}"
+                class="chip { $filterItemsStore.filterItemsBySkills.includes(skill) ? 'variant-filled-primary' : 'variant-soft-primary' }"
                 on:click={() => { toggleSelectedSkill(skill); }}
-                on:keypress
             >
-                {#if selectedSkills[skill]}
+                {#if $filterItemsStore.filterItemsBySkills.includes(skill)}
                     <span>
                         <i class="fa-solid fa-check"></i>
                     </span>
@@ -76,18 +84,16 @@
 <div class="w-full max-w-6xl px-8 py-3 flex flex-col lg:items-end gap-4 bg-surface-50 dark:bg-surface-800 lg:bg-transparent dark:lg:bg-transparent lg:flex-row border border-x-0 border-t-0 border-b-1 border-surface-300 dark:border-surface-400 lg:border-0 lg:mx-auto">
     <label class="label">
         <span>Sort by</span>
-        <select class="select variant-ghost-primary">
-            <option value="ge">GE value</option>
-            <option value="alchemy">Alchemy value</option>
-            <option value="exp">Experience given</option>
+        <select disabled class="select variant-ghost-primary">
+            <option value="category">Category</option>
         </select>
     </label>
 
     <label class="label">
         <span>Order</span>
-        <select class="select variant-ghost-primary">
-            <option value="ge">Highest first</option>
-            <option value="alchemy">Lowest first</option>
+        <select disabled class="select variant-ghost-primary">
+            <option value="descending">Highest first</option>
+            <option value="ascending">Lowest first</option>
         </select>
     </label>
 
