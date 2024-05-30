@@ -73,7 +73,6 @@
                 {item}
                 showXpStats
                 showTree
-                treeColumnCount="{1}"
             />
         {/if}
 
