@@ -10,4 +10,5 @@ export enum GameItemCateogoryNamesEnum {
     SHIELDS = 'Shields',
     // Smithing categories.
     BRONZE = 'Bronze',
+    STEEL = 'Steel',
 }
