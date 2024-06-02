@@ -14,9 +14,9 @@
 <div class="px-8 py-4 max-w-6xl mx-auto">
     <!-- Title and image -->
     <div class="flex items-center mb-6">
-        <div class="rounded-full w-24 min-w-24 max-w-24 h-24 min-h-24 max-h-24 p-3 variant-soft-primary flex place-content-center">
+        <div class="rounded-full w-24 min-w-24 max-w-24 h-24 min-h-24 max-h-24 p-4 variant-soft-primary flex place-content-center">
             <img
-                class="w-full h-auto object-contain"
+                class="w-full object-contain"
                 src="/item-images/{item.image}"
                 alt="{item.name}"
             >
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="mb-6 flex gap-1">
+    <div class="mb-12 flex gap-1">
         <!-- Wiki link -->
         <a
             href="https://oldschool.runescape.wiki/w/{_.snakeCase(item.name)}"
@@ -61,7 +61,6 @@
 
     <GameItemDataAccordion
         {item}
-        linkToIngredients={false}
         spacing="space-y-1"
         showGeData
         showXpStats
