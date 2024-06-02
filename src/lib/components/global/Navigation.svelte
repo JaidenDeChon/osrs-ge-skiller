@@ -11,7 +11,7 @@
 
 
 <nav class="h-full">
-	<AppRail background="bg-primary-50 dark:bg-surface-500">
+	<AppRail background="bg-surface-50 dark:bg-surface-500">
 		<svelte:fragment slot="lead">
 			<!-- Home -->
 			<AppRailAnchor
