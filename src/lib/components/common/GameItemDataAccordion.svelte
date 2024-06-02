@@ -54,7 +54,7 @@
             </svelte:fragment>
 
             <svelt:fragment slot="content">
-                <div class="table-container">
+                <div class="table-container my-2">
                     <table class="table table-hover variant-filled-surface dark:variant-soft-primary">
                         <thead>
                             <tr class="variant-filled-surface dark:variant-soft-primary">
@@ -108,7 +108,7 @@
                     <strong>Levels required</strong>
                 </ImageWithText>
         
-                <div class="table-container">
+                <div class="table-container my-2">
                     <table class="table table-hover variant-filled-surface dark:variant-soft-primary">
                         <thead>
                             <tr class="variant-filled-surface dark:variant-soft-primary">
@@ -135,7 +135,7 @@
                     <strong>XP Given</strong>
                 </ImageWithText>
         
-                <div class="table-container">
+                <div class="table-container my-2">
                     <table class="table table-hover variant-filled-surface dark:variant-soft-primary">
                         <thead>
                             <tr class="variant-filled-surface dark:variant-soft-primary">
@@ -176,7 +176,7 @@
             </svelte:fragment>
 
             <svelte:fragment slot="content">
-                <div class="table-container">
+                <div class="table-container my-2">
                     <table class="table table-hover variant-filled-surface dark:variant-soft-primary">
                         <thead>
                             <tr class="variant-filled-surface dark:variant-soft-primary">
