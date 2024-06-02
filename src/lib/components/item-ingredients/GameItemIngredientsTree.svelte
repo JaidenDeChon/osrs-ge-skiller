@@ -73,8 +73,8 @@
             .attr('xlink:href', d => `/item-images/${d.data.itemData.image}`) // Assuming d.data.image contains the path to the image file
             .attr('x', d => d.x - imageDimensions / 2)
             .attr('y', d => d.y - imageDimensions / 2)
-            .style('width', `${imageDimensions}`)
-            .style('height', `${imageDimensions}`);
+            .attr('width', `${imageDimensions}`)
+            .attr('height', `${imageDimensions}`);
         
         const treeLinks = d3.select('.game-item-ingredients-tree__tree g.links')
             .selectAll('path.link')
