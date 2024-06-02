@@ -39,9 +39,9 @@
 
     // If there are no creation specs, just use undefined.
     $: creationSpecsOrUndefined =
-        creationSpecs.experienceGranted.length ||
+        (creationSpecs.experienceGranted.length ||
         creationSpecs.requiredSkills.length ||
-        creationSpecs.ingredients.length
+        creationSpecs.ingredients.length)
             ? creationSpecs
             : undefined;
 
