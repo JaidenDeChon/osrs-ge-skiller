@@ -11,11 +11,11 @@
 
 
 <nav class="h-full">
-	<AppRail background="bg-primary-50 dark:bg-surface-500">
+	<AppRail background="bg-surface-50 dark:bg-surface-500">
 		<svelte:fragment slot="lead">
 			<!-- Home -->
 			<AppRailAnchor
-				href="/"
+				href="/add-items-to-db"
 				selected={$page.url.pathname === '/'}
 				class="flex"
 				on:click={closeDrawer}
@@ -46,6 +46,13 @@
 
 		<!-- Github -->
 		<svelte:fragment slot="trail">
+			<div class="w-full flex justify-center">
+				<img
+					src="/other-images/osrs-dance.gif"
+					alt="osrs dance gif"
+					class="w-full px-2"
+				/>
+			</div>
 			<AppRailAnchor
 				href="https://github.com/JaidenDeChon"
 				class="flex"

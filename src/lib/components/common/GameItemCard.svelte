@@ -9,8 +9,11 @@
     export let linkToIngredients = false;
     export let enableTransparency = true;
     export let useSingleColumnImageTextPills = false;
+    export let showAccordion = false;
 
     const cardClasses = `${ enableTransparency ? 'variant-glass-primary' : 'variant-filled-surface' } card border border-solid border-primary-700 rounded-md`;
+
+    $: alchemyAvailable = item.highAlch !== undefined && item.lowAlch !== undefined;
 </script>
 
 <div class="{cardClasses} { $modeCurrent ? 'bg-surface-50' : '' }">
@@ -49,6 +52,7 @@
                 </div>
             </ImageWithTextPill>
 
+            {#if alchemyAvailable}
             <ImageWithTextPill
                 src="spell-images/high-level-alchemy.png"
                 alt="high alchemcy spell icon"
@@ -61,14 +65,16 @@
                     </p>
                 </div>
             </ImageWithTextPill>
+            {/if}
         </div>
 
-        <GameItemDataAccordion
-            {item}
-            showXpStats
-            showTree
-            treeColumnCount="{1}"
-        />
+        {#if showAccordion}
+            <GameItemDataAccordion
+                {item}
+                showXpStats
+                showTree
+            />
+        {/if}
 
         {#if linkToIngredients}
             <a

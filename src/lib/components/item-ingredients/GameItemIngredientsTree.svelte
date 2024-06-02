@@ -73,8 +73,9 @@
             .attr('xlink:href', d => `/item-images/${d.data.itemData.image}`) // Assuming d.data.image contains the path to the image file
             .attr('x', d => d.x - imageDimensions / 2)
             .attr('y', d => d.y - imageDimensions / 2)
-            .style('width', `${imageDimensions}`)
-            .style('height', `${imageDimensions}`);
+            .attr('width', `${imageDimensions}`)
+            .attr('height', `${imageDimensions}`)
+            .attr('style', 'filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.6))');
         
         const treeLinks = d3.select('.game-item-ingredients-tree__tree g.links')
             .selectAll('path.link')
@@ -152,7 +153,7 @@
     }
 
     :global(g.node) {
-        fill: rgb(172, 202, 150);
+        fill: #3e3529;
     }
 
     :global(g.node:has(.not-counted)) {

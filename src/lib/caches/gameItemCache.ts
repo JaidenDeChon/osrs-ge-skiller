@@ -1,28 +1,26 @@
 import type { GameItem, GameItemsBySkill } from '$lib/models/GameItem';
 import type { InGameSkillNamesEnum } from '$lib/enums/InGameSkillNamesEnum';
-import { populateGameItems } from '$lib/services/game-items-service/getAllGameItems';
+import { buildGameItemTrees } from '$lib/services/game-items-service/buildGameItemTrees';
 
-// Full list of GameItems relevant to the app. Does not include every single GameItem.
-let allGameItems = [] as GameItem[];
-
-// GameItems separated by skill.
-let itemsBySkill = [] as GameItemsBySkill[];
+const allGameItems = [] as GameItem[];
+const itemsBySkill = [] as GameItemsBySkill[];
 
 /**
  * Populates the game item lists.
  */
 export async function populateGameItemCaches(): Promise<void> {
-    // Reset arrays.
     allGameItems.length = 0;
     itemsBySkill.length = 0;
 
-    await populateGameItems(allGameItems, itemsBySkill, true);
+    const { finishedGameItems, finishedSkills } = await buildGameItemTrees();
+    allGameItems.push(...finishedGameItems);
+    itemsBySkill.push(...finishedSkills);
 }
 
 /**
  * Checks either list for empty state. If empty, calls function to populate them.
  */
-export async function checkEmpty(): Promise<void> {
+export async function ensureCacheIsPopulated(): Promise<void> {
     if (!allGameItems.length || !itemsBySkill.length) await populateGameItemCaches();
 }
 
@@ -31,8 +29,9 @@ export async function checkEmpty(): Promise<void> {
  * @param itemId The ID of the item to find.
  * @returns The found item, or null if not found.
  */
-export async function getItemById(itemId: string): Promise<GameItem | null> {
-    await checkEmpty();
+export async function getItemById(itemId: string | undefined): Promise<GameItem | GameItem[] | null> {
+    await ensureCacheIsPopulated();
+    if (itemId === undefined) return allGameItems;
     const foundItem = allGameItems.find(item => item.id === itemId);
     return foundItem ?? null;
 }
@@ -47,7 +46,7 @@ export async function getItemById(itemId: string): Promise<GameItem | null> {
 export async function getItemsBySkill(
     skillName?: InGameSkillNamesEnum
 ): Promise<GameItemsBySkill[] | GameItemsBySkill | null> {
-    await checkEmpty();
+    await ensureCacheIsPopulated();
     if (skillName) return itemsBySkill.find(skill => skill.skillName === skillName) ?? null;
     else return itemsBySkill;
 }
@@ -57,6 +56,6 @@ export async function getItemsBySkill(
  * @returns The list of all GameItems.
  */
 export async function getAllGameItems(): Promise<GameItem[]> {
-    await checkEmpty();
+    await ensureCacheIsPopulated();
     return allGameItems;
 }
