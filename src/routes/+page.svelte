@@ -7,13 +7,11 @@
 	import { InGameSkillNamesEnum } from '$lib/enums/InGameSkillNamesEnum';
 	import SiteHero from '$lib/components/global/SiteHero.svelte';
 	import ItemListControlBar from '$lib/components/global/ItemListControlBar.svelte';
-	import GameItemCardNew from '$lib/components/common/GameItemCard.svelte';
-	import GameItemCardCompact from '$lib/components/common/GameItemCardCompact.svelte';
+	import SuperNewGameItemCard from '$lib/components/common/SuperNewGameItemCard.svelte';
 
 	const toastStore = getToastStore();
 
 	export let data: PageData;
-	let viewMode = 1 as 0 | 1; // 0 for expanded, 1 for compact
 
 	$: skillsToDisplay = $filterItemsStore.filterItemsBySkills.length
 		? $filterItemsStore.filterItemsBySkills
@@ -38,7 +36,6 @@
 			hideDismiss: true,
 			classes: 'variant-filled-secondary shadow-lg'
 		});
-		viewMode = (eventDetail.detail as 1 | 0);
 	}
 
 	function getCategoriesOfSkill(skillName: InGameSkillNamesEnum) {
@@ -48,53 +45,57 @@
 
 <SiteHero />
 
-<ItemListControlBar
-	{viewMode}
-	on:layout-change={changeLayout}
-/>
+<ItemListControlBar />
 
 <div class="flex flex-col px-8 max-w-6xl mx-auto">
 	<!-- For each skill that should be displayed... -->
 	{#each skillsToDisplay as skill}
 
 		<!-- Display an H2 and an accordion containing the categories within that skill. -->
-		<h2 class="h2 capitalize mt-8">{skill}</h2>
-		<Accordion class="mt-4">
+		<h3 class="h3 capitalize mt-8 text-surface">{skill}</h3>
+		<Accordion class="mt-4 variant-soft-surface p-6 rounded-md dark:variant-ghost-primary">
 
 			<!-- For each category in this skill... -->
 			{#each getCategoriesOfSkill(skill) as category}
 
 				<!-- Add an accordion item for the category. -->
-				<AccordionItem open>
-					<svelte:fragment slot="summary"><h3 class="h3">{category.categoryName}</h3></svelte:fragment>
+				<AccordionItem class="bg-surface-200 border border-surface-800 rounded-md dark:variant-filled-surface">
+					<svelte:fragment slot="lead">
+						<div class="accordion-lead-icon my-2 h-12 w-12 min-h-12 min-w-12 flex items-center justify-center rounded-md">
+							<img
+								class="accordion-lead-icon__img w-6"
+								src="item-images/{category.items[0].image}"
+								alt="small thumbnail image depicting {category.items[0].name}"
+							/>
+						</div>
+					</svelte:fragment>
+					<svelte:fragment slot="summary"><p>{category.categoryName}</p></svelte:fragment>
 					<svelte:fragment slot="content">
-						{#key viewMode}
-							<div
-								in:fly={ { ...transitionIn, delay } }
-								out:fly={ transitionOut }
-								class="p-4 mb-4 gap-4 grid grid-cols-1 lg:grid-cols-2"
-								style="align-items: start"
-							>
-								{#each category.items as item}
-									{#if viewMode === 0}
-										<GameItemCardNew
-											{item}
-											linkToIngredients
-											showAccordion
-										/>
-									{/if}
-
-									{#if viewMode === 1}
-										<a href="/item/{item.id}">
-											<GameItemCardCompact {item} />
-										</a>
-									{/if}
-								{/each}
-							</div>
-						{/key}
+						<div
+							in:fly={ { ...transitionIn, delay } }
+							out:fly={ transitionOut }
+							class="p-4 mb-4 gap-4 grid grid-cols-1 lg:grid-cols-2"
+							style="align-items: start"
+						>
+							{#each category.items as item}
+								<a href="item/{item.id}">
+									<SuperNewGameItemCard {item} enableHoverEffect />
+								</a>
+							{/each}
+						</div>
 					</svelte:fragment>
 				</AccordionItem>
 			{/each}
 		</Accordion>
 	{/each}
 </div>
+
+<style>
+	.accordion-lead-icon {
+		background-image: url("/other-images/inventory-texture.png");
+	}
+
+	.accordion-lead-icon img {
+		filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.6));
+	}
+</style>
