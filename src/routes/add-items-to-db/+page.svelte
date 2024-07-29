@@ -197,7 +197,7 @@
 
 </script>
 
-<div class="p-6">
+<div class="p-6 max-w-xl mx-auto">
     <!-- {#if !isDev}
         <p class="mb-4">Hey! You're not supposed to be here!</p>
         <a href="/">Go back home</a>
