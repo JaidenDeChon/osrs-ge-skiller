@@ -53,7 +53,7 @@
 
 		<!-- Display an H2 and an accordion containing the categories within that skill. -->
 		<h3 class="h3 capitalize mt-8 text-surface">{skill}</h3>
-		<Accordion class="mt-4 variant-soft-surface p-6 rounded-md dark:variant-ghost-primary">
+		<Accordion class="mt-4 bg-surface-50 p-6 rounded-md dark:variant-ghost-primary">
 
 			<!-- For each category in this skill... -->
 			{#each getCategoriesOfSkill(skill) as category}
