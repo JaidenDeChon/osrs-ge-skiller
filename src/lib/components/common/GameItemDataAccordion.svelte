@@ -24,7 +24,7 @@
 
     $: ingredients = item.creationSpecs?.ingredients ?? [];
 
-// View transition-related functionality
+    // View transition-related functionality
     const duration = 300;
 	const delay = duration + 100;
 	const y = 10;

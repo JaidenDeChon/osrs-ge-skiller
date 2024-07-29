@@ -61,7 +61,7 @@
 				<!-- Add an accordion item for the category. -->
 				<AccordionItem class="bg-surface-200 border border-surface-800 rounded-md dark:variant-filled-surface">
 					<svelte:fragment slot="lead">
-						<div class="accordion-lead-icon my-2 h-12 w-12 min-h-12 min-w-12 flex items-center justify-center rounded-md">
+						<div class="accordion-lead-icon my-2 h-12 w-12 min-h-12 min-w-12 flex items-center justify-center bg-surface-50 dark:bg-transparent rounded-full dark:rounded-md">
 							<img
 								class="accordion-lead-icon__img w-6"
 								src="item-images/{category.items[0].image}"
@@ -92,10 +92,14 @@
 
 <style>
 	.accordion-lead-icon {
+		filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.1));
+	}
+
+	:global(:root.dark) .accordion-lead-icon {
 		background-image: url("/other-images/inventory-texture.png");
 	}
 
-	.accordion-lead-icon img {
-		filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.6));
+	:global(:root.dark) .accordion-lead-icon img {
+		filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.6));
 	}
 </style>
