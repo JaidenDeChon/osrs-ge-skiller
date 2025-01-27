@@ -1,4 +1,4 @@
-export enum GameItemCateogoryNamesEnum {
+export enum GameItemCategoryNamesEnum {
     // Crafting categories.
     LEATHER_ARMOR = 'Leather armor',
     SNAKESKIN_ARMOR = 'Snakeskin armor',
@@ -6,9 +6,12 @@ export enum GameItemCateogoryNamesEnum {
     GREEN_DRAGONHIDE_ARMOR = 'Green d\'hide armor',
     RED_DRAGONHIDE_ARMOR = 'Red d\'hide armor',
     BLACK_DRAGONHIDE_ARMOR = 'Black d\'hide armor',
+
     // Fletching categories.
     SHIELDS = 'Shields',
+
     // Smithing categories.
     BRONZE = 'Bronze',
     STEEL = 'Steel',
+    IRON = 'Iron',
 }

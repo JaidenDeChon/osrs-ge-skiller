@@ -37,10 +37,10 @@ export async function getItemById(itemId: string | undefined): Promise<GameItem 
 }
 
 /**
- * Retrieves the GameItemsByCategory object with the matching `categoryName`, or all of them if none is given.
- * @param categoryName The string name of the category of `GameItems` to retreive.
- * @returns The `GameItemsByCategory` object with `categoryName` property that matches the given name. Returns the
- *     entire `itemsByCategory` array if no category name is given. If one is given and no matching object can be
+ * Retrieves the GameItemsBySkill object with the matching `skillName`, or all of them if none is given.
+ * @param skillName The string name of the category of `GameItem`s to retrieve.
+ * @returns The `GameItemsBySkill` object with `skillName` property that matches the given name. Returns the
+ *     entire `itemsBySkill` array if no skill name is given. If one is given and no matching object can be
  *     found, returns `null`.
  */
 export async function getItemsBySkill(

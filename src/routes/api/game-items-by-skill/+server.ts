@@ -5,9 +5,7 @@ import { getItemsBySkill } from '$lib/caches/gameItemCache';
 export const GET: RequestHandler = async ({ url }) => {
     const skillName = url.searchParams.get('skillName')
 
-    let itemsByCategory;
-
-    itemsByCategory = skillName
+    const itemsByCategory = skillName
         ? await getItemsBySkill(skillName as InGameSkillNamesEnum)
         : await getItemsBySkill();
 

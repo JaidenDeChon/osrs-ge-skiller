@@ -1,15 +1,13 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
-	import { getToastStore, Accordion, AccordionItem } from '@skeletonlabs/skeleton';
+	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
 	import { filterItemsStore } from '$lib/stores/filterItemBrowserByPlayerLevelsStore';
 	import { InGameSkillNamesEnum } from '$lib/enums/InGameSkillNamesEnum';
 	import SiteHero from '$lib/components/global/SiteHero.svelte';
 	import ItemListControlBar from '$lib/components/global/ItemListControlBar.svelte';
 	import SuperNewGameItemCard from '$lib/components/common/SuperNewGameItemCard.svelte';
-
-	const toastStore = getToastStore();
 
 	export let data: PageData;
 
@@ -24,19 +22,6 @@
 
 	const transitionIn = { easing: cubicOut, y, duration };
 	const transitionOut = { easing: cubicIn, y: -y, duration };
-
-	function changeLayout(eventDetail: any) {
-		const mode = (eventDetail.detail as 1 | 0);
-		// Show a loading toast so they know we're working on it.
-		toastStore.trigger({
-			autohide: true,
-			timeout: 3500,
-			hoverable: false,
-			message: `Switched to ${mode === 0 ? 'detailed' : 'compact'} view.`,
-			hideDismiss: true,
-			classes: 'variant-filled-secondary shadow-lg'
-		});
-	}
 
 	function getCategoriesOfSkill(skillName: InGameSkillNamesEnum) {
 		return data.gameItemsBySkill.find(category => category.skillName === skillName)?.categories ?? [];

@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
-import { GameItemCateogoryNamesEnum } from '$lib/enums/GameItemCategoryNamesEnum';
+import { GameItemCategoryNamesEnum } from '$lib/enums/GameItemCategoryNamesEnum';
 
 export interface IGameItemCategory {
-    categoryName: GameItemCateogoryNamesEnum;
+    categoryName: GameItemCategoryNamesEnum;
     items: mongoose.Types.ObjectId[];
 }
 
 export const gameItemCategoriesSchema = new mongoose.Schema<IGameItemCategory>({
     categoryName: {
         type: String,
-        enum: GameItemCateogoryNamesEnum
+        enum: GameItemCategoryNamesEnum
     },
     items: [
         {

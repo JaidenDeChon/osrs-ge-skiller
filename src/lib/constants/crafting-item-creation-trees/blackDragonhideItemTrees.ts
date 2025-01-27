@@ -1,5 +1,5 @@
 import type { GameItem } from '$lib/models/GameItem';
-import { blackDragonhideVambraces } from '../game-items/blackDragonVambraces';
+import { blackDragonhideVambraces } from '../game-items/blackDragonhideVambraces';
 import { blackDragonhideChaps } from '../game-items/blackDragonhideChaps';
 import { blackDragonhideBody } from '../game-items/blackDragonhideBody';
 

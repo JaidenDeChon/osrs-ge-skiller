@@ -51,11 +51,11 @@ export type GameItemCreationSpecs = {
  * @property examineText - The "examine" text of the item. Works as a description.
  * @property image - The name of the file for the image of this item.
  * @property highPrice - The most recent high price at which the item was sold.
- * @property highPriceTime - The time at which the item sold at the most recent high price.
+ * @property highTime - The time at which the item sold at the most recent high price.
  * @property lowPrice - The most recent low price at which the item was sold.
- * @property lowPriceTime - The time at which the item sold at the most recent low price.
+ * @property lowTime - The time at which the item sold at the most recent low price.
  * @property highAlch - The high alchemy value of the item.
- * @property lowAlch - The low alchecmy value of the item.
+ * @property lowAlch - The low alchemy value of the item.
  * @property creationSpecs - The character requirements for creating this item.
  */
 export type GameItem = {
@@ -75,7 +75,7 @@ export type GameItem = {
 
 /**
  * Pairs multiple GameItems together under a single category represented by a string.
- * @property category - The name of the category of these GameItems.
+ * @property categoryName - The name of the category of these GameItems.
  * @property items - The list of GameItems for this category.
  */
 export type GameItemsByCategory = {
@@ -85,7 +85,7 @@ export type GameItemsByCategory = {
 
 /**
  * Pairs multiple `GameItemsByCategory` objects together under a single skill.
- * @property skillName - The name of the skill to which these categories are relvant.
+ * @property skillName - The name of the skill to which these categories are relevant.
  * @property categories - The list of categories under this skill.
  */
 export type GameItemsBySkill = {

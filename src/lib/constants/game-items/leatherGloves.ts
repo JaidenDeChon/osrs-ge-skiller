@@ -31,4 +31,4 @@ export function leatherGloves(): GameItem {
     };
 
     return gameItem;
-};
+}

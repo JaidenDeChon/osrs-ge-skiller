@@ -4,7 +4,8 @@
     import { kebabCase } from 'lodash';
     import type { PageData } from '../$types';
     import { InGameSkillNamesEnum } from '$lib/enums/InGameSkillNamesEnum';
-	import type { GameItem, GameItemCreationSpecs } from '$lib/models/GameItem';
+	  import type { GameItem, GameItemCreationSpecs } from '$lib/models/GameItem';
+    import { snakeskinItemTrees } from '$lib/constants/crafting-item-creation-trees';
 
     let isDev = false;
 
@@ -135,6 +136,15 @@
     }
 
     async function saveGameItem(): Promise<string | undefined> {
+        const gameItemCopy = { ...newGameItem };
+        if (
+          !gameItemCopy.creationSpecs?.experienceGranted.length &&
+          !gameItemCopy.creationSpecs?.requiredSkills.length &&
+          !gameItemCopy.creationSpecs?.ingredients.length
+        ) {
+            gameItemCopy.creationSpecs = undefined;
+        }
+
         try {
             const response = await fetch('/api/db/game-item', {
                 method: 'POST',
@@ -143,8 +153,6 @@
                 },
                 body: JSON.stringify(newGameItem)
             });
-
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
             const result = await response.json();
             console.log('GameItem created:', result);
@@ -195,22 +203,63 @@
         }
     }
 
+    function snakeskin(): void {
+        console.log(snakeskinItemTrees);
+    }
+
 </script>
 
 <div class="p-6 max-w-xl mx-auto">
+    <button
+      class="btn variant-filled-primary mb-4"
+      on:click={snakeskin}
+    >
+        Snakeskin
+    </button>
+
     <!-- {#if !isDev}
         <p class="mb-4">Hey! You're not supposed to be here!</p>
         <a href="/">Go back home</a>
     {/if} -->
 
     <!-- {#if isDev}
-        
+
     {/if} -->
 
     <h2 class="h2">Add item to DB</h2>
 
-    <!-- Category and skill parents -->
-    <h3 class="h3 mt-6 mb-4">Category and skill parents</h3>
+    <!-- Category and skill -->
+    <h3 class="h3 mt-6 mb-4">Select or enter category and skill</h3>
+
+    <div class="flex gap-4 mb-4">
+        <label class="flex-1">
+            Skill
+            <select
+              class="select variant-ghost-primary capitalize"
+              name="skill"
+              bind:value={skill}
+            >
+                {#each allSkills as skill}
+                    <option>{ skill }</option>
+                {/each}
+            </select>
+        </label>
+
+        <label class="flex-1">
+            Category
+            <select
+              class="select variant-ghost-primary capitalize"
+              name="category"
+              bind:value={category}
+            >
+                {#each allCategories as categoryName}
+                    <option>{ categoryName }</option>
+                {/each}
+            </select>
+        </label>
+    </div>
+
+    <span>or</span>
 
     <label
         class="flex flex-col mb-4"
@@ -237,31 +286,6 @@
             bind:value={skill}
         />
     </label>
-
-    <p>Or select from existing:</p>
-    <div class="flex gap-4">
-        <select
-            placeholder="category"
-            class="select variant-ghost-primary"
-            name="category"
-            bind:value={category}
-        >
-            {#each allCategories as categoryName}
-                <option>{ categoryName }</option>
-            {/each}
-        </select> 
-
-        <select
-            placeholder="skill"
-            class="select variant-ghost-primary"
-            name="skill"
-            bind:value={skill}
-        >
-            {#each allSkills as skill}
-                <option>{ skill }</option>
-            {/each}
-        </select>
-    </div>
 
     <!-- General information -->
     <h3 class="h3 mt-6 mb-4">General information</h3>
